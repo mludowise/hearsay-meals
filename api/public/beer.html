@@ -1,0 +1,34 @@
+<html>
+  <head>
+    <title>Hearsay Meals - Beer</title>
+    <style>
+    body { font-family: Helvetica, Arial, sans-serif; }
+    div { width: 800px; height: 400px; margin: 40px auto; padding: 20px; border: 2px solid #5298fc; }
+    h1 { font-size: 30px; margin: 0; }
+    p { margin: 40px 0; }
+    em { font-family: monospace; }
+    a { color: #5298fc; text-decoration: none; }
+    </style>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="beer.js"></script>
+    <script>
+      $('.newRequest').click(function(){
+        var beerType = $('.beerType').val();
+        addBeerRequest(beerType);
+        return false;
+      });
+
+      $('.showRequests').click(function(){
+        loadBeerRequests();
+        return false;
+      });
+    </script>
+  </head>
+  <body>
+    <div>
+      Beer Type: <input type='text' class='beerType'><br>
+      <input type='submit' value='Add Beer Request' class='newRequest'><br>
+      <input type='submit' value='Show Beer Requests' class='showRequests'><br>
+    </div>
+  </body>
+</html>
