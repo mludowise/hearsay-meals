@@ -22,9 +22,4 @@ class LunchEventViewController: UIViewController {
         var start = calendarEvent?.start.dateTime.date
         self.title = NSDateFormatter.localizedStringFromDate(start!, dateStyle: NSDateFormatterStyle.FullStyle, timeStyle: NSDateFormatterStyle.NoStyle)
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
 }

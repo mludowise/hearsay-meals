@@ -15,6 +15,7 @@ class SignInViewController: UIViewController, GPPSignInDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // TODO Uncomment
         var signIn = GPPSignIn.sharedInstance()
         signIn.shouldFetchGooglePlusUser = true
         signIn.clientID = kClientId
@@ -29,6 +30,7 @@ class SignInViewController: UIViewController, GPPSignInDelegate {
 //            objectWithClassName: "TestObject")
         testObject["foo"] = "bar"
         testObject.saveInBackground()
+//        presentTabView() // TODO Comment this out
     }
     
     func finishedWithAuth (auth: GTMOAuth2Authentication,
@@ -38,14 +40,17 @@ class SignInViewController: UIViewController, GPPSignInDelegate {
             } else {
                 // TODO: Validate against hearsaycorp.com domain
                 NSLog("Domain: %@", GPPSignIn.sharedInstance().googlePlusUser.domain);
-                let tabViewController = storyboard?.instantiateViewControllerWithIdentifier("tabViewController") as UIViewController?
-                if (tabViewController != nil) {
-                    presentViewController(tabViewController!, animated: true, completion: nil)
-                } else {
-                    NSLog("Can't find modal")
-                }
-
+                presentTabView()
             }
+    }
+    
+    func presentTabView() {
+        let tabViewController = storyboard?.instantiateViewControllerWithIdentifier("tabViewController") as UIViewController?
+        if (tabViewController != nil) {
+            presentViewController(tabViewController!, animated: true, completion: nil)
+        } else {
+            NSLog("Can't find modal")
+        }
     }
     
     func presentSignInViewController(viewController: UIViewController) {
