@@ -1,0 +1,14 @@
+{
+    "applications": {
+        "Hearsay Meals": {
+            "applicationId": "myq9zbMzdkBqqEyudRcwIR5yxnmwihlslqUvYh34", 
+            "masterKey": "sAG9ecM32AnFOANz4h4hnknW2NOC9Rz8P17hzR48"
+        }, 
+        "_default": {
+            "link": "Hearsay Meals"
+        }
+    }, 
+    "global": {
+        "parseVersion": "1.3.1"
+    }
+}
