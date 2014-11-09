@@ -51,31 +51,37 @@
           <ul>
             <li>
               <img src="images/meat.png" alt="Omnivore">  Omnivore
-              <span><input name="preferences" checked="true" type="radio"></span>
+              <span><input id="0" name="preferences" checked="true" type="radio"></span>
             </li>            
             <li>
               <img src="images/vegetarian.png" alt="Vegetarian">  Vegetarian
-              <span><input name="preferences" type="radio"></span>
+              <span><input id="1" name="preferences" type="radio" value="1"></span>
             </li>
             <li>
               <img src="images/vegan.png" alt="Vegan">  Vegan
-              <span><input name="preferences" type="radio"></span>
+              <span><input id="2" name="preferences" type="radio" value="2"></span>
             </li>  
           </ul>            
           <h4>Restrictions:</h4>          
           <ul>
             <li>
               <img src="images/gluten.png" alt="Gluten">  Gluten
-              <span><input name="preferences" type="checkbox"></span>
+              <span><input id="3" name="restrictions" type="checkbox" value="3"></span>
             </li>
           </ul>
         </div>
       </div>
     </div>
-    
+    <div class="row">
+        <div class="col-xs-1"></div>
+        <div class="col-xs-5">
+          
+        </div>        
+    </div>
     </body>
     <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script type="text/javascript" src="scripts/bootstrap.min.js"></script>
+    <script type="text/javascript" src="scripts/base.js"></script>    
     <script type="text/javascript" src="scripts/dinner.js"></script>
 
 </html>
