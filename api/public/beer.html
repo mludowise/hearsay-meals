@@ -1,34 +1,53 @@
+<!DOCTYPE html>
 <html>
-  <head>
-    <title>Hearsay Meals - Beer</title>
-    <style>
-    body { font-family: Helvetica, Arial, sans-serif; }
-    div { width: 800px; height: 400px; margin: 40px auto; padding: 20px; border: 2px solid #5298fc; }
-    h1 { font-size: 30px; margin: 0; }
-    p { margin: 40px 0; }
-    em { font-family: monospace; }
-    a { color: #5298fc; text-decoration: none; }
-    </style>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script src="beer.js"></script>
-    <script>
-      $('.newRequest').click(function(){
-        var beerType = $('.beerType').val();
-        addBeerRequest(beerType);
-        return false;
-      });
+    <head>
+        <title>Hearsay Meals - Beer</title>
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
+    </head>
+    <body>
+    <nav class="navbar navbar-default" role="navigation">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="index.html">Hearsay Meals</a>
+        </div>
 
-      $('.showRequests').click(function(){
-        loadBeerRequests();
-        return false;
-      });
-    </script>
-  </head>
-  <body>
-    <div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="dinner.html">Dinner</a></li>
+            <li><a href="beer.html">Beer</a></li>
+            <li><a href="snacks.html">Snacks</a></li>           
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#">Log in</a></li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+    <div class="row">
+    <div class="col-xs-1"></div>      
+    <div class="col-xs-4">
       Beer Type: <input type='text' class='beerType'><br>
-      <input type='submit' value='Add Beer Request' class='newRequest'><br>
-      <input type='submit' value='Show Beer Requests' class='showRequests'><br>
+      <button type="button" class="btn btn-danger btn-lg" id="request-beer">
+        Request Beer
+      </button>
+      <button type="button" class="btn btn-danger btn-lg" id="show-requests">
+        Show Beer Requests
+      </button>
     </div>
+    
+    </body>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script type="text/javascript" src="scripts/bootstrap.min.js"></script>
+    <script type="text/javascript" src="scripts/base.js"></script>
+    <script type="text/javascript" src="scripts/beer.js"></script>
   </body>
 </html>
