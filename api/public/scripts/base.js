@@ -8,7 +8,7 @@ function apiRequest(url, data, method) {
         data = {};
     }
 
-    if ($.inArray(method, ['POST', 'PUT'])){
+    if ($.inArray(method, ['POST', 'PUT']) >= 0){
         data = JSON.stringify(data);
         contentType = 'application/json';
     }

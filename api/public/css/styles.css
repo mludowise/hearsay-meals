@@ -1,0 +1,44 @@
+body {
+	overflow: hidden;
+}
+
+.countdown {
+	display: inline;
+	float: right;
+	margin-top: 5px;
+}
+
+.countdown span.time {
+	font-size: 30px;
+}
+
+.countdown span.dinner-label {
+	margin-right: 10px;
+	color: #767676;
+}
+
+.preferences {
+	margin-top: 50px;
+}
+
+.preferences img {
+	width: 20px;
+}
+
+.preferences ul {
+	list-style-type: none;
+	font-size: 16px;
+}
+
+.preferences h4 {
+	margin-top: 20px;
+}
+
+.preferences ul li {
+	margin-top: 10px;
+}
+
+.preferences ul li span {
+	float: right;
+	font-size: 12px;
+}

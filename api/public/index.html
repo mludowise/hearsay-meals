@@ -1,21 +1,53 @@
-
+<!DOCTYPE html>
 <html>
-  <head>
-    <title>My ParseApp site</title>
-    <style>
-    body { font-family: Helvetica, Arial, sans-serif; }
-    div { width: 800px; height: 400px; margin: 40px auto; padding: 20px; border: 2px solid #5298fc; }
-    h1 { font-size: 30px; margin: 0; }
-    p { margin: 40px 0; }
-    em { font-family: monospace; }
-    a { color: #5298fc; text-decoration: none; }
-    </style>
-  </head>
-  <body>
-    <div>
-      <h1>Congratulations! You're already hosting with Parse.</h1>
-      <p>To get started, edit this file at <em>public/index.html</em> and start adding static content.</p>
-      <p>If you want something a bit more dynamic, delete this file and check out <a href="https://parse.com/docs/hosting_guide#webapp">our hosting docs</a>.</p>
+    <head>
+        <title>Hearsay Meals - Dinner</title>
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
+        <script src="https://apis.google.com/js/client:platform.js" async defer></script>        
+    </head>
+    <body>
+    <nav class="navbar navbar-default" role="navigation">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="index.html">Hearsay Meals</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li><a href="dinner.html">Dinner</a></li>
+            <li><a href="beer.html">Beer</a></li>
+            <li><a href="snacks.html">Snacks</a></li>           
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#">Log in</a></li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>    
+    <script type="text/javascript" src="scripts/base.js"></script>    
+    <script type="text/javascript" src="scripts/dinner.js"></script>
+    <div id="gConnect">
+      <button class="g-signin"
+          data-scope="https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/userinfo.email"
+          data-requestvisibleactions="http://schemas.google.com/AddActivity"
+          data-clientId="966122623899-07cog3u9lpipk8q4qo9bvmn51v7h01m5.apps.googleusercontent.com"
+          data-callback="onSignInCallback"
+          data-theme="dark"
+          key="AIzaSyAW7z4SEmncGb9ElHfWlCOn6gejEPm0vHo"
+          data-cookiepolicy="single_host_origin">
+      </button>
     </div>
-  </body>
+
+    </body>
+    <script type="text/javascript" src="scripts/bootstrap.min.js"></script>
 </html>
