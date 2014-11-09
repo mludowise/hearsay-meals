@@ -18,6 +18,10 @@ class RequestTableViewCell: UITableViewCell {
     private var voted = false
     
     func loadView() {
+//        voteButton.setBackgroundImage(nil, forState: UIControlState.Selected)
+//        voteButton.layer.borderWidth = 1
+//        voteButton.layer.borderColor = voteButton.currentTitleColor.CGColor
+        
         beerLabel.text = beer
         
         var numVotesWithoutUser = votes.count

@@ -936,9 +936,16 @@ Allergen Key: *Vegetarian, **Vegan, (G) Gluten Safe, (D) Dairy Safe, (N) Nut Saf
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="cGM-ln-flT">
                                                                     <rect key="frame" x="274" y="7" width="30" height="30"/>
                                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                                    <state key="normal" title="+1">
+                                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                                    <state key="normal" title="+1" backgroundImage="button-unselected">
                                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                                     </state>
+                                                                    <state key="selected" backgroundImage="button-selected"/>
+                                                                    <userDefinedRuntimeAttributes>
+                                                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                                            <integer key="value" value="6"/>
+                                                                        </userDefinedRuntimeAttribute>
+                                                                    </userDefinedRuntimeAttributes>
                                                                     <connections>
                                                                         <action selector="onVoteButton:" destination="O5g-29-ndG" eventType="touchUpInside" id="Zka-Jw-1PP"/>
                                                                     </connections>
@@ -1047,6 +1054,8 @@ Allergen Key: *Vegetarian, **Vegan, (G) Gluten Safe, (D) Dairy Safe, (N) Nut Saf
     <resources>
         <image name="account" width="23" height="22"/>
         <image name="beer" width="23" height="24"/>
+        <image name="button-selected" width="11" height="11"/>
+        <image name="button-unselected" width="11" height="11"/>
         <image name="calendar" width="23" height="24"/>
         <image name="dinner" width="16" height="24"/>
         <image name="lunch" width="28" height="24"/>

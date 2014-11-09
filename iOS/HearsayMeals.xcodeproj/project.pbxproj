@@ -43,6 +43,7 @@
 		E696048D19EB0C6800FD0885 /* CalendarTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E696048B19EB0C6800FD0885 /* CalendarTableViewCell.xib */; };
 		E696049119EBD31600FD0885 /* LunchEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E696049019EBD31600FD0885 /* LunchEventViewController.swift */; };
 		E69D925A1A0EECAA00A94B98 /* RequestTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E69D92591A0EECAA00A94B98 /* RequestTableViewCell.swift */; };
+		E69D925C1A0F6C0D00A94B98 /* VoteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E69D925B1A0F6C0D00A94B98 /* VoteButton.swift */; };
 		E69F8F1819EA69020046DFCD /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E69F8F1719EA69020046DFCD /* SettingsViewController.swift */; };
 		E6E3ABFA1A0E9B5300B0DCA1 /* DinnerTonightViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E3ABF91A0E9B5300B0DCA1 /* DinnerTonightViewController.swift */; };
 		E6E3ABFC1A0EC1F900B0DCA1 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E3ABFB1A0EC1F900B0DCA1 /* Util.swift */; };
@@ -131,6 +132,7 @@
 		E696048B19EB0C6800FD0885 /* CalendarTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CalendarTableViewCell.xib; sourceTree = "<group>"; };
 		E696049019EBD31600FD0885 /* LunchEventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LunchEventViewController.swift; sourceTree = "<group>"; };
 		E69D92591A0EECAA00A94B98 /* RequestTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestTableViewCell.swift; sourceTree = "<group>"; };
+		E69D925B1A0F6C0D00A94B98 /* VoteButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VoteButton.swift; sourceTree = "<group>"; };
 		E69F8F1719EA69020046DFCD /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		E6E3ABF91A0E9B5300B0DCA1 /* DinnerTonightViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DinnerTonightViewController.swift; sourceTree = "<group>"; };
 		E6E3ABFB1A0EC1F900B0DCA1 /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
@@ -228,6 +230,7 @@
 				E65D527819EA3A73002BEDDE /* Images.xcassets */,
 				E65D527A19EA3A73002BEDDE /* LaunchScreen.xib */,
 				E65D526F19EA3A73002BEDDE /* Supporting Files */,
+				E69D925B1A0F6C0D00A94B98 /* VoteButton.swift */,
 			);
 			path = HearsayMeals;
 			sourceTree = "<group>";
@@ -467,6 +470,7 @@
 				E69D925A1A0EECAA00A94B98 /* RequestTableViewCell.swift in Sources */,
 				E6E3ABFC1A0EC1F900B0DCA1 /* Util.swift in Sources */,
 				E65D52ED19EA3D41002BEDDE /* SignInViewController.swift in Sources */,
+				E69D925C1A0F6C0D00A94B98 /* VoteButton.swift in Sources */,
 				E65D52CB19EA3BA3002BEDDE /* GTLCalendar_Sources.m in Sources */,
 				E65D527219EA3A73002BEDDE /* AppDelegate.swift in Sources */,
 				E69F8F1819EA69020046DFCD /* SettingsViewController.swift in Sources */,

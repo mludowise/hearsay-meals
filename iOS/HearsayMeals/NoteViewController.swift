@@ -34,9 +34,7 @@ class NoteViewController: UIViewController, UITextViewDelegate {
     }
     
     @IBAction func onDone(sender: AnyObject) {
-        if (onDone != nil) {
-            onDone!(textArea.text)
-        }
+        onDone?(textArea.text)
         view.endEditing(true)
         dismissViewControllerAnimated(true, completion: nil)
     }
