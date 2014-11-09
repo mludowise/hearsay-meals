@@ -1,6 +1,6 @@
 var parseApiUrl = "https://api.parse.com";
 
-function apiRequest(url, method, data) {
+function apiRequest(url, data, method) {
     if (typeof method === "undefined"){
         method = "GET";
     }
@@ -8,19 +8,27 @@ function apiRequest(url, method, data) {
         data = {};
     }
 
+    if ($.inArray(method, ['POST', 'PUT'])){
+        data = JSON.stringify(data);
+        contentType = 'application/json';
+    }
+    else {
+        contentType = 'application/x-www-form-urlencoded; charset=UTF-8';
+    }
+
     var results = null;
 
     var headers = {
         'X-Parse-Application-Id': 'myq9zbMzdkBqqEyudRcwIR5yxnmwihlslqUvYh34',
         'X-Parse-REST-API-Key': '8Zwn2jGVUZEimJ9YYJUorF305QCAg9qZaWsUVVPZ'
-    }
+    };
 
     $.ajax({
         url: parseApiUrl + url,
         type: method,
         data: data,
         headers: headers,
-        contentType: 'application/json',
+        contentType: contentType,
         dataType: 'json',
         async: false,
         success: function(data, status, jqXHR){
@@ -32,6 +40,5 @@ function apiRequest(url, method, data) {
 }
 
 function getCurrentUser(){
-    return null;
     return apiRequest('/1/users/me');
 }
