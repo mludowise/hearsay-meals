@@ -5,9 +5,9 @@ $(document).ready(function() {
         var beerType = $('.beerType').val();
         var beerRequest = {
             name: beerType,
-            user: user
+            user_id: user.objectId
         };
-        saveBeerRequest(beerRequest);
+        beerRequestResult = saveBeerRequest(beerRequest);
     });
 
     $('#show-requests').click(function(){
@@ -16,7 +16,8 @@ $(document).ready(function() {
         // Do something with the returned Parse.Object values
         for (var i = 0; i < beerRequests.length; i++) {
             var object = beerRequests[i];
-            alert(object.id + ' - ' + object.name);
+            var requester = findUser(object.user_id);
+            alert(object.name + ' - ' + requester.name);
         }
         return false;
     });
