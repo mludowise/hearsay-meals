@@ -23,6 +23,12 @@ function apiRequest(url, data, method) {
         'X-Parse-REST-API-Key': '8Zwn2jGVUZEimJ9YYJUorF305QCAg9qZaWsUVVPZ'
     };
 
+    var sessionToken = localStorage.getItem('sessionToken');
+
+    if (sessionToken !== null){
+        headers['X-Parse-Session-Token'] = sessionToken;
+    }
+
     $.ajax({
         url: parseApiUrl + url,
         type: method,
@@ -40,5 +46,71 @@ function apiRequest(url, data, method) {
 }
 
 function getCurrentUser(){
-    return apiRequest('/1/users/me');
+    results = apiRequest('/1/users/me');
+    return results;
+}
+
+function findUser(email){
+    var where = {
+        where: {
+            email: email
+        }
+    };
+    results = apiRequest('/1/users/', where);
+    return results.results[0];
+}
+
+function userLogin(email){
+    var data = {
+        username: email,
+        password: 'password'
+    };
+    results = apiRequest('/1/login/', data);
+    return results;
+}
+
+function userSignedIn(){
+    var sessionToken = localStorage.getItem('sessionToken');
+    return sessionToken !== null;
+}
+
+function onSignInCallback(response) {
+    console.log(response);
+    key = "AIzaSyAW7z4SEmncGb9ElHfWlCOn6gejEPm0vHo";
+    if (response.status.signed_in) {
+        $('#gConnect').hide();
+        if (!userSignedIn()){
+            gapi.client.load('oauth2', 'v2', function() {
+              gapi.client.oauth2.userinfo.get().execute(function(resp) {
+                if (resp.hd !== 'hearsaycorp.com') {
+                    alert('You must have a Hearsay email to use this app');
+                    return;
+                }
+                localStorage.setItem('email', resp.email);
+                localStorage.setItem('name', resp.name);
+                var storedEmail = localStorage.getItem('email');
+                var user = null;
+                if (storedEmail !== null)
+                {
+                    user = userLogin(storedEmail);
+                }
+                else
+                {
+                    user = userLogin(resp.email);
+                    if (user === null){
+                        var data = {
+                            email : resp.email,
+                            password : 'password',
+                            username : resp.email,
+                            name : resp.name,
+                            picture : resp.picture
+                        };
+                        user = apiRequest('/1/users', data, 'POST');
+                    }
+                }
+                localStorage.setItem('sessionToken', user.sessionToken);
+              });
+            });
+        }
+    }
 }
