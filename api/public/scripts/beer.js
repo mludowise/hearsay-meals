@@ -1,10 +1,10 @@
 $(document).ready(function() {
-    var user = getUser();
+    var user = getCurrentUser();
 
     $('#request-beer').click(function(){
         var beerType = $('.beerType').val();
         var beerRequest = {
-            'name': beerType,
+            name: beerType,
         };
         saveBeerRequest(beerRequest);
     });
