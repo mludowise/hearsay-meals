@@ -8,6 +8,9 @@
 
 import UIKit
 
+internal var userEmail = ""
+
+
 class SignInViewController: UIViewController, GPPSignInDelegate {
     private let kClientId = "966122623899-snf8rtjucf08hup8a2jjmihcina16a0j.apps.googleusercontent.com"
     private let kDomain = "hearsaycorp.com"
@@ -15,6 +18,7 @@ class SignInViewController: UIViewController, GPPSignInDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // TODO Uncomment
         var signIn = GPPSignIn.sharedInstance()
         signIn.shouldFetchGooglePlusUser = true
         signIn.clientID = kClientId
@@ -29,23 +33,30 @@ class SignInViewController: UIViewController, GPPSignInDelegate {
 //            objectWithClassName: "TestObject")
         testObject["foo"] = "bar"
         testObject.saveInBackground()
+//        presentTabView() // TODO Comment this out
     }
     
     func finishedWithAuth (auth: GTMOAuth2Authentication,
         error: NSError?) {
             if (error != nil) {
-                NSLog("Received error %@ and auth object %@",error!, auth);
+                NSLog("Received error %@ and auth object %@",error!, auth)
             } else {
                 // TODO: Validate against hearsaycorp.com domain
-                NSLog("Domain: %@", GPPSignIn.sharedInstance().googlePlusUser.domain);
-                let tabViewController = storyboard?.instantiateViewControllerWithIdentifier("tabViewController") as UIViewController?
-                if (tabViewController != nil) {
-                    presentViewController(tabViewController!, animated: true, completion: nil)
-                } else {
-                    NSLog("Can't find modal")
-                }
-
+                NSLog("Domain: %@", GPPSignIn.sharedInstance().googlePlusUser.domain)
+                NSLog("ID: %@", GPPSignIn.sharedInstance().googlePlusUser.identifier)
+                NSLog("Emails: %@", GPPSignIn.sharedInstance().googlePlusUser.emails)
+                userEmail = (GPPSignIn.sharedInstance().googlePlusUser.emails[0] as GTLPlusPersonEmailsItem).value
+                presentTabView()
             }
+    }
+    
+    func presentTabView() {
+        let tabViewController = storyboard?.instantiateViewControllerWithIdentifier("tabViewController") as UIViewController?
+        if (tabViewController != nil) {
+            presentViewController(tabViewController!, animated: true, completion: nil)
+        } else {
+            NSLog("Can't find modal")
+        }
     }
     
     func presentSignInViewController(viewController: UIViewController) {

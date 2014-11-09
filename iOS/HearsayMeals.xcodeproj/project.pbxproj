@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E65A6B7E1A0ECAB600976FD6 /* NoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65A6B7D1A0ECAB600976FD6 /* NoteViewController.swift */; };
+		E65A6B801A0EE1FE00976FD6 /* BeerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65A6B7F1A0EE1FE00976FD6 /* BeerViewController.swift */; };
 		E65D527219EA3A73002BEDDE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65D527119EA3A73002BEDDE /* AppDelegate.swift */; };
 		E65D527719EA3A73002BEDDE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E65D527519EA3A73002BEDDE /* Main.storyboard */; };
 		E65D527919EA3A73002BEDDE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E65D527819EA3A73002BEDDE /* Images.xcassets */; };
@@ -40,7 +42,11 @@
 		E65D5D9B19ECF362000B52DB /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E65D5D9A19ECF362000B52DB /* Accounts.framework */; };
 		E696048D19EB0C6800FD0885 /* CalendarTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E696048B19EB0C6800FD0885 /* CalendarTableViewCell.xib */; };
 		E696049119EBD31600FD0885 /* LunchEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E696049019EBD31600FD0885 /* LunchEventViewController.swift */; };
+		E69D925A1A0EECAA00A94B98 /* RequestTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E69D92591A0EECAA00A94B98 /* RequestTableViewCell.swift */; };
+		E69D925C1A0F6C0D00A94B98 /* VoteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E69D925B1A0F6C0D00A94B98 /* VoteButton.swift */; };
 		E69F8F1819EA69020046DFCD /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E69F8F1719EA69020046DFCD /* SettingsViewController.swift */; };
+		E6E3ABFA1A0E9B5300B0DCA1 /* DinnerTonightViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E3ABF91A0E9B5300B0DCA1 /* DinnerTonightViewController.swift */; };
+		E6E3ABFC1A0EC1F900B0DCA1 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E3ABFB1A0EC1F900B0DCA1 /* Util.swift */; };
 		E6FF58D019EA8A5D008124A5 /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FF58CF19EA8A5D008124A5 /* CalendarViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -55,6 +61,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E65A6B7D1A0ECAB600976FD6 /* NoteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteViewController.swift; sourceTree = "<group>"; };
+		E65A6B7F1A0EE1FE00976FD6 /* BeerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeerViewController.swift; sourceTree = "<group>"; };
 		E65D526C19EA3A73002BEDDE /* HearsayMeals.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HearsayMeals.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E65D527019EA3A73002BEDDE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E65D527119EA3A73002BEDDE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -123,7 +131,11 @@
 		E65D5D9A19ECF362000B52DB /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		E696048B19EB0C6800FD0885 /* CalendarTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CalendarTableViewCell.xib; sourceTree = "<group>"; };
 		E696049019EBD31600FD0885 /* LunchEventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LunchEventViewController.swift; sourceTree = "<group>"; };
+		E69D92591A0EECAA00A94B98 /* RequestTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestTableViewCell.swift; sourceTree = "<group>"; };
+		E69D925B1A0F6C0D00A94B98 /* VoteButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VoteButton.swift; sourceTree = "<group>"; };
 		E69F8F1719EA69020046DFCD /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		E6E3ABF91A0E9B5300B0DCA1 /* DinnerTonightViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DinnerTonightViewController.swift; sourceTree = "<group>"; };
+		E6E3ABFB1A0EC1F900B0DCA1 /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		E6FF58CF19EA8A5D008124A5 /* CalendarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -168,6 +180,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E6385BDA1A0DD5DE00299C9C /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				E65A6B7D1A0ECAB600976FD6 /* NoteViewController.swift */,
+				E6FF58CF19EA8A5D008124A5 /* CalendarViewController.swift */,
+				E65A6B7F1A0EE1FE00976FD6 /* BeerViewController.swift */,
+				E696049019EBD31600FD0885 /* LunchEventViewController.swift */,
+				E6E3ABF91A0E9B5300B0DCA1 /* DinnerTonightViewController.swift */,
+				E65D52EC19EA3D41002BEDDE /* SignInViewController.swift */,
+				E69F8F1719EA69020046DFCD /* SettingsViewController.swift */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
 		E65D526319EA3A73002BEDDE = {
 			isa = PBXGroup;
 			children = (
@@ -196,15 +222,15 @@
 			children = (
 				E65D52EE19EA3ED4002BEDDE /* -Bridging-Header.h */,
 				E65D527119EA3A73002BEDDE /* AppDelegate.swift */,
-				E6FF58CF19EA8A5D008124A5 /* CalendarViewController.swift */,
-				E65D52EC19EA3D41002BEDDE /* SignInViewController.swift */,
-				E69F8F1719EA69020046DFCD /* SettingsViewController.swift */,
+				E6E3ABFB1A0EC1F900B0DCA1 /* Util.swift */,
+				E69D92591A0EECAA00A94B98 /* RequestTableViewCell.swift */,
+				E6385BDA1A0DD5DE00299C9C /* View Controllers */,
 				E65D527519EA3A73002BEDDE /* Main.storyboard */,
-				E696049019EBD31600FD0885 /* LunchEventViewController.swift */,
 				E696048B19EB0C6800FD0885 /* CalendarTableViewCell.xib */,
 				E65D527819EA3A73002BEDDE /* Images.xcassets */,
 				E65D527A19EA3A73002BEDDE /* LaunchScreen.xib */,
 				E65D526F19EA3A73002BEDDE /* Supporting Files */,
+				E69D925B1A0F6C0D00A94B98 /* VoteButton.swift */,
 			);
 			path = HearsayMeals;
 			sourceTree = "<group>";
@@ -436,9 +462,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E65A6B801A0EE1FE00976FD6 /* BeerViewController.swift in Sources */,
+				E65A6B7E1A0ECAB600976FD6 /* NoteViewController.swift in Sources */,
+				E6E3ABFA1A0E9B5300B0DCA1 /* DinnerTonightViewController.swift in Sources */,
 				E696049119EBD31600FD0885 /* LunchEventViewController.swift in Sources */,
 				E6FF58D019EA8A5D008124A5 /* CalendarViewController.swift in Sources */,
+				E69D925A1A0EECAA00A94B98 /* RequestTableViewCell.swift in Sources */,
+				E6E3ABFC1A0EC1F900B0DCA1 /* Util.swift in Sources */,
 				E65D52ED19EA3D41002BEDDE /* SignInViewController.swift in Sources */,
+				E69D925C1A0F6C0D00A94B98 /* VoteButton.swift in Sources */,
 				E65D52CB19EA3BA3002BEDDE /* GTLCalendar_Sources.m in Sources */,
 				E65D527219EA3A73002BEDDE /* AppDelegate.swift in Sources */,
 				E69F8F1819EA69020046DFCD /* SettingsViewController.swift in Sources */,

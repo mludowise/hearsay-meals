@@ -63,6 +63,7 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
         
         calendarService.shouldFetchNextPages = true
         calendarService.retryEnabled = true
+        // TODO: Uncomment this
         fetchCalendarEvents()
     }
     
