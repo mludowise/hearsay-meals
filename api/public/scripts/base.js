@@ -50,14 +50,9 @@ function getCurrentUser(){
     return results;
 }
 
-function findUser(email){
-    var where = {
-        where: {
-            email: email
-        }
-    };
-    results = apiRequest('/1/users/', where);
-    return results.results[0];
+function findUser(id){
+    results = apiRequest('/1/users/' + id);
+    return results;
 }
 
 function userLogin(email){
