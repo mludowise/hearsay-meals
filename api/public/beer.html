@@ -33,15 +33,33 @@
       </div><!-- /.container-fluid -->
     </nav>
     <div class="row">
-    <div class="col-xs-1"></div>      
-    <div class="col-xs-4">
-      Beer Type: <input type='text' class='beerType'><br>
-      <button type="button" class="btn btn-danger btn-lg" id="request-beer">
-        Request Beer
-      </button>
-      <button type="button" class="btn btn-danger btn-lg" id="show-requests">
-        Show Beer Requests
-      </button>
+      <div class="col-xs-1"></div>
+      <div class="col-xs-4">
+        <form role="form">
+          <div class="form-group">
+            <label for="beerType">Beer Type</label>
+            <input type="text" class="form-control" id="beerType">
+          </div>
+          <button type="button" class="btn btn-danger btn-lg" id="request-beer">
+            Request Beer
+          </button>
+        </form>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-1"></div>      
+      <div class="col-xs-9">
+        <table id="beer-request-list" class="table table-striped">
+          <thead>
+            <tr>
+              <th>Beer Type</th>
+              <th>Votes</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
     </div>
     
     </body>
