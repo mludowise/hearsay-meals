@@ -53,7 +53,7 @@ class BeerViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        return kegRequests.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -66,6 +66,7 @@ class BeerViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     @IBAction func onReportEmpty(sender: AnyObject) {
         reportEmptyActivityIndicator.startAnimating()
+        reportEmptyButton.setTitle(reportEmptyButton.currentTitle, forState: UIControlState.Disabled)
         reportEmptyButton.enabled = false
         delay(1, { () -> () in
             self.reportEmptyActivityIndicator.stopAnimating()
@@ -81,10 +82,6 @@ class BeerViewController: UIViewController, UITableViewDataSource, UITableViewDe
             
             self.updateKegReport()
         })
-    }
-    
-    @IBAction func onMakeRequest(sender: AnyObject) {
-        
     }
     
     private func updateKegReport() {
@@ -103,9 +100,30 @@ class BeerViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 })
             }
         } else {
-            kickedView.hidden = true
-            mainView.frame.origin.y = 0
+            if (!kickedView.hidden) {
+                UIView.animateWithDuration(0.2, animations: { () -> Void in
+                    self.scrollView.contentOffset.y = 0
+                    }, completion: { (Bool) -> Void in
+                        UIView.animateWithDuration(0.5, animations: { () -> Void in
+                            self.kickedView.frame.origin.y = -self.kickedView.frame.height
+                            self.mainView.frame.origin.y = 0
+                            }, completion: { (Bool) -> Void in
+                                self.kickedView.hidden = true
+                        })
+                })
+            }
         }
     }
     
+    @IBAction func onMakeRequest(sender: AnyObject) {
+        var noteViewController = storyboard?.instantiateViewControllerWithIdentifier(kNoteViewControllerID) as NoteViewController
+        noteViewController.title = "Request Beer"
+        noteViewController.onDone = { (text: String) -> Void in
+            kegRequests.append(name: text, requests: [userEmail])
+            self.requestsTable.beginUpdates()
+            self.requestsTable.insertRowsAtIndexPaths([NSIndexPath(forRow: kegRequests.count - 1, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Automatic)
+            self.requestsTable.endUpdates()
+        }
+        presentViewController(noteViewController, animated: true, completion: nil)
+    }
 }
