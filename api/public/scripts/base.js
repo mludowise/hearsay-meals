@@ -81,8 +81,6 @@ function onSignInCallback(response) {
                     alert('You must have a Hearsay email to use this app');
                     return;
                 }
-                localStorage.setItem('email', resp.email);
-                localStorage.setItem('name', resp.name);
                 var storedEmail = localStorage.getItem('email');
                 var user = null;
                 if (storedEmail !== null)
@@ -103,6 +101,8 @@ function onSignInCallback(response) {
                         user = apiRequest('/1/users', data, 'POST');
                     }
                 }
+                localStorage.setItem('email', resp.email);
+                localStorage.setItem('name', resp.name);
                 localStorage.setItem('sessionToken', user.sessionToken);
               });
             });
