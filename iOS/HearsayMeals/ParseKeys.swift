@@ -14,8 +14,15 @@ let kUserPictureKey = "picture"
 let kUserNameKey = "name"
 let kUserAdminKey = "admin"
 
+let kBeerRequestTableKey = "BeerRequest"
 let kBeerRequestNameKey = "name"
-let kBeerRequestUserKey = "user"
+let kBeerRequestUserKey = "user_id"
+let kBeerRequestInactiveKey = "inactive"
 
+let kBeerVotesTableKey = "BeerVotes"
+let kBeerVotesBeerKey = "beer_request_id"
+let kBeerVotesUserKey = "user_id"
+
+let kKegTableKey = "Keg"
 let kKegBeerNameKey = "beerName"
 let kKegKickedReportsKey = "kickedReports"

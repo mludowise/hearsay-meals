@@ -8,8 +8,6 @@
 
 import UIKit
 
-internal var userEmail = ""
-
 private let kClientId = "966122623899-snf8rtjucf08hup8a2jjmihcina16a0j.apps.googleusercontent.com"
 private let kDomain = "hearsaycorp.com"
 
@@ -54,7 +52,7 @@ class SignInViewController: UIViewController, GPPSignInDelegate {
                     return
                 }
                 
-                userEmail = (googlePlusUser.emails[0] as GTLPlusPersonEmailsItem).value
+                var userEmail = (googlePlusUser.emails[0] as GTLPlusPersonEmailsItem).value
                 
                 PFUser.logInWithUsernameInBackground(userEmail, password: kUserPassword, block: { (parseUser: PFUser!, error: NSError!) -> Void in
                     if (error != nil) {

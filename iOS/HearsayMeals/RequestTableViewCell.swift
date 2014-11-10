@@ -25,7 +25,7 @@ class RequestTableViewCell: UITableViewCell {
         beerLabel.text = beer
         
         var numVotesWithoutUser = votes.count
-        if (find(votes, userEmail) != nil) {
+        if (find(votes, PFUser.currentUser().email) != nil) {
             voted = true
             numVotesWithoutUser--
         }
@@ -36,13 +36,14 @@ class RequestTableViewCell: UITableViewCell {
     
     @IBAction func onVoteButton(sender: AnyObject) {
         if (voted) {
-            var emailIndex = find(votes, userEmail)!
+            var emailIndex = find(votes, PFUser.currentUser().email)!
             votes.removeAtIndex(emailIndex)
         } else {
-            votes.append(userEmail)
+            votes.append(PFUser.currentUser().email)
         }
         
         voted = !voted
         voteButton.selected = voted
     }
+    
 }
