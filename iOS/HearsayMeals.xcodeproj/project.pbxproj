@@ -42,7 +42,7 @@
 		E65D5D9B19ECF362000B52DB /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E65D5D9A19ECF362000B52DB /* Accounts.framework */; };
 		E696048D19EB0C6800FD0885 /* CalendarTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E696048B19EB0C6800FD0885 /* CalendarTableViewCell.xib */; };
 		E696049119EBD31600FD0885 /* LunchEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E696049019EBD31600FD0885 /* LunchEventViewController.swift */; };
-		E69D925A1A0EECAA00A94B98 /* RequestTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E69D92591A0EECAA00A94B98 /* RequestTableViewCell.swift */; };
+		E69D925A1A0EECAA00A94B98 /* BeerRequestTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E69D92591A0EECAA00A94B98 /* BeerRequestTableViewCell.swift */; };
 		E69D925C1A0F6C0D00A94B98 /* VoteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E69D925B1A0F6C0D00A94B98 /* VoteButton.swift */; };
 		E69F8F1819EA69020046DFCD /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E69F8F1719EA69020046DFCD /* SettingsViewController.swift */; };
 		E6E3ABFA1A0E9B5300B0DCA1 /* DinnerTonightViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E3ABF91A0E9B5300B0DCA1 /* DinnerTonightViewController.swift */; };
@@ -132,7 +132,7 @@
 		E65D5D9A19ECF362000B52DB /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		E696048B19EB0C6800FD0885 /* CalendarTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CalendarTableViewCell.xib; sourceTree = "<group>"; };
 		E696049019EBD31600FD0885 /* LunchEventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LunchEventViewController.swift; sourceTree = "<group>"; };
-		E69D92591A0EECAA00A94B98 /* RequestTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestTableViewCell.swift; sourceTree = "<group>"; };
+		E69D92591A0EECAA00A94B98 /* BeerRequestTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeerRequestTableViewCell.swift; sourceTree = "<group>"; };
 		E69D925B1A0F6C0D00A94B98 /* VoteButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VoteButton.swift; sourceTree = "<group>"; };
 		E69F8F1719EA69020046DFCD /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		E6E3ABF91A0E9B5300B0DCA1 /* DinnerTonightViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DinnerTonightViewController.swift; sourceTree = "<group>"; };
@@ -225,7 +225,7 @@
 				E65D52EE19EA3ED4002BEDDE /* -Bridging-Header.h */,
 				E65D527119EA3A73002BEDDE /* AppDelegate.swift */,
 				E6E3ABFB1A0EC1F900B0DCA1 /* Util.swift */,
-				E69D92591A0EECAA00A94B98 /* RequestTableViewCell.swift */,
+				E69D92591A0EECAA00A94B98 /* BeerRequestTableViewCell.swift */,
 				E6E590411A100E280002473E /* ParseKeys.swift */,
 				E6385BDA1A0DD5DE00299C9C /* View Controllers */,
 				E65D527519EA3A73002BEDDE /* Main.storyboard */,
@@ -470,7 +470,7 @@
 				E6E3ABFA1A0E9B5300B0DCA1 /* DinnerTonightViewController.swift in Sources */,
 				E696049119EBD31600FD0885 /* LunchEventViewController.swift in Sources */,
 				E6FF58D019EA8A5D008124A5 /* CalendarViewController.swift in Sources */,
-				E69D925A1A0EECAA00A94B98 /* RequestTableViewCell.swift in Sources */,
+				E69D925A1A0EECAA00A94B98 /* BeerRequestTableViewCell.swift in Sources */,
 				E6E3ABFC1A0EC1F900B0DCA1 /* Util.swift in Sources */,
 				E65D52ED19EA3D41002BEDDE /* SignInViewController.swift in Sources */,
 				E6E590421A100E280002473E /* ParseKeys.swift in Sources */,

@@ -72,7 +72,7 @@ class BeerViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCellWithIdentifier(kCellIdentifier) as RequestTableViewCell
+        var cell = tableView.dequeueReusableCellWithIdentifier(kCellIdentifier) as BeerRequestTableViewCell
         cell.beerRequest = beerRequests[indexPath.row]
         cell.loadView()
         return cell

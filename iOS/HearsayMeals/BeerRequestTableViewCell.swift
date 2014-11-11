@@ -1,5 +1,5 @@
 //
-//  RequestTableViewCell.swift
+//  BeerRequestTableViewCell.swift
 //  HearsayMeals
 //
 //  Created by Mel Ludowise on 11/8/14.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class RequestTableViewCell: UITableViewCell {
+class BeerRequestTableViewCell: UITableViewCell {
 
     @IBOutlet weak var beerLabel: UILabel!
     @IBOutlet weak var voteButton: UIButton!
