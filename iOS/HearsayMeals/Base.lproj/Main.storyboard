@@ -841,7 +841,7 @@ Allergen Key: *Vegetarian, **Vegan, (G) Gluten Safe, (D) Dairy Safe, (N) Nut Saf
         <scene sceneID="6FL-lq-o2L">
             <objects>
                 <tableViewController id="dWM-4J-L6x" customClass="BeerViewController" customModule="HearsayMeals" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Uzv-Yj-eua">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Uzv-Yj-eua">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -966,11 +966,16 @@ Allergen Key: *Vegetarian, **Vegan, (G) Gluten Safe, (D) Dairy Safe, (N) Nut Saf
                                                 <action selector="onVoteButton:" destination="KUP-ZX-1PK" eventType="touchUpInside" id="LyY-mf-IZQ"/>
                                             </connections>
                                         </button>
+                                        <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" id="TCz-VU-8XO">
+                                            <rect key="frame" x="278" y="10" width="20" height="20"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        </activityIndicatorView>
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="beerLabel" destination="CRr-4A-iBa" id="E2H-vd-cCq"/>
                                     <outlet property="voteButton" destination="HLV-Xc-g0B" id="mzX-96-HpH"/>
+                                    <outlet property="votingActivityIndicator" destination="TCz-VU-8XO" id="YS7-XL-MdA"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
