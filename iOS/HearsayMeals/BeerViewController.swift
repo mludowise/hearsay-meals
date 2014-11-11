@@ -35,8 +35,6 @@ class BeerViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.registerClass(RequestTableViewCell.self, forCellReuseIdentifier: kCellIdentifier)
-        
         reportEmptyButton.selected = find(emptyKegReports, PFUser.currentUser().email) != nil
         
         kickedView.hidden = true
@@ -76,20 +74,7 @@ class BeerViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell = tableView.dequeueReusableCellWithIdentifier(kCellIdentifier) as RequestTableViewCell
-        var beerRequest = beerRequests[indexPath.row]
-        
-        println("loading beer \(beerRequest[kBeerRequestNameKey])")
-//        cell.beer = beerRequest[kBeerRequestNameKey] as String
-        
-        
-//        var query = PFQuery(className: kBeerVotesTableKey)
-//        query.whereKey(kBeerVotesBeerKey, equalTo: beerRequest.objectId)
-//        query.findObjectsInBackgroundWithBlock { (objects: [AnyObject]!, error: NSError!) -> Void in
-//            if (error == nil) {
-////                cell.votes = objects as [PFObject]
-//            }
-//        }
-        
+        cell.beerRequest = beerRequests[indexPath.row]
         cell.loadView()
         return cell
     }

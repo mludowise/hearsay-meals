@@ -10,40 +10,62 @@ import UIKit
 
 class RequestTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var beerLabel: UILabel?
-    @IBOutlet weak var voteButton: UIButton?
+    @IBOutlet weak var beerLabel: UILabel!
+    @IBOutlet weak var voteButton: UIButton!
     
-    var beer = ""
-    var votes : [String] = []
+    var beerRequest : PFObject?
+    private var votes : [PFObject] = []
     private var voted = false
     
     func loadView() {
-//        voteButton.setBackgroundImage(nil, forState: UIControlState.Selected)
-//        voteButton.layer.borderWidth = 1
-//        voteButton.layer.borderColor = voteButton.currentTitleColor.CGColor
-        
-        beerLabel?.text = beer
+        if (beerRequest != nil) {
+            beerLabel.text = beerRequest![kBeerRequestNameKey] as? String
+            
+            var query = PFQuery(className: kBeerVotesTableKey)
+            query.whereKey(kBeerVotesBeerKey, equalTo: beerRequest?.objectId)
+            query.whereKey(kBeerVotesUserKey, equalTo: PFUser.currentUser().objectId)
+            voted = query.findObjects().count > 0
+            
+            updateVotes()
+        } else {
+            voteButton.hidden = true
+        }
+    }
+    
+    private func updateVotes() {
+        var query = PFQuery(className: kBeerVotesTableKey)
+        query.whereKey(kBeerVotesBeerKey, equalTo: beerRequest?.objectId)
+        votes = query.findObjects() as [PFObject]
         
         var numVotesWithoutUser = votes.count
-        if (find(votes, PFUser.currentUser().email) != nil) {
-            voted = true
+        
+        if (voted) {
             numVotesWithoutUser--
         }
-        voteButton?.selected = voted
-        voteButton?.setTitle("+\(numVotesWithoutUser)", forState: UIControlState.Normal)
-        voteButton?.setTitle("+\(numVotesWithoutUser + 1)", forState: UIControlState.Selected)
+        
+        voteButton.selected = voted
+        voteButton.setTitle("+\(numVotesWithoutUser)", forState: UIControlState.Normal)
+        voteButton.setTitle("+\(numVotesWithoutUser + 1)", forState: UIControlState.Selected)
     }
     
     @IBAction func onVoteButton(sender: AnyObject) {
-        if (voted) {
-            var emailIndex = find(votes, PFUser.currentUser().email)!
-            votes.removeAtIndex(emailIndex)
-        } else {
-            votes.append(PFUser.currentUser().email)
+        var query = PFQuery(className: kBeerVotesTableKey)
+        query.whereKey(kBeerVotesBeerKey, equalTo: beerRequest?.objectId)
+        query.whereKey(kBeerVotesUserKey, equalTo: PFUser.currentUser().objectId)
+        var userVotes = query.findObjects() as [PFObject]
+        
+        if (voted) { // Remove user's vote for this beer
+            for userVote in userVotes {
+                userVote.deleteInBackground()
+            }
+        } else if (userVotes.count == 0) { // Add user's vote for beer
+            var userVote = PFObject(className: kBeerVotesTableKey)
+            userVote[kBeerVotesBeerKey] = beerRequest?.objectId
+            userVote[kBeerVotesUserKey] = PFUser.currentUser().objectId
+            userVote.save()
         }
         
         voted = !voted
-        voteButton?.selected = voted
+        updateVotes()
     }
-    
 }
