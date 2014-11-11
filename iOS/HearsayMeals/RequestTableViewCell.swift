@@ -52,6 +52,10 @@ class RequestTableViewCell: UITableViewCell {
         })
     }
     
+    private func updateVotesButton() {
+        
+    }
+    
     @IBAction func onVoteButton(sender: AnyObject) {
         // Check if user voted before clicking this button
         var voted = userVote != nil

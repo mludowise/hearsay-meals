@@ -142,11 +142,13 @@ class BeerViewController: UITableViewController {
     private func updateBeerRequests() {
         var beerRequestQuery = PFQuery(className: kBeerRequestTableKey)
         beerRequestQuery.whereKey(kBeerRequestInactiveKey, notEqualTo: true)
+        beerRequestQuery.orderByAscending(kCreatedAtKey)
         beerRequestQuery.findObjectsInBackgroundWithBlock { (objects: [AnyObject]!, error: NSError!) -> Void in
             if (error != nil) {
                 NSLog("%@", error)
             } else {
                 self.beerRequests = objects as [PFObject]!
+                
                 self.tableView.reloadData()
             }
         }
@@ -156,8 +158,29 @@ class BeerViewController: UITableViewController {
         var noteViewController = storyboard?.instantiateViewControllerWithIdentifier(kNoteViewControllerID) as NoteViewController
         noteViewController.title = "Request Beer"
         noteViewController.onDone = { (text: String) -> Void in
-            //            kegRequests.append(name: text, requests: [PFUser.currentUser().email])
-            self.tableView.reloadData()
+            
+            var beerRequest = PFObject(className: kBeerRequestTableKey)
+            beerRequest[kBeerRequestUserKey] = PFUser.currentUser().objectId
+            beerRequest[kBeerRequestNameKey] = text
+            beerRequest.saveInBackgroundWithBlock({ (b: Bool, error: NSError!) -> Void in
+                if (error != nil) {
+                    NSLog("%@", error)
+                } else {
+                    // User implicitly votes for beer
+                    var beerVote = PFObject(className: kBeerVotesTableKey)
+                    beerVote[kBeerVotesUserKey] = PFUser.currentUser().objectId
+                    beerVote[kBeerVotesBeerKey] = beerRequest.objectId
+                    beerVote.saveInBackground()
+                    
+                    // Update table
+                    self.beerRequests.append(beerRequest)
+                    self.tableView.beginUpdates()
+                    self.tableView.insertRowsAtIndexPaths([NSIndexPath(forItem: self.beerRequests.count-1, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Automatic)
+                    self.tableView.endUpdates()
+
+                }
+            })
+            
         }
         presentViewController(noteViewController, animated: true, completion: nil)
     }
