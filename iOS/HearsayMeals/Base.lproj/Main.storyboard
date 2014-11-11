@@ -236,7 +236,7 @@
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
                                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile" id="fI6-cQ-OPJ">
-                                                                    <rect key="frame" x="14" y="11" width="368" height="116.5"/>
+                                                                    <rect key="frame" x="14" y="11" width="688" height="185"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <userDefinedRuntimeAttributes>
                                                                         <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -1004,6 +1004,12 @@ Allergen Key: *Vegetarian, **Vegan, (G) Gluten Safe, (D) Dairy Safe, (N) Nut Saf
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Currently On Tap" id="hXk-ha-AcH"/>
+                    <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="1QC-za-Cnd">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <connections>
+                            <action selector="onRefreshTable:" destination="dWM-4J-L6x" eventType="valueChanged" id="uuR-2g-cfT"/>
+                        </connections>
+                    </refreshControl>
                     <connections>
                         <outlet property="currentKegLabel" destination="gGG-m0-Uqc" id="AeS-yy-EGJ"/>
                         <outlet property="emptyKegReportsLabel" destination="cDE-9T-eYd" id="aWr-rb-8IY"/>

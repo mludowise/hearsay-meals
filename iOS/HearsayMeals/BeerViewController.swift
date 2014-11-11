@@ -41,8 +41,26 @@ class BeerViewController: UITableViewController {
         headerView.frame.size.height -= kickedView.frame.height
         tableView.tableHeaderView = headerView
         
-        updateKeg(updateKegView)
-        updateBeerRequests()
+        updateKeg(updateKegKickedView)
+        updateBeerRequests(nil)
+    }
+    
+    @IBAction func onRefreshTable(sender: UIRefreshControl) {
+        var updatedKeg = false
+        var updatedRequests = false
+        updateKeg { () -> Void in
+            self.updateKegKickedView()
+            updatedKeg = true
+            if (updatedRequests) {
+                sender.endRefreshing()
+            }
+        }
+        updateBeerRequests { () -> Void in
+            updatedRequests = true
+            if (updatedKeg) {
+                sender.endRefreshing()
+            }
+        }
     }
     
     override func numberOfSectionsInTableView(tableView: UITableView?) -> Int {
@@ -85,7 +103,7 @@ class BeerViewController: UITableViewController {
         }
     }
     
-    private func updateKegView() {
+    private func updateKegKickedView() {
         // Scroll to the top of the view
         UIView.animateWithDuration(0.1, animations: { () -> Void in
             self.tableView.contentOffset.y = -self.tableView.contentInset.top
@@ -135,11 +153,11 @@ class BeerViewController: UITableViewController {
         keg?.saveInBackgroundWithBlock({ (b: Bool, error: NSError!) -> Void in
             self.reportEmptyActivityIndicator.stopAnimating()
             self.reportEmptyButton.selected = !self.reportEmptyButton.selected
-            self.updateKegView()
+            self.updateKegKickedView()
         })
     }
     
-    private func updateBeerRequests() {
+    private func updateBeerRequests(completion: (() -> Void)?) {
         var beerRequestQuery = PFQuery(className: kBeerRequestTableKey)
         beerRequestQuery.whereKey(kBeerRequestInactiveKey, notEqualTo: true)
         beerRequestQuery.orderByAscending(kCreatedAtKey)
@@ -148,8 +166,8 @@ class BeerViewController: UITableViewController {
                 NSLog("%@", error)
             } else {
                 self.beerRequests = objects as [PFObject]!
-                
                 self.tableView.reloadData()
+                completion?()
             }
         }
     }
