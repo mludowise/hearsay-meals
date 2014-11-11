@@ -27,7 +27,8 @@ class BeerViewController: UITableViewController {
     @IBOutlet weak var reportEmptyButton: UIButton!
     @IBOutlet weak var reportEmptyActivityIndicator: UIActivityIndicatorView!
     
-    private var beerRequests : [PFObject] = []
+    private var beerRequests = [PFObject]()
+    private var beerVotes = [String: [PFObject]]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,6 +42,7 @@ class BeerViewController: UITableViewController {
         
         updateKegReport()
         updateBeerRequests()
+        
     }
     
     override func numberOfSectionsInTableView(tableView: UITableView?) -> Int {
@@ -99,10 +101,28 @@ class BeerViewController: UITableViewController {
             if (error != nil) {
                 NSLog("%@", error)
             } else {
-                if (objects != nil) {
-                    self.beerRequests = objects as [PFObject]!
-                    self.tableView.reloadData()
-                }
+                self.beerRequests = objects as [PFObject]!
+                self.tableView.reloadData()
+                
+//                var queries : [PFQuery] = []
+//                for beerRequest in self.beerRequests {
+//                    self.beerVotes[beerRequest.objectId] = [PFObject]()
+//                    var query = PFQuery(className: kBeerVotesTableKey)
+//                    var s : String = beerRequest.objectId
+//                    query.whereKey(kBeerVotesBeerKey, equalTo: beerRequest.objectId)
+//                    queries.append(query)
+//                }
+//                var query = PFQuery.orQueryWithSubqueries(queries)
+//                query.findObjectsInBackgroundWithBlock({ (results: [AnyObject]!, error: NSError!) -> Void in
+//                    if (error != nil) {
+//                        NSLog("%@", error)
+//                    } else {
+//                        var votes = results as [PFObject]
+//                        for vote in votes {
+//                            self.beerVotes[vote[kBeerVotesBeerKey] as String]?.append(vote)
+//                        }
+//                    }
+//                })
             }
         }
     }

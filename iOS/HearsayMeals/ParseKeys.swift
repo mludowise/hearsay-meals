@@ -26,3 +26,5 @@ let kBeerVotesUserKey = "user_id"
 let kKegTableKey = "Keg"
 let kKegBeerNameKey = "beerName"
 let kKegKickedReportsKey = "kickedReports"
+
+let kCreatedAtKey = "createdAt"
