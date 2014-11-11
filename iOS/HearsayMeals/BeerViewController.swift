@@ -8,17 +8,14 @@
 
 import UIKit
 
-var emptyKegReports : [String] = []
-var kegRequests = [
-    (name: "Some kind of belgian", requests: ["mludowise@hearsaycorp.com"]),
-    (name: "Racer 5", requests: ["pcockwell@hearsaycorp.com"])
-]
+private let kCellIdentifier = "BeerRequestTableCell"
+private let kSectionHeaderIdentifier = "BeerRequestSectionHeader"
+private let kSectionFooterIdentifier = "BeerRequestSectionFooter"
 
-private let kCellIdentifier = "requestCell"
+var emptyKegReports : [String] = []
 
 class BeerViewController: UITableViewController {
     
-
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var headerSubView: UIView!
     
@@ -39,28 +36,9 @@ class BeerViewController: UITableViewController {
         
         kickedView.hidden = true
         headerSubView.frame.origin.y -= kickedView.frame.height
-        headerSubView.frame.size.height -= kickedView.frame.height
+        headerView.frame.size.height -= kickedView.frame.height
         updateKegReport()
         updateBeerRequests()
-    }
-    
-    private func updateBeerRequests() {
-        println("loading beer requests...")
-        var beerRequestQuery = PFQuery(className: kBeerRequestTableKey)
-        beerRequestQuery.whereKey(kBeerRequestInactiveKey, notEqualTo: true)
-        beerRequestQuery.findObjectsInBackgroundWithBlock { (objects: [AnyObject]!, error: NSError!) -> Void in
-            if (error != nil) {
-                NSLog("%@", error)
-            } else {
-                println("loading \(objects?.count) beer requests")
-                if (objects != nil) {
-                    self.beerRequests = objects as [PFObject]!
-                    self.tableView.reloadData()
-                } else {
-                    println("nil")
-                }
-            }
-        }
     }
     
     override func numberOfSectionsInTableView(tableView: UITableView?) -> Int {
@@ -77,6 +55,20 @@ class BeerViewController: UITableViewController {
         cell.beerRequest = beerRequests[indexPath.row]
         cell.loadView()
         return cell
+    }
+    
+    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        return tableView.dequeueReusableCellWithIdentifier(kSectionHeaderIdentifier) as UITableViewCell
+    }
+    
+    @IBAction func onMakeRequest(sender: AnyObject) {
+        var noteViewController = storyboard?.instantiateViewControllerWithIdentifier(kNoteViewControllerID) as NoteViewController
+        noteViewController.title = "Request Beer"
+        noteViewController.onDone = { (text: String) -> Void in
+//            kegRequests.append(name: text, requests: [PFUser.currentUser().email])
+            self.tableView.reloadData()
+        }
+        presentViewController(noteViewController, animated: true, completion: nil)
     }
     
     @IBAction func onReportEmpty(sender: AnyObject) {
@@ -99,27 +91,49 @@ class BeerViewController: UITableViewController {
         })
     }
     
+    private func updateBeerRequests() {
+        println("loading beer requests...")
+        var beerRequestQuery = PFQuery(className: kBeerRequestTableKey)
+        beerRequestQuery.whereKey(kBeerRequestInactiveKey, notEqualTo: true)
+        beerRequestQuery.findObjectsInBackgroundWithBlock { (objects: [AnyObject]!, error: NSError!) -> Void in
+            if (error != nil) {
+                NSLog("%@", error)
+            } else {
+                println("loading \(objects?.count) beer requests")
+                if (objects != nil) {
+                    self.beerRequests = objects as [PFObject]!
+                    self.tableView.reloadData()
+                } else {
+                    println("nil")
+                }
+            }
+        }
+    }
+    
     private func updateKegReport() {
+        // Calculate where to scroll to see the top of the view
+        var scrollViewOffset = (self.navigationController == nil) ? 0 : -self.navigationController!.navigationBar.frame.height
+        
         if (emptyKegReports.count > 0) {
             emptyKegReportsLabel.text = "Reported by \(emptyKegReports.count) people"
             if (kickedView.hidden) {
                 kickedView.hidden = false
                 UIView.animateWithDuration(0.2, animations: { () -> Void in
-                    self.tableView.contentOffset.y = 0
+                    self.tableView.contentOffset.y = scrollViewOffset
                 }, completion: { (Bool) -> Void in
                     UIView.animateWithDuration(0.5, animations: { () -> Void in
-                        self.headerSubView.frame.origin.y -= self.kickedView.frame.height
-                        self.headerSubView.frame.size.height -= self.kickedView.frame.height
+                        self.headerSubView.frame.origin.y += self.kickedView.frame.height
+                        self.headerView.frame.size.height += self.kickedView.frame.height
                     })
                 })
             }
         } else if (!kickedView.hidden) {
             UIView.animateWithDuration(0.2, animations: { () -> Void in
-                self.tableView.contentOffset.y = 0
+                self.tableView.contentOffset.y = scrollViewOffset
                 }, completion: { (Bool) -> Void in
                     UIView.animateWithDuration(0.5, animations: { () -> Void in
                         self.headerSubView.frame.origin.y -= self.kickedView.frame.height
-                        self.headerSubView.frame.size.height -= self.kickedView.frame.height
+                        self.headerView.frame.size.height -= self.kickedView.frame.height
                         }, completion: { (Bool) -> Void in
                             self.kickedView.hidden = true
                     })
@@ -127,13 +141,4 @@ class BeerViewController: UITableViewController {
         }
     }
     
-    @IBAction func onMakeRequest(sender: AnyObject) {
-        var noteViewController = storyboard?.instantiateViewControllerWithIdentifier(kNoteViewControllerID) as NoteViewController
-        noteViewController.title = "Request Beer"
-        noteViewController.onDone = { (text: String) -> Void in
-            kegRequests.append(name: text, requests: [PFUser.currentUser().email])
-            self.tableView.reloadData()
-        }
-        presentViewController(noteViewController, animated: true, completion: nil)
-    }
 }
