@@ -32,9 +32,10 @@ class RequestTableViewCell: UITableViewCell {
                 var votes = objects? as [PFObject]
                 self.voted = votes.count > 0
                 
-                self.updateVotes()
-                self.votingActivityIndicator.stopAnimating()
-                self.voteButton.hidden = false
+                self.updateVotes({ () -> Void in
+                    self.votingActivityIndicator.stopAnimating()
+                    self.voteButton.hidden = false
+                })
             })
             
         } else {
@@ -42,20 +43,22 @@ class RequestTableViewCell: UITableViewCell {
         }
     }
     
-    private func updateVotes() {
+    private func updateVotes(oncompletion: (() -> Void)?) {
         var query = PFQuery(className: kBeerVotesTableKey)
         query.whereKey(kBeerVotesBeerKey, equalTo: beerRequest?.objectId)
-        var votes = query.findObjects() as [PFObject]
-        
-        var numVotesWithoutUser = votes.count
-        
-        if (voted) {
-            numVotesWithoutUser--
+        query.findObjectsInBackgroundWithBlock { (objects: [AnyObject]!, error: NSError!) -> Void in
+            var votes = objects as [PFObject]
+            var numVotesWithoutUser = votes.count
+            
+            if (self.voted) {
+                numVotesWithoutUser--
+            }
+            
+            self.voteButton.selected = self.voted
+            self.voteButton.setTitle("+\(numVotesWithoutUser)", forState: UIControlState.Normal)
+            self.voteButton.setTitle("+\(numVotesWithoutUser + 1)", forState: UIControlState.Selected)
+            oncompletion?()
         }
-        
-        voteButton.selected = voted
-        voteButton.setTitle("+\(numVotesWithoutUser)", forState: UIControlState.Normal)
-        voteButton.setTitle("+\(numVotesWithoutUser + 1)", forState: UIControlState.Selected)
     }
     
     @IBAction func onVoteButton(sender: AnyObject) {
@@ -66,23 +69,30 @@ class RequestTableViewCell: UITableViewCell {
         query.whereKey(kBeerVotesBeerKey, equalTo: beerRequest?.objectId)
         query.whereKey(kBeerVotesUserKey, equalTo: PFUser.currentUser().objectId)
         query.findObjectsInBackgroundWithBlock { (objects: [AnyObject]!, error: NSError!) -> Void in
-            var userVotes = query.findObjects() as [PFObject]
+            var userVotes = objects as [PFObject]
+            
+            var oncompletion = {() -> Void in
+                self.voted = !self.voted
+                self.updateVotes({ () -> Void in
+                    self.votingActivityIndicator.stopAnimating()
+                    self.voteButton.hidden = false
+                })
+            }
             
             if (self.voted) { // Remove user's vote for this beer
                 for userVote in userVotes {
-                    userVote.deleteInBackground()
+                    userVote.deleteInBackgroundWithBlock({ (b: Bool, error: NSError!) -> Void in
+                        oncompletion()
+                    })
                 }
             } else if (userVotes.count == 0) { // Add user's vote for beer
                 var userVote = PFObject(className: kBeerVotesTableKey)
                 userVote[kBeerVotesBeerKey] = self.beerRequest?.objectId
                 userVote[kBeerVotesUserKey] = PFUser.currentUser().objectId
-                userVote.save()
+                userVote.saveInBackgroundWithBlock({ (b: Bool, error: NSError!) -> Void in
+                    oncompletion()
+                })
             }
-            
-            self.voted = !self.voted
-            self.updateVotes()
-            self.votingActivityIndicator.stopAnimating()
-            self.voteButton.hidden = false
         }
     }
 }
