@@ -8,109 +8,166 @@
 
 import UIKit
 
-var emptyKegReports : [String] = []
-var kegRequests = [
-    (name: "Some kind of belgian", requests: ["mludowise@hearsaycorp.com"]),
-    (name: "Racer 5", requests: ["pcockwell@hearsaycorp.com"])
-]
+private let kCellIdentifier = "BeerRequestTableCell"
+private let kSectionHeaderIdentifier = "BeerRequestSectionHeader"
+private let kSectionFooterIdentifier = "BeerRequestSectionFooter"
 
-private let kCellReuseIdentifier = "requestCell"
+//var emptyKegReports : [String] = []
 
-class BeerViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-
-    @IBOutlet weak var scrollView: UIScrollView!
+class BeerViewController: UITableViewController {
+    
+    @IBOutlet weak var headerView: UIView!
+    @IBOutlet weak var headerSubView: UIView!
     
     @IBOutlet weak var kickedView: UIView!
     @IBOutlet weak var emptyKegReportsLabel: UILabel!
     
-    @IBOutlet weak var mainView: UIView!
+    @IBOutlet weak var currentKegLabel: UILabel!
     
     @IBOutlet weak var reportEmptyButton: UIButton!
     @IBOutlet weak var reportEmptyActivityIndicator: UIActivityIndicatorView!
     
-    @IBOutlet weak var requestsTable: UITableView!
-    @IBOutlet weak var makeRequestView: UIView!
+    private var beerRequests = [PFObject]()
+    private var keg: PFObject?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        requestsTable.dataSource = self
-        
-        reportEmptyButton.selected = find(emptyKegReports, userEmail) != nil
         
         kickedView.hidden = true
-        mainView.frame.origin.y = 0
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        requestsTable.frame.size = requestsTable.contentSize
-        makeRequestView.frame.origin.y = requestsTable.frame.origin.y + requestsTable.frame.height + 20
-        mainView.frame.size.height = makeRequestView.frame.origin.y + makeRequestView.frame.height
+        currentKegLabel.text = ""
         
-        scrollView.contentSize = CGSize(width: scrollView.frame.width, height: mainView.frame.origin.y + mainView.frame.height)
+        headerSubView.frame.origin.y -= kickedView.frame.height
+        headerView.frame.size.height -= kickedView.frame.height
+        tableView.tableHeaderView = headerView
         
-        updateKegReport()
+        updateKeg(updateKegKickedView)
+        updateBeerRequests(nil)
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return kegRequests.count
+    @IBAction func onRefreshTable(sender: UIRefreshControl) {
+        var updatedKeg = false
+        var updatedRequests = false
+        updateKeg { () -> Void in
+            self.updateKegKickedView()
+            updatedKeg = true
+            if (updatedRequests) {
+                sender.endRefreshing()
+            }
+        }
+        updateBeerRequests { () -> Void in
+            updatedRequests = true
+            if (updatedKeg) {
+                sender.endRefreshing()
+            }
+        }
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCellWithIdentifier(kCellReuseIdentifier) as RequestTableViewCell
-        cell.beer = kegRequests[indexPath.row].name
-        cell.votes = kegRequests[indexPath.row].requests
+    override func numberOfSectionsInTableView(tableView: UITableView?) -> Int {
+        return 1
+    }
+    
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return beerRequests.count
+    }
+    
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        var cell = tableView.dequeueReusableCellWithIdentifier(kCellIdentifier) as BeerRequestTableViewCell
+        cell.beerRequest = beerRequests[indexPath.row]
         cell.loadView()
         return cell
     }
     
+    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        return tableView.dequeueReusableCellWithIdentifier(kSectionHeaderIdentifier) as UITableViewCell
+    }
+    
+    private func updateKeg(completion: (() -> Void)?) {
+        var query = PFQuery(className: kKegTableKey)
+        query.orderByDescending(kCreatedAtKey)
+        query.getFirstObjectInBackgroundWithBlock { (keg: PFObject!, error: NSError!) -> Void in
+            if (error != nil) {
+                NSLog("%@", error)
+            } else {
+                self.keg = keg
+                
+                // Update current keg
+                self.currentKegLabel.text = keg[kKegBeerNameKey] as? String
+                
+                // Disable report empty keg button if user already reported it
+                if (keg[kKegKickedReportsKey] != nil) {
+                    self.reportEmptyButton.selected = find(keg[kKegKickedReportsKey] as [String], PFUser.currentUser().objectId) != nil
+                }
+                completion?()
+            }
+        }
+    }
+    
+    private func updateKegKickedView() {
+        // Scroll to the top of the view
+        UIView.animateWithDuration(0.1, animations: { () -> Void in
+            self.tableView.contentOffset.y = -self.tableView.contentInset.top
+        })
+        
+        if ((keg?[kKegKickedReportsKey] as [String]).count > 0) {
+            // Flash empty report off and on to update it
+            UIView.animateWithDuration(0.1, animations: { () -> Void in
+                self.emptyKegReportsLabel.alpha = 0
+            }, completion: { (Bool) -> Void in
+                self.emptyKegReportsLabel.text = "Reported by \((self.keg?[kKegKickedReportsKey] as [String]).count) people"
+                UIView.animateWithDuration(0.4, delay: 0.1, options: nil, animations: { () -> Void in
+                    self.emptyKegReportsLabel.alpha = 1
+                }, completion: nil)
+            })
+            
+            // If we're not showing the kicked banner already, animate it
+            if (kickedView.hidden) {
+                kickedView.hidden = false
+                UIView.animateWithDuration(0.4, delay: 0.1, options: nil, animations: { () -> Void in
+                    self.headerSubView.frame.origin.y += self.kickedView.frame.height
+                    self.headerView.frame.size.height += self.kickedView.frame.height
+                    self.tableView.tableHeaderView = self.headerView
+                    }, completion: nil)
+            }
+        } else if (!kickedView.hidden) {
+            // If kicked banner isn't already hidden, hide it
+            UIView.animateWithDuration(0.4, delay: 0.1, options: nil, animations: { () -> Void in
+                self.headerSubView.frame.origin.y -= self.kickedView.frame.height
+                self.headerView.frame.size.height -= self.kickedView.frame.height
+                self.tableView.tableHeaderView = self.headerView
+                }, completion: { (Bool) -> Void in
+                    self.kickedView.hidden = true
+            })
+        }
+    }
+    
     @IBAction func onReportEmpty(sender: AnyObject) {
         reportEmptyActivityIndicator.startAnimating()
-        reportEmptyButton.setTitle(reportEmptyButton.currentTitle, forState: UIControlState.Disabled)
-        reportEmptyButton.enabled = false
-        delay(1, { () -> () in
+        
+        if (reportEmptyButton.selected) { // User already reported as kicked
+            keg?.removeObjectsInArray([PFUser.currentUser().objectId], forKey: kKegKickedReportsKey)
+        } else {
+            keg?.addUniqueObject(PFUser.currentUser().objectId, forKey: kKegKickedReportsKey)
+        }
+        
+        keg?.saveInBackgroundWithBlock({ (b: Bool, error: NSError!) -> Void in
             self.reportEmptyActivityIndicator.stopAnimating()
-            self.reportEmptyButton.enabled = true
             self.reportEmptyButton.selected = !self.reportEmptyButton.selected
-            
-            var index = find(emptyKegReports, userEmail)
-            if (index != nil) {
-                emptyKegReports.removeAtIndex(index!)
-            } else {
-                emptyKegReports.append(userEmail)
-            }
-            
-            self.updateKegReport()
+            self.updateKegKickedView()
         })
     }
     
-    private func updateKegReport() {
-        if (emptyKegReports.count > 0) {
-            emptyKegReportsLabel.text = "Reported by \(emptyKegReports.count) people"
-            if (kickedView.hidden) {
-                kickedView.hidden = false
-                kickedView.frame.origin.y = -kickedView.frame.height
-                UIView.animateWithDuration(0.2, animations: { () -> Void in
-                    self.scrollView.contentOffset.y = 0
-                }, completion: { (Bool) -> Void in
-                    UIView.animateWithDuration(0.5, animations: { () -> Void in
-                        self.kickedView.frame.origin.y = 0
-                        self.mainView.frame.origin.y = self.kickedView.frame.height
-                    })
-                })
-            }
-        } else {
-            if (!kickedView.hidden) {
-                UIView.animateWithDuration(0.2, animations: { () -> Void in
-                    self.scrollView.contentOffset.y = 0
-                    }, completion: { (Bool) -> Void in
-                        UIView.animateWithDuration(0.5, animations: { () -> Void in
-                            self.kickedView.frame.origin.y = -self.kickedView.frame.height
-                            self.mainView.frame.origin.y = 0
-                            }, completion: { (Bool) -> Void in
-                                self.kickedView.hidden = true
-                        })
-                })
+    private func updateBeerRequests(completion: (() -> Void)?) {
+        var beerRequestQuery = PFQuery(className: kBeerRequestTableKey)
+        beerRequestQuery.whereKey(kBeerRequestInactiveKey, notEqualTo: true)
+        beerRequestQuery.orderByAscending(kCreatedAtKey)
+        beerRequestQuery.findObjectsInBackgroundWithBlock { (objects: [AnyObject]!, error: NSError!) -> Void in
+            if (error != nil) {
+                NSLog("%@", error)
+            } else {
+                self.beerRequests = objects as [PFObject]!
+                self.tableView.reloadData()
+                completion?()
             }
         }
     }
@@ -119,11 +176,31 @@ class BeerViewController: UIViewController, UITableViewDataSource, UITableViewDe
         var noteViewController = storyboard?.instantiateViewControllerWithIdentifier(kNoteViewControllerID) as NoteViewController
         noteViewController.title = "Request Beer"
         noteViewController.onDone = { (text: String) -> Void in
-            kegRequests.append(name: text, requests: [userEmail])
-            self.requestsTable.beginUpdates()
-            self.requestsTable.insertRowsAtIndexPaths([NSIndexPath(forRow: kegRequests.count - 1, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Automatic)
-            self.requestsTable.endUpdates()
+            
+            var beerRequest = PFObject(className: kBeerRequestTableKey)
+            beerRequest[kBeerRequestUserKey] = PFUser.currentUser().objectId
+            beerRequest[kBeerRequestNameKey] = text
+            beerRequest.saveInBackgroundWithBlock({ (b: Bool, error: NSError!) -> Void in
+                if (error != nil) {
+                    NSLog("%@", error)
+                } else {
+                    // User implicitly votes for beer
+                    var beerVote = PFObject(className: kBeerVotesTableKey)
+                    beerVote[kBeerVotesUserKey] = PFUser.currentUser().objectId
+                    beerVote[kBeerVotesBeerKey] = beerRequest.objectId
+                    beerVote.saveInBackground()
+                    
+                    // Update table
+                    self.beerRequests.append(beerRequest)
+                    self.tableView.beginUpdates()
+                    self.tableView.insertRowsAtIndexPaths([NSIndexPath(forItem: self.beerRequests.count-1, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Automatic)
+                    self.tableView.endUpdates()
+
+                }
+            })
+            
         }
         presentViewController(noteViewController, animated: true, completion: nil)
     }
+    
 }
