@@ -969,7 +969,7 @@ Allergen Key: *Vegetarian, **Vegan, (G) Gluten Safe, (D) Dairy Safe, (N) Nut Saf
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="beerLabel" destination="CRr-4A-iBa" id="cPV-GK-t3j"/>
+                                    <outlet property="beerLabel" destination="CRr-4A-iBa" id="E2H-vd-cCq"/>
                                     <outlet property="voteButton" destination="HLV-Xc-g0B" id="mzX-96-HpH"/>
                                 </connections>
                             </tableViewCell>

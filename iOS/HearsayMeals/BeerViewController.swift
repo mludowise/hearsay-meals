@@ -14,9 +14,9 @@ var kegRequests = [
     (name: "Racer 5", requests: ["pcockwell@hearsaycorp.com"])
 ]
 
-private let kCellReuseIdentifier = "requestCell"
+private let kCellIdentifier = "requestCell"
 
-class BeerViewController: UITableViewController {//, UITableViewDataSource, UITableViewDelegate {
+class BeerViewController: UITableViewController {
     
 
     @IBOutlet weak var headerView: UIView!
@@ -35,22 +35,19 @@ class BeerViewController: UITableViewController {//, UITableViewDataSource, UITa
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.dataSource = self
-        
+        tableView.registerClass(RequestTableViewCell.self, forCellReuseIdentifier: kCellIdentifier)
         
         reportEmptyButton.selected = find(emptyKegReports, PFUser.currentUser().email) != nil
         
         kickedView.hidden = true
         headerSubView.frame.origin.y -= kickedView.frame.height
         headerSubView.frame.size.height -= kickedView.frame.height
-    }
-    
-    override func viewDidAppear(animated: Bool) {
         updateKegReport()
-//        updateBeerRequests()
+        updateBeerRequests()
     }
     
     private func updateBeerRequests() {
+        println("loading beer requests...")
         var beerRequestQuery = PFQuery(className: kBeerRequestTableKey)
         beerRequestQuery.whereKey(kBeerRequestInactiveKey, notEqualTo: true)
         beerRequestQuery.findObjectsInBackgroundWithBlock { (objects: [AnyObject]!, error: NSError!) -> Void in
@@ -60,10 +57,7 @@ class BeerViewController: UITableViewController {//, UITableViewDataSource, UITa
                 println("loading \(objects?.count) beer requests")
                 if (objects != nil) {
                     self.beerRequests = objects as [PFObject]!
-                    self.tableView.beginUpdates()
                     self.tableView.reloadData()
-//                    self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: kegRequests.count - 1, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Automatic)
-                    self.tableView.endUpdates()
                 } else {
                     println("nil")
                 }
@@ -71,16 +65,22 @@ class BeerViewController: UITableViewController {//, UITableViewDataSource, UITa
         }
     }
     
+    override func numberOfSectionsInTableView(tableView: UITableView?) -> Int {
+        return 1
+    }
+    
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return beerRequests.count
-        return kegRequests.count
+        println("beer count: \(beerRequests.count)")
+        return beerRequests.count
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCellWithIdentifier(kCellReuseIdentifier) as RequestTableViewCell
-        cell.beer = kegRequests[indexPath.row].name
-//        var beerRequest = beerRequests[indexPath.row]
+        var cell = tableView.dequeueReusableCellWithIdentifier(kCellIdentifier) as RequestTableViewCell
+        var beerRequest = beerRequests[indexPath.row]
+        
+        println("loading beer \(beerRequest[kBeerRequestNameKey])")
 //        cell.beer = beerRequest[kBeerRequestNameKey] as String
+        
         
 //        var query = PFQuery(className: kBeerVotesTableKey)
 //        query.whereKey(kBeerVotesBeerKey, equalTo: beerRequest.objectId)
@@ -89,7 +89,6 @@ class BeerViewController: UITableViewController {//, UITableViewDataSource, UITa
 ////                cell.votes = objects as [PFObject]
 //            }
 //        }
-        
         
         cell.loadView()
         return cell

@@ -10,8 +10,8 @@ import UIKit
 
 class RequestTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var beerLabel: UILabel!
-    @IBOutlet weak var voteButton: UIButton!
+    @IBOutlet weak var beerLabel: UILabel?
+    @IBOutlet weak var voteButton: UIButton?
     
     var beer = ""
     var votes : [String] = []
@@ -22,16 +22,16 @@ class RequestTableViewCell: UITableViewCell {
 //        voteButton.layer.borderWidth = 1
 //        voteButton.layer.borderColor = voteButton.currentTitleColor.CGColor
         
-        beerLabel.text = beer
+        beerLabel?.text = beer
         
         var numVotesWithoutUser = votes.count
         if (find(votes, PFUser.currentUser().email) != nil) {
             voted = true
             numVotesWithoutUser--
         }
-        voteButton.selected = voted
-        voteButton.setTitle("+\(numVotesWithoutUser)", forState: UIControlState.Normal)
-        voteButton.setTitle("+\(numVotesWithoutUser + 1)", forState: UIControlState.Selected)
+        voteButton?.selected = voted
+        voteButton?.setTitle("+\(numVotesWithoutUser)", forState: UIControlState.Normal)
+        voteButton?.setTitle("+\(numVotesWithoutUser + 1)", forState: UIControlState.Selected)
     }
     
     @IBAction func onVoteButton(sender: AnyObject) {
@@ -43,7 +43,7 @@ class RequestTableViewCell: UITableViewCell {
         }
         
         voted = !voted
-        voteButton.selected = voted
+        voteButton?.selected = voted
     }
     
 }
