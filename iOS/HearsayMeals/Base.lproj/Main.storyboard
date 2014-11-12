@@ -73,7 +73,7 @@
         <scene sceneID="IQS-fK-764">
             <objects>
                 <tableViewController id="sKU-1R-PRw" customClass="DinnerTonightViewController" customModule="HearsayMeals" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="69" sectionHeaderHeight="22" sectionFooterHeight="22" id="6fb-or-Fyb">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="69" sectionHeaderHeight="22" sectionFooterHeight="22" id="6fb-or-Fyb">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -266,6 +266,13 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="P1v-7n-UWd">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <connections>
+                            <action selector="onRefreshTable:" destination="sKU-1R-PRw" eventType="valueChanged" id="KGl-rS-eaC"/>
+                        </connections>
+                    </refreshControl>
                     <connections>
                         <outlet property="cancelOrderActivityIndicator" destination="Ki9-BI-hSs" id="MEv-iN-VPd"/>
                         <outlet property="cancelOrderButton" destination="knW-xY-4uB" id="HQ3-yM-m64"/>

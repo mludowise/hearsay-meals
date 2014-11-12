@@ -36,7 +36,7 @@ class DinnerTonightViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        getPeopleEatingTonight(true)
+        getPeopleEatingTonight(true, nil)
         updateTimer()
         NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "updateTimer", userInfo: nil, repeats: true)
     }
@@ -46,17 +46,7 @@ class DinnerTonightViewController: UITableViewController {
         
     }
     
-    func updateTimer() {
-        var timeToOrder = timeUntil(kTimeToOrderBy.hour, kTimeToOrderBy.minute, 0, kOfficeTimeZone)
-        self.countdownLabel.text = NSString(format: "%u:%02u:%02u", Int(timeToOrder) / 3600, Int(timeToOrder) / 60 % 60, Int(timeToOrder) % 60)
-        if (timeToOrder > kCountdownRedTime) {
-            self.countdownLabel.textColor = UIColor.blackColor()
-        } else {
-            self.countdownLabel.textColor = kCountdownRedColor
-        }
-    }
-    
-    private func getPeopleEatingTonight(updateOrderedView: Bool) {
+    private func getPeopleEatingTonight(updateOrderedView: Bool, completion: (() -> Void)?) {
         var today = todayAtZero(nil)
         var tomorrow = tomorrowAtZero(nil)
         
@@ -77,6 +67,7 @@ class DinnerTonightViewController: UITableViewController {
                 self.updateNumPeopleOrdered(self.dinnerOrdersTonight.count)
                 self.updateSpecialRequest()
                 self.tableView.reloadData()
+                completion?()
             }
         }
     }
@@ -117,6 +108,12 @@ class DinnerTonightViewController: UITableViewController {
             }
         }
         return cell
+    }
+    
+    @IBAction func onRefreshTable(sender: UIRefreshControl) {
+        getPeopleEatingTonight(true, completion: { () -> Void in
+            sender.endRefreshing()
+        })
     }
     
     @IBAction func onOrderButton(sender: AnyObject) {
@@ -206,6 +203,16 @@ class DinnerTonightViewController: UITableViewController {
     
     @IBAction func onCalendarButton(sender: AnyObject) {
         
+    }
+    
+    func updateTimer() {
+        var timeToOrder = timeUntil(kTimeToOrderBy.hour, kTimeToOrderBy.minute, 0, kOfficeTimeZone)
+        self.countdownLabel.text = NSString(format: "%u:%02u:%02u", Int(timeToOrder) / 3600, Int(timeToOrder) / 60 % 60, Int(timeToOrder) % 60)
+        if (timeToOrder > kCountdownRedTime) {
+            self.countdownLabel.textColor = UIColor.blackColor()
+        } else {
+            self.countdownLabel.textColor = kCountdownRedColor
+        }
     }
     
     private func displayDinnerOrdered(dinnerOrdered: Bool) {
