@@ -259,13 +259,7 @@
                             <outlet property="delegate" destination="sKU-1R-PRw" id="sT1-Yt-64U"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Dinner Tonight" id="Dtm-AT-yZ4">
-                        <barButtonItem key="rightBarButtonItem" image="calendar" id="jT8-yR-qVP">
-                            <connections>
-                                <action selector="onCalendarButton:" destination="sKU-1R-PRw" id="82R-z5-3IF"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Dinner Tonight" id="Dtm-AT-yZ4"/>
                     <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="P1v-7n-UWd">
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
@@ -1008,7 +1002,6 @@ Allergen Key: *Vegetarian, **Vegan, (G) Gluten Safe, (D) Dairy Safe, (N) Nut Saf
         <image name="beer" width="23" height="24"/>
         <image name="button-selected" width="11" height="11"/>
         <image name="button-unselected" width="11" height="11"/>
-        <image name="calendar" width="23" height="24"/>
         <image name="dinner" width="16" height="24"/>
         <image name="lunch" width="28" height="24"/>
     </resources>
