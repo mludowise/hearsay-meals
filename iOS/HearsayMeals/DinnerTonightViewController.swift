@@ -55,6 +55,7 @@ class DinnerTonightViewController: UITableViewController {
                     self.displayDinnerOrdered(self.userOrderIndex != nil)
                 }
                 self.updateNumPeopleOrdered(self.dinnerOrdersTonight.count)
+                self.updateSpecialRequest()
                 self.tableView.reloadData()
             }
         }
@@ -163,7 +164,24 @@ class DinnerTonightViewController: UITableViewController {
     }
     
     @IBAction func editSpecialRequest(sender: AnyObject) {
+        if (userOrderIndex == nil) {
+            return
+        }
         
+        var userDinnerOrder = self.dinnerOrdersTonight[self.userOrderIndex!]
+        
+        var noteViewController = storyboard?.instantiateViewControllerWithIdentifier(kNoteViewControllerID) as NoteViewController
+        noteViewController.titleBarText = "Dinner Request"
+        noteViewController.initialText = userDinnerOrder[kDinnerSpecialRequestKey] as? String
+        noteViewController.onDone = { (text: String) -> Void in
+            
+            userDinnerOrder[kDinnerSpecialRequestKey] = text
+            userDinnerOrder.saveInBackground()
+            
+            self.specialRequestLabel.text = text
+            self.specialRequestEmptyView.hidden = text != ""
+        }
+        presentViewController(noteViewController, animated: true, completion: nil)
     }
     
     @IBAction func onCalendarButton(sender: AnyObject) {
@@ -184,6 +202,15 @@ class DinnerTonightViewController: UITableViewController {
         }
         
         minimumPeopleMetLabel.hidden = numberOrdered >= kMinDinnerOrders
+    }
+    
+    private func updateSpecialRequest() {
+        var specialRequestText : String?
+        if (userOrderIndex != nil) {
+            specialRequestText = dinnerOrdersTonight[userOrderIndex!][kDinnerSpecialRequestKey] as? String
+            specialRequestLabel.text = specialRequestText?
+        }
+        specialRequestEmptyView.hidden = specialRequestText != nil
     }
     
     private func findUserOrder(orders: [PFObject]) -> Int? {

@@ -197,9 +197,6 @@
                                                                 <state key="normal" title="Make a Special Request">
                                                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                                 </state>
-                                                                <connections>
-                                                                    <action selector="editSpecialRequest:" destination="QWk-VJ-yEx" eventType="touchUpInside" id="X4i-7m-o8H"/>
-                                                                </connections>
                                                             </button>
                                                         </subviews>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -363,8 +360,7 @@
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                     <connections>
-                                                        <action selector="editSpecialRequest:" destination="sKU-1R-PRw" eventType="touchUpInside" id="0d4-uI-D8G"/>
-                                                        <action selector="editSpecialRequest:" destination="QWk-VJ-yEx" eventType="touchUpInside" id="c3M-nU-8qI"/>
+                                                        <action selector="editSpecialRequest:" destination="sKU-1R-PRw" eventType="touchUpInside" id="h23-hc-cG8"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
@@ -382,8 +378,7 @@
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                     <connections>
-                                                        <action selector="editSpecialRequest:" destination="QWk-VJ-yEx" eventType="touchUpInside" id="HhR-vY-7rG"/>
-                                                        <action selector="editSpecialRequest:" destination="sKU-1R-PRw" eventType="touchUpInside" id="Mqc-m6-9hh"/>
+                                                        <action selector="editSpecialRequest:" destination="sKU-1R-PRw" eventType="touchUpInside" id="hQs-uA-cg5"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
@@ -526,11 +521,18 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="ou7-qF-g64">
+                                <rect key="frame" x="10" y="74" width="300" height="267"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                             <navigationBar contentMode="scaleToFill" id="Fgh-ML-V05">
                                 <rect key="frame" x="0.0" y="20" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <items>
-                                    <navigationItem title="Title" id="sIH-Ok-hfX">
+                                    <navigationItem id="sIH-Ok-hfX">
                                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="okx-Ou-yQD">
                                             <connections>
                                                 <action selector="onCancel:" destination="hLI-wx-1yl" id="Dsx-9E-xqw"/>
@@ -549,19 +551,13 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </navigationBar>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="ou7-qF-g64">
-                                <rect key="frame" x="10" y="74" width="300" height="267"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
                         <outlet property="doneButton" destination="rBn-Ll-Rso" id="LBr-CA-sTE"/>
                         <outlet property="textArea" destination="ou7-qF-g64" id="pdB-Yp-nd8"/>
+                        <outlet property="titleBar" destination="sIH-Ok-hfX" id="TLf-uv-C1F"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="05B-Lk-4uQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -972,7 +968,7 @@ Allergen Key: *Vegetarian, **Vegan, (G) Gluten Safe, (D) Dairy Safe, (N) Nut Saf
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Lunch" id="S6X-qy-avX"/>
+                    <tabBarItem key="tabBarItem" title="Lunch" image="lunch" id="S6X-qy-avX"/>
                     <navigationItem key="navigationItem" title="Today, Oct 13" id="xDD-QE-qXm"/>
                     <connections>
                         <outlet property="menuTextView" destination="byi-2d-6hL" id="JSt-dF-jqP"/>

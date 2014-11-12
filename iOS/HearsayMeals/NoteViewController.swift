@@ -12,21 +12,21 @@ internal var kNoteViewControllerID = "noteViewController"
 
 class NoteViewController: UIViewController, UITextViewDelegate {
 
+    @IBOutlet weak var titleBar: UINavigationItem!
     @IBOutlet weak var textArea: UITextView!
     @IBOutlet weak var doneButton: UIBarButtonItem!
     
     var initialText : String?
     var onDone : ((String) -> Void)?
+    var titleBarText : String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if (initialText != nil) {
-            textArea.text = initialText
-        }
-        
+        textArea.text = initialText?
         textArea.delegate = self
         textArea.becomeFirstResponder()
+        titleBar.title = titleBarText?
     }
     
     func textViewDidChange(textView: UITextView) {

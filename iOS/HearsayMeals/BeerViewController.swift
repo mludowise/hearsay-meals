@@ -174,7 +174,7 @@ class BeerViewController: UITableViewController {
     
     @IBAction func onMakeRequest(sender: AnyObject) {
         var noteViewController = storyboard?.instantiateViewControllerWithIdentifier(kNoteViewControllerID) as NoteViewController
-        noteViewController.title = "Request Beer"
+        noteViewController.titleBarText = "Beer Request"
         noteViewController.onDone = { (text: String) -> Void in
             
             var beerRequest = PFObject(className: kBeerRequestTableKey)
