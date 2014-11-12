@@ -37,8 +37,8 @@ class DinnerTonightViewController: UITableViewController {
     }
     
     private func getPeopleEatingTonight(updateOrderedView: Bool) {
-        var today = todayAtZero(kOfficeTimeZone)
-        var tomorrow = tomorrowAtZero(kOfficeTimeZone)
+        var today = todayAtZero(nil)
+        var tomorrow = tomorrowAtZero(nil)
         
         var query = PFQuery(className: kDinnerTableKey)
         query.whereKey(kDinnerOrderDateKey, greaterThanOrEqualTo: today)
@@ -98,16 +98,12 @@ class DinnerTonightViewController: UITableViewController {
         return cell
     }
     
-//    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//        return tableView.dequeueReusableCellWithIdentifier(kSectionHeaderIdentifier) as UITableViewCell
-//    }
-    
     @IBAction func onOrderButton(sender: AnyObject) {
         orderButton.enabled = false
         orderButtonActivityIndicator.startAnimating()
         
         var userDinnerOrder = PFObject(className: kDinnerTableKey)
-        userDinnerOrder[kDinnerOrderDateKey] = todayAtZero(kOfficeTimeZone)
+        userDinnerOrder[kDinnerOrderDateKey] = todayAtZero(nil)
         userDinnerOrder[kDinnerUserIdKey] = PFUser.currentUser().objectId
         
         // Save locally

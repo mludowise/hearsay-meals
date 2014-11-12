@@ -20,10 +20,10 @@ func delay(delay:Double, closure:()->()) {
         dispatch_get_main_queue(), closure)
 }
 
-func dateTimeAtHour(date: NSDate, hour: Int, minute: Int, second: Int, timeZone: NSTimeZone, offsetYear: Int, offsetMonth: Int, offsetDay: Int, offsetHour: Int, offsetMinute: Int, offsetSecond:Int) -> NSDate {
+func dateTimeAtHour(date: NSDate, hour: Int, minute: Int, second: Int, timeZone: NSTimeZone?, offsetYear: Int, offsetMonth: Int, offsetDay: Int, offsetHour: Int, offsetMinute: Int, offsetSecond:Int) -> NSDate {
     var cal = NSCalendar(identifier: NSGregorianCalendar)!
     var dateComponents = cal.components(kCalendarComponentBits, fromDate: date)
-    dateComponents.timeZone = timeZone
+    dateComponents.timeZone = timeZone?
     var newDate = cal.dateBySettingHour(hour, minute: minute, second: second, ofDate: date, options: nil)!
     
     dateComponents = NSDateComponents()
@@ -36,10 +36,10 @@ func dateTimeAtHour(date: NSDate, hour: Int, minute: Int, second: Int, timeZone:
     return cal.dateByAddingComponents(dateComponents, toDate: newDate, options: nil)!
 }
 
-func todayAtZero(timeZone: NSTimeZone) -> NSDate {
+func todayAtZero(timeZone: NSTimeZone?) -> NSDate {
     return dateTimeAtHour(NSDate(), 0, 0, 0, timeZone, 0, 0, 0, 0, 0, 0)
 }
 
-func tomorrowAtZero(timeZone: NSTimeZone) -> NSDate {
+func tomorrowAtZero(timeZone: NSTimeZone?) -> NSDate {
     return dateTimeAtHour(NSDate(), 0, 0, 0, timeZone, 0, 0, 1, 0, 0, 0)
 }
