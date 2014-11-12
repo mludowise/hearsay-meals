@@ -9,6 +9,8 @@
 import UIKit
 
 private let kCellIdentifier = "DinnerPeopleTableCell"
+private let kCountdownRedColor = UIColor(red: 227.0 / 255, green: 26.0 / 255, blue: 28.0 / 255, alpha: 1)
+private let kCountdownRedTime = NSTimeInterval(15.0 * 60) // 15 minutes
 
 class DinnerTonightViewController: UITableViewController {
     
@@ -16,6 +18,7 @@ class DinnerTonightViewController: UITableViewController {
     @IBOutlet weak var timeLeftLabel: UILabel!
     @IBOutlet weak var orderButton: UIButton!
     @IBOutlet weak var orderButtonActivityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var countdownLabel: UILabel!
     
     @IBOutlet weak var orderedView: UIView!
     @IBOutlet weak var cancelOrderButton: UIButton!
@@ -34,6 +37,23 @@ class DinnerTonightViewController: UITableViewController {
         super.viewDidLoad()
         
         getPeopleEatingTonight(true)
+        updateTimer()
+        NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "updateTimer", userInfo: nil, repeats: true)
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+    }
+    
+    func updateTimer() {
+        var timeToOrder = timeUntil(kTimeToOrderBy.hour, kTimeToOrderBy.minute, 0, kOfficeTimeZone)
+        self.countdownLabel.text = NSString(format: "%u:%02u:%02u", Int(timeToOrder) / 3600, Int(timeToOrder) / 60 % 60, Int(timeToOrder) % 60)
+        if (timeToOrder > kCountdownRedTime) {
+            self.countdownLabel.textColor = UIColor.blackColor()
+        } else {
+            self.countdownLabel.textColor = kCountdownRedColor
+        }
     }
     
     private func getPeopleEatingTonight(updateOrderedView: Bool) {

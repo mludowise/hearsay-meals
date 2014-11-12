@@ -43,3 +43,8 @@ func todayAtZero(timeZone: NSTimeZone?) -> NSDate {
 func tomorrowAtZero(timeZone: NSTimeZone?) -> NSDate {
     return dateTimeAtHour(NSDate(), 0, 0, 0, timeZone, 0, 0, 1, 0, 0, 0)
 }
+
+func timeUntil(hour: Int, minute: Int, second: Int, inTimeZone: NSTimeZone?) -> NSTimeInterval {
+    var date = dateTimeAtHour(NSDate(), hour, minute, second, inTimeZone, 0, 0, 0, 0, 0, 0)
+    return date.timeIntervalSinceNow
+}
