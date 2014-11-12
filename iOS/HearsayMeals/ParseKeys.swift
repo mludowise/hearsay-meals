@@ -27,4 +27,10 @@ let kKegTableKey = "Keg"
 let kKegBeerNameKey = "beerName"
 let kKegKickedReportsKey = "kickedReports"
 
+let kDinnerTableKey = "Dinner"
+let kDinnerOrderDateKey = "order_date"
+let kDinnerUserIdKey = "user_id"
+let kDinnerSpecialRequestKey = "special_request"
+
 let kCreatedAtKey = "createdAt"
+let kObjectId = "objectId"
