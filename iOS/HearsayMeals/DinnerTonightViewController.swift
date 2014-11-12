@@ -24,7 +24,8 @@ class DinnerTonightViewController: UITableViewController {
     @IBOutlet weak var specialRequestFilledView: UIView!
     @IBOutlet weak var specialRequestLabel: UILabel!
     
-//    @IBOutlet weak var minimumPeopleMetLabel: UILabel!
+    @IBOutlet weak var numPeopleOrdered: UILabel!
+    @IBOutlet weak var minimumPeopleMetLabel: UILabel!
     
     var dinnerOrdersTonight = [PFObject]()
     var userOrderIndex : Int?
@@ -48,16 +49,17 @@ class DinnerTonightViewController: UITableViewController {
                 NSLog("%@", error)
             } else {
                 self.dinnerOrdersTonight = results as [PFObject]
-                self.userOrderIndex = self.findUserOrder()
+                self.userOrderIndex = self.findUserOrder(self.dinnerOrdersTonight)
                 
                 if (updateOrderedView) {
                     self.displayDinnerOrdered(self.userOrderIndex != nil)
                 }
+                self.updateNumPeopleOrdered(self.dinnerOrdersTonight.count)
                 self.tableView.reloadData()
             }
         }
     }
-
+    
     override func numberOfSectionsInTableView(tableView: UITableView?) -> Int {
         return 1
     }
@@ -127,6 +129,7 @@ class DinnerTonightViewController: UITableViewController {
             self.tableView.beginUpdates()
             self.tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: self.userOrderIndex!, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Automatic)
             self.tableView.endUpdates()
+            self.updateNumPeopleOrdered(self.dinnerOrdersTonight.count)
         })
     }
     
@@ -155,16 +158,11 @@ class DinnerTonightViewController: UITableViewController {
                 self.tableView.beginUpdates()
                 self.tableView.deleteRowsAtIndexPaths([NSIndexPath(forItem: self.userOrderIndex!, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Automatic)
                 self.tableView.endUpdates()
+                self.updateNumPeopleOrdered(self.dinnerOrdersTonight.count)
                 
                 self.userOrderIndex = nil
 
             })
-        }
-    }
-    
-    private func displayDinnerOrdered(dinnerOrdered: Bool) {
-        UIView.animateWithDuration(0.1) { () -> Void in
-            self.notOrderedView.alpha = dinnerOrdered ? 0 : 1
         }
     }
     
@@ -176,8 +174,24 @@ class DinnerTonightViewController: UITableViewController {
         
     }
     
-    private func findUserOrder() -> Int? {
-        for (i, order) in enumerate(dinnerOrdersTonight) {
+    private func displayDinnerOrdered(dinnerOrdered: Bool) {
+        UIView.animateWithDuration(0.1) { () -> Void in
+            self.notOrderedView.alpha = dinnerOrdered ? 0 : 1
+        }
+    }
+    
+    private func updateNumPeopleOrdered(numberOrdered: Int) {
+        if (numberOrdered == 1) {
+            numPeopleOrdered.text = "1 Person Ordered"
+        } else {
+            numPeopleOrdered.text = "\(numberOrdered) People Ordered"
+        }
+        
+        minimumPeopleMetLabel.hidden = numberOrdered >= kMinDinnerOrders
+    }
+    
+    private func findUserOrder(orders: [PFObject]) -> Int? {
+        for (i, order) in enumerate(orders) {
             if (order[kDinnerUserIdKey] as String == PFUser.currentUser().objectId) {
                 return i
             }

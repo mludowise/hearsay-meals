@@ -303,12 +303,12 @@
         <scene sceneID="IQS-fK-764">
             <objects>
                 <tableViewController id="sKU-1R-PRw" customClass="DinnerTonightViewController" customModule="HearsayMeals" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="69" sectionHeaderHeight="33" sectionFooterHeight="22" id="6fb-or-Fyb">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="69" sectionHeaderHeight="22" sectionFooterHeight="22" id="6fb-or-Fyb">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="4KU-Bc-nOp" userLabel="Header View">
-                            <rect key="frame" x="0.0" y="64" width="320" height="124"/>
+                            <rect key="frame" x="0.0" y="64" width="320" height="157"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <view contentMode="scaleToFill" id="2PL-5E-w4r" userLabel="Ordered View">
@@ -440,34 +440,24 @@
                                     </subviews>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </view>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0 People Ordered" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Shd-95-fqs">
+                                    <rect key="frame" x="15" y="134" width="153" height="18"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                    <color key="textColor" white="0.5" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Minimum Not Met" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="O4W-i8-B9i">
+                                    <rect key="frame" x="182" y="134" width="123" height="18"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                    <color key="textColor" red="0.89019607840000003" green="0.1019607843" blue="0.10980392160000001" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
                             </subviews>
                             <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         </view>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="BeerRequestSectionHeader" rowHeight="33" id="G0e-aE-EP3" userLabel="Section Header">
-                                <rect key="frame" x="0.0" y="54" width="320" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="G0e-aE-EP3" id="ERr-et-7TP">
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2 People Ordered" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Shd-95-fqs">
-                                            <rect key="frame" x="15" y="8" width="153" height="18"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                            <color key="textColor" white="0.5" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Minimum Not Met" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="O4W-i8-B9i">
-                                            <rect key="frame" x="182" y="8" width="123" height="18"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                            <color key="textColor" red="0.89019607840000003" green="0.1019607843" blue="0.10980392160000001" alpha="1" colorSpace="calibratedRGB"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                    <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="DinnerPeopleTableCell" id="JZ6-XO-mn4" customClass="DinnerPeopleTableCell" customModule="HearsayMeals" customModuleProvider="target">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="JZ6-XO-mn4" id="68d-tC-3zg">
@@ -512,7 +502,9 @@
                     <connections>
                         <outlet property="cancelOrderActivityIndicator" destination="Ki9-BI-hSs" id="MEv-iN-VPd"/>
                         <outlet property="cancelOrderButton" destination="knW-xY-4uB" id="HQ3-yM-m64"/>
+                        <outlet property="minimumPeopleMetLabel" destination="O4W-i8-B9i" id="Qzj-0R-vvt"/>
                         <outlet property="notOrderedView" destination="JW7-yy-3RS" id="X4V-1k-zRs"/>
+                        <outlet property="numPeopleOrdered" destination="Shd-95-fqs" id="RVM-na-g2Y"/>
                         <outlet property="orderButton" destination="F9c-11-EoW" id="ecl-gH-BrH"/>
                         <outlet property="orderButtonActivityIndicator" destination="eKP-R6-9lp" id="uPi-Zy-cBV"/>
                         <outlet property="orderedView" destination="2PL-5E-w4r" id="JXu-Vw-fWs"/>

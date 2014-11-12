@@ -8,7 +8,6 @@
 
 import Foundation
 
-let kOfficeTimeZone = NSTimeZone(name: "US/Pacific")!
 let kCalendarComponentBits = (NSCalendarUnit.CalendarUnitYear | NSCalendarUnit.CalendarUnitMonth | NSCalendarUnit.CalendarUnitDay
     | NSCalendarUnit.CalendarUnitHour | NSCalendarUnit.CalendarUnitMinute | NSCalendarUnit.CalendarUnitSecond)
 
