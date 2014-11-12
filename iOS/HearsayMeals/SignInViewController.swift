@@ -43,7 +43,8 @@ class SignInViewController: UIViewController, GPPSignInDelegate {
                 errorTextView.text = error?.localizedDescription
                 errorTextView.hidden = false
             } else {
-                var googlePlusUser = GPPSignIn.sharedInstance().googlePlusUser
+                var sharedInstance = GPPSignIn.sharedInstance()
+                var googlePlusUser = sharedInstance.googlePlusUser
                 
                 if (googlePlusUser.domain != kDomain) {
                     NSLog("Wrong domain: %@", googlePlusUser.domain)
@@ -66,6 +67,7 @@ class SignInViewController: UIViewController, GPPSignInDelegate {
                         parseUser.email = userEmail
                         parseUser.username = userEmail
                         parseUser[kUserNameKey] = name
+                        parseUser[kUserPictureKey] = googlePlusUser.image.url
                         
                         parseUser.signUpInBackgroundWithBlock({ (succeeded: Bool, error: NSError!) -> Void in
                             if (error == nil) {

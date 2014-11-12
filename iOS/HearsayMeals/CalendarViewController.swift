@@ -116,7 +116,7 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
         teamCalendarEvents = nil
         calendarEventsFetchError = nil
         
-        var startOfDay = dateTimeForTodayAtHour(0,minute: 0,second: 0,timeZone: NSTimeZone(name: "US/Pacific")!)
+        var startOfDay = GTLDateTime(date: todayAtZero(kOfficeTimeZone), timeZone: kOfficeTimeZone)
         var query = GTLQueryCalendar.queryForEventsListWithCalendarId(kTeamCalendarId) as GTLQueryCalendar
         query.minAccessRole = kGTLCalendarMinAccessRoleReader
         query.maxResults = 10;
@@ -154,24 +154,6 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
     
     @IBAction func onRefreshButton(sender: AnyObject) {
         fetchCalendarEvents()
-    }
-    
-    // Utility routine to make a GTLDateTime object for sometime today
-    func dateTimeForTodayAtHour(hour: Int, minute: Int, second: Int, timeZone: NSTimeZone) -> GTLDateTime {
-        let kComponentBits = (NSCalendarUnit.CalendarUnitYear | NSCalendarUnit.CalendarUnitMonth | NSCalendarUnit.CalendarUnitDay
-            | NSCalendarUnit.CalendarUnitHour | NSCalendarUnit.CalendarUnitMinute | NSCalendarUnit.CalendarUnitSecond);
-        
-        var cal = NSCalendar(identifier: NSGregorianCalendar)
-//        var dateComponents = cal.components(kComponentBits, fromDate:NSDate.date())
-        var dateComponents = cal?.components(kComponentBits, fromDate: NSDate())
-        dateComponents?.hour = hour
-        dateComponents?.minute = minute
-        dateComponents?.hour = hour
-        dateComponents?.second = second
-        dateComponents?.timeZone = timeZone
-        
-        var dateTime = GTLDateTime(dateComponents: dateComponents)
-        return dateTime;
     }
     
     func compareCalendarDates(event1: GTLCalendarEvent, event2: GTLCalendarEvent) -> Bool {
