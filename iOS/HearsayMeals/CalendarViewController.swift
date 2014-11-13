@@ -58,7 +58,7 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
     private var teamCalendarEvents : GTLCalendarEvents?
     private var calendarEventsServiceTicket : GTLServiceTicket?
     private var calendarEventsFetchError : NSError?
-    private var lunchCalendarEvents = [GTLCalendarEvent]()
+    private var lunchCalendarEvents : [(week: Int, events:[GTLCalendarEvent])] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,14 +67,18 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
         fetchCalendarEvents()
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func numberOfSectionsInTableView(tableView: UITableView?) -> Int {
         return lunchCalendarEvents.count
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return lunchCalendarEvents[section].events.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell = tableView.dequeueReusableCellWithIdentifier(kCellReuseIdentifier) as LunchCalendarTableCell
         
-        var event = lunchCalendarEvents[indexPath.row]
+        var event = lunchCalendarEvents[indexPath.section].events[indexPath.row]
         cell.loadItem(description: event.descriptionProperty, date: event.start.dateTime)
         
         return cell
@@ -84,30 +88,20 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
         var lunchEventViewController = storyboard?.instantiateViewControllerWithIdentifier(kLunchEventViewController) as LunchEventViewController!
-        lunchEventViewController.calendarEvent = lunchCalendarEvents[indexPath.row]
+        lunchEventViewController.calendarEvent = lunchCalendarEvents[indexPath.section].events[indexPath.row]
         self.navigationController?.pushViewController(lunchEventViewController, animated: true)
     }
-
-    func refreshTable(oldEvents:[GTLCalendarEvent]) {
-        var paths = [NSIndexPath]()
-        
-        tableView?.beginUpdates()
-        
-        // Deletes
-        for (index, event) in enumerate(oldEvents) {
-            paths.append(NSIndexPath(forRow: index, inSection: 0))
+    
+    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        var week = lunchCalendarEvents[section].week
+        switch (week) {
+        case 0:
+            return "This Week"
+        case 1:
+            return "Next Week"
+        default:
+            return "In \(week) Weeks"
         }
-        tableView?.deleteRowsAtIndexPaths(paths, withRowAnimation: UITableViewRowAnimation.Automatic)
-        
-        // Reloads
-        
-        // Inserts
-        paths = [NSIndexPath]()
-        for (index, event) in enumerate(lunchCalendarEvents) {
-            paths.append(NSIndexPath(forRow: index, inSection: 0))
-        }
-        tableView?.insertRowsAtIndexPaths(paths, withRowAnimation: UITableViewRowAnimation.Automatic)
-        tableView?.endUpdates()
     }
     
     func fetchCalendarEvents() {
@@ -116,6 +110,7 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
         teamCalendarEvents = nil
         calendarEventsFetchError = nil
         
+        var sunday = pastSunday(NSDate())
         var startOfDay = GTLDateTime(date: todayAtZero(kOfficeTimeZone), timeZone: kOfficeTimeZone)
         var inTwoWeeks = GTLDateTime(date: daysInFutureAtZero(14, kOfficeTimeZone), timeZone: kOfficeTimeZone)
         var query = GTLQueryCalendar.queryForEventsListWithCalendarId(kTeamCalendarId) as GTLQueryCalendar
@@ -134,7 +129,9 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
                 } else {
                     self.teamCalendarEvents = events as? GTLCalendarEvents
                     var oldEvents = self.lunchCalendarEvents
-                    self.lunchCalendarEvents = [GTLCalendarEvent]()
+                    self.lunchCalendarEvents = []
+                    
+                    var eventsGroupedByWeek = [Int: [GTLCalendarEvent]]()
                     
                     var items = self.teamCalendarEvents!.items()
                     for item in items as NSArray {
@@ -142,20 +139,39 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
                         
                         // Is a lunch item & not a generic "TBA" lunch
                         if (calendarEvent.summary == kLunchEventSummary && calendarEvent.descriptionProperty != kGenericLunchEventDescription) {
-                            self.lunchCalendarEvents.append(calendarEvent)
+                            var timeSinceSunday = calendarEvent.start.dateTime.date.timeIntervalSinceDate(sunday)
+                            
+                            var week = convertToWeeks(timeSinceSunday)
+                            if (eventsGroupedByWeek[week] == nil) {
+                                eventsGroupedByWeek[week] = []
+                            }
+                            eventsGroupedByWeek[week]!.append(calendarEvent)
                         }
                     }
                     
-                    self.lunchCalendarEvents.sort(self.isEventOrderedBefore)
+                    self.addLunchEvents(eventsGroupedByWeek)
                     
                     NSLog("Retreived %d lunch items.", self.lunchCalendarEvents.count)
-                    self.refreshTable(oldEvents)
+                    self.tableView?.reloadData()
                 }
         })
     }
     
     @IBAction func onRefreshButton(sender: AnyObject) {
         fetchCalendarEvents()
+    }
+    
+    private func addLunchEvents(eventsGroupedByWeek: [Int: [GTLCalendarEvent]]) {
+        var weeks = eventsGroupedByWeek.keys.array
+        weeks.sort({ (a: Int, b: Int) -> Bool in
+            return a < b
+        })
+        
+        for week in weeks {
+            var group = eventsGroupedByWeek[week]!
+            group.sort(self.isEventOrderedBefore)
+            self.lunchCalendarEvents += [(week: week as Int, events: group)]
+        }
     }
     
     private func isEventOrderedBefore(event1: GTLCalendarEvent, event2: GTLCalendarEvent) -> Bool {

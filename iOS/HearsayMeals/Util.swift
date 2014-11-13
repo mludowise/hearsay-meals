@@ -50,7 +50,7 @@ func daysInFutureAtZero(days: Int, timeZone: NSTimeZone?) -> NSDate {
 
 func pastSunday(date: NSDate) -> NSDate {
     var cal = NSCalendar(identifier: NSGregorianCalendar)!
-    var dateComponents = cal.components(kCalendarComponentBits, fromDate: date)
+    var dateComponents = cal.components(NSCalendarUnit.WeekdayCalendarUnit, fromDate: date)
     var weekday = dateComponents.weekday
     
     // Set to midnight
@@ -64,6 +64,10 @@ func pastSunday(date: NSDate) -> NSDate {
 func timeUntil(hour: Int, minute: Int, second: Int, inTimeZone: NSTimeZone?) -> NSTimeInterval {
     var date = dateTimeAtHour(NSDate(), hour, minute, second, inTimeZone, 0, 0, 0, 0, 0, 0)
     return date.timeIntervalSinceNow
+}
+
+func convertToWeeks(timeInterval: NSTimeInterval) -> Int {
+    return Int(timeInterval / 604800)    //(7 * 24 * 60 * 60)
 }
 
 func loadImageFromURL(url: String) -> UIImage? {
