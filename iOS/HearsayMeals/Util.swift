@@ -48,3 +48,15 @@ func timeUntil(hour: Int, minute: Int, second: Int, inTimeZone: NSTimeZone?) -> 
     var date = dateTimeAtHour(NSDate(), hour, minute, second, inTimeZone, 0, 0, 0, 0, 0, 0)
     return date.timeIntervalSinceNow
 }
+
+func loadImageFromURL(url: String) -> UIImage? {
+    var imageUrl = NSURL(string: url)
+    if (imageUrl == nil) {
+        return nil
+    }
+    var imageData = NSData(contentsOfURL: imageUrl!)
+    if (imageData == nil) {
+        return nil
+    }
+    return UIImage(data: imageData!)
+}

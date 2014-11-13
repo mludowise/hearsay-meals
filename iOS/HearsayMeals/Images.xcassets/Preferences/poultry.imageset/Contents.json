@@ -3,16 +3,17 @@
     {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "gluten-free.png"
+      "filename" : "poultry.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "gluten-free@2x.png"
+      "filename" : "poultry@2x.png"
     },
     {
       "idiom" : "universal",
-      "scale" : "3x"
+      "scale" : "3x",
+      "filename" : "poultry@3x.png"
     }
   ],
   "info" : {

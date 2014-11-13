@@ -91,20 +91,8 @@ class DinnerTonightViewController: UITableViewController {
                 NSLog("%@", error)
             } else {
                 var user = object as PFUser
-                
                 cell.nameLabel.text = user[kUserNameKey] as? String
-                
-                var imageUrl = NSURL(string: user[kUserPictureKey] as String)
-                if (imageUrl == nil) {
-                    return
-                }
-                var imageData = NSData(contentsOfURL: imageUrl!)
-                if (imageData == nil) {
-                    return
-                }
-                var image = UIImage(data: imageData!)
-
-                cell.profileImage.image = image
+                cell.profileImage.image = loadImageFromURL(user[kUserPictureKey] as String)
             }
         }
         return cell
