@@ -8,6 +8,8 @@
 
 import UIKit
 
+let kLunchEventViewController = "lunchEventViewController"
+
 class LunchEventViewController: UIViewController {
     @IBOutlet weak var menuTextView: UITextView?
     

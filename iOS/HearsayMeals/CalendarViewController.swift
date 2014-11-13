@@ -8,14 +8,18 @@
 
 import UIKit
 
+private let kCellReuseIdentifier = "LunchCalendarTableCell"
+
+
 private let kTeamCalendarId = "hearsaycorp.com_b8edk8m1lmv57al9uiferecurk@group.calendar.google.com"
 private let kLunchEventSummary = "Lunch Menu (see below)"
-private let kCellReuseIdentifier = "calendarCell"
+private let kGenericLunchEventDescription = "TBA"
+
 private var dateFormatter = NSDateFormatter()
 private let kDayFormat = "EEE"
 private let kDateFormat = "MMM d"
 
-class CalendarTableViewCell : UITableViewCell {
+class LunchCalendarTableCell : UITableViewCell {
     @IBOutlet var dayLabel: UILabel?
     @IBOutlet var dateLabel: UILabel?
     @IBOutlet var descriptionLabel1: UILabel?
@@ -58,12 +62,8 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        var nib = UINib(nibName: "CalendarTableViewCell", bundle: nil)
-        tableView?.registerNib(nib, forCellReuseIdentifier: kCellReuseIdentifier)
-        
         calendarService.shouldFetchNextPages = true
         calendarService.retryEnabled = true
-        // TODO: Uncomment this
         fetchCalendarEvents()
     }
     
@@ -72,7 +72,7 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell:CalendarTableViewCell = tableView.dequeueReusableCellWithIdentifier(kCellReuseIdentifier) as CalendarTableViewCell
+        var cell = tableView.dequeueReusableCellWithIdentifier(kCellReuseIdentifier) as LunchCalendarTableCell
         
         var event = lunchCalendarEvents[indexPath.row]
         cell.loadItem(description: event.descriptionProperty, date: event.start.dateTime)
@@ -83,7 +83,7 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
     func tableView(tableView: UITableView!, didSelectRowAtIndexPath indexPath: NSIndexPath!) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
-        var lunchEventViewController = storyboard?.instantiateViewControllerWithIdentifier("lunchEventViewController") as LunchEventViewController!
+        var lunchEventViewController = storyboard?.instantiateViewControllerWithIdentifier(kLunchEventViewController) as LunchEventViewController!
         lunchEventViewController.calendarEvent = lunchCalendarEvents[indexPath.row]
         self.navigationController?.pushViewController(lunchEventViewController, animated: true)
     }
@@ -135,17 +135,17 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
                     self.lunchCalendarEvents = [GTLCalendarEvent]()
                     
                     var items = self.teamCalendarEvents!.items()
-                    // TODO: Sort by date & filter out repeating events that are out of scope
-//                    items.sort({ (event1, event2) -> Bool in
-//                        return self.compareCalendarDates((event1 as GTLCalendarEvent), event2: (event2 as GTLCalendarEvent))
-//                    })
-                    
                     for item in items as NSArray {
                         var calendarEvent = item as GTLCalendarEvent
-                        if (calendarEvent.summary != nil && calendarEvent.summary == kLunchEventSummary) {
+                        
+                        // Is a lunch item & not a generic "TBA" lunch
+                        if (calendarEvent.summary == kLunchEventSummary && calendarEvent.descriptionProperty != kGenericLunchEventDescription) {
                             self.lunchCalendarEvents.append(calendarEvent)
                         }
                     }
+                    
+                    self.lunchCalendarEvents.sort(self.isEventOrderedBefore)
+                    
                     NSLog("Retreived %d lunch items.", self.lunchCalendarEvents.count)
                     self.refreshTable(oldEvents)
                 }
@@ -156,9 +156,9 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
         fetchCalendarEvents()
     }
     
-    func compareCalendarDates(event1: GTLCalendarEvent, event2: GTLCalendarEvent) -> Bool {
-        var date1 : NSDate = event1.start.dateTime.date
-        var date2 : NSDate = event2.start.dateTime.date
-        return date1.compare(date2) == NSComparisonResult.OrderedAscending
+    private func isEventOrderedBefore(event1: GTLCalendarEvent, event2: GTLCalendarEvent) -> Bool {
+        var date1 = event1.start.dateTime.date
+        var date2 = event2.start.dateTime.date
+        return date2.timeIntervalSinceDate(date1) > 0
     }
 }
