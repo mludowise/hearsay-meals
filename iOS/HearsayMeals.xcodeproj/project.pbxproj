@@ -11,7 +11,6 @@
 		E65A6B801A0EE1FE00976FD6 /* BeerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65A6B7F1A0EE1FE00976FD6 /* BeerViewController.swift */; };
 		E65D527219EA3A73002BEDDE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65D527119EA3A73002BEDDE /* AppDelegate.swift */; };
 		E65D527719EA3A73002BEDDE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E65D527519EA3A73002BEDDE /* Main.storyboard */; };
-		E65D527919EA3A73002BEDDE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E65D527819EA3A73002BEDDE /* Images.xcassets */; };
 		E65D527C19EA3A73002BEDDE /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = E65D527A19EA3A73002BEDDE /* LaunchScreen.xib */; };
 		E65D528819EA3A73002BEDDE /* HearsayMealsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65D528719EA3A73002BEDDE /* HearsayMealsTests.swift */; };
 		E65D52CB19EA3BA3002BEDDE /* GTLCalendar_Sources.m in Sources */ = {isa = PBXBuildFile; fileRef = E65D529519EA3BA3002BEDDE /* GTLCalendar_Sources.m */; };
@@ -47,6 +46,8 @@
 		E69D925A1A0EECAA00A94B98 /* BeerRequestTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E69D92591A0EECAA00A94B98 /* BeerRequestTableViewCell.swift */; };
 		E69D925C1A0F6C0D00A94B98 /* VoteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E69D925B1A0F6C0D00A94B98 /* VoteButton.swift */; };
 		E69F8F1819EA69020046DFCD /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E69F8F1719EA69020046DFCD /* SettingsViewController.swift */; };
+		E6D8AAA51A14B71000058A7F /* DietaryPreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D8AAA41A14B71000058A7F /* DietaryPreferencesViewController.swift */; };
+		E6DA59E51A14C3F90061AF20 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E6DA59E41A14C3F90061AF20 /* Images.xcassets */; };
 		E6E3ABFA1A0E9B5300B0DCA1 /* DinnerTonightViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E3ABF91A0E9B5300B0DCA1 /* DinnerTonightViewController.swift */; };
 		E6E3ABFC1A0EC1F900B0DCA1 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E3ABFB1A0EC1F900B0DCA1 /* Util.swift */; };
 		E6E590421A100E280002473E /* ParseKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E590411A100E280002473E /* ParseKeys.swift */; };
@@ -70,7 +71,6 @@
 		E65D527019EA3A73002BEDDE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E65D527119EA3A73002BEDDE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E65D527619EA3A73002BEDDE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		E65D527819EA3A73002BEDDE /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		E65D527B19EA3A73002BEDDE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		E65D528119EA3A73002BEDDE /* HearsayMealsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HearsayMealsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E65D528619EA3A73002BEDDE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -139,6 +139,8 @@
 		E69D92591A0EECAA00A94B98 /* BeerRequestTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeerRequestTableViewCell.swift; sourceTree = "<group>"; };
 		E69D925B1A0F6C0D00A94B98 /* VoteButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VoteButton.swift; sourceTree = "<group>"; };
 		E69F8F1719EA69020046DFCD /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		E6D8AAA41A14B71000058A7F /* DietaryPreferencesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DietaryPreferencesViewController.swift; sourceTree = "<group>"; };
+		E6DA59E41A14C3F90061AF20 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		E6E3ABF91A0E9B5300B0DCA1 /* DinnerTonightViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DinnerTonightViewController.swift; sourceTree = "<group>"; };
 		E6E3ABFB1A0EC1F900B0DCA1 /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		E6E590411A100E280002473E /* ParseKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseKeys.swift; sourceTree = "<group>"; };
@@ -189,6 +191,7 @@
 		E6385BDA1A0DD5DE00299C9C /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				E6D8AAA41A14B71000058A7F /* DietaryPreferencesViewController.swift */,
 				E65A6B7D1A0ECAB600976FD6 /* NoteViewController.swift */,
 				E6FF58CF19EA8A5D008124A5 /* CalendarViewController.swift */,
 				E65A6B7F1A0EE1FE00976FD6 /* BeerViewController.swift */,
@@ -236,8 +239,8 @@
 				E6385BDA1A0DD5DE00299C9C /* View Controllers */,
 				E65D527519EA3A73002BEDDE /* Main.storyboard */,
 				E696048B19EB0C6800FD0885 /* CalendarTableViewCell.xib */,
-				E65D527819EA3A73002BEDDE /* Images.xcassets */,
 				E65D527A19EA3A73002BEDDE /* LaunchScreen.xib */,
+				E6DA59E41A14C3F90061AF20 /* Images.xcassets */,
 				E65D526F19EA3A73002BEDDE /* Supporting Files */,
 				E69D925B1A0F6C0D00A94B98 /* VoteButton.swift */,
 			);
@@ -450,10 +453,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				E65D527719EA3A73002BEDDE /* Main.storyboard in Resources */,
+				E6DA59E51A14C3F90061AF20 /* Images.xcassets in Resources */,
 				E65D527C19EA3A73002BEDDE /* LaunchScreen.xib in Resources */,
 				E696048D19EB0C6800FD0885 /* CalendarTableViewCell.xib in Resources */,
 				E65D52E619EA3BA3002BEDDE /* GooglePlus.bundle in Resources */,
-				E65D527919EA3A73002BEDDE /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -475,6 +478,7 @@
 				E65A6B7E1A0ECAB600976FD6 /* NoteViewController.swift in Sources */,
 				E6E3ABFA1A0E9B5300B0DCA1 /* DinnerTonightViewController.swift in Sources */,
 				E696049119EBD31600FD0885 /* LunchEventViewController.swift in Sources */,
+				E6D8AAA51A14B71000058A7F /* DietaryPreferencesViewController.swift in Sources */,
 				E6FF58D019EA8A5D008124A5 /* CalendarViewController.swift in Sources */,
 				E66AB0981A13406F004EFAA2 /* Config.swift in Sources */,
 				E69D925A1A0EECAA00A94B98 /* BeerRequestTableViewCell.swift in Sources */,

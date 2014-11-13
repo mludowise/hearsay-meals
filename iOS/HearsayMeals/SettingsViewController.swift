@@ -29,9 +29,7 @@ class SettingsViewController: UITableViewController {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         var selectedCell = tableView.cellForRowAtIndexPath(indexPath)
         
-        if (selectedCell == dietaryRestrictionsCell) {
-            
-        } else if (selectedCell == signOutCell) {
+        if (selectedCell == signOutCell) {
             onSignOutButton()
         }
     }
