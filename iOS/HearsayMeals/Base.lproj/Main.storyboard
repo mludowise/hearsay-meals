@@ -4,7 +4,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
     </dependencies>
     <scenes>
-        <!--Settings-->
+        <!--Account-->
         <scene sceneID="UiA-6n-SXK">
             <objects>
                 <tableViewController id="5u9-1m-BiM" customClass="SettingsViewController" customModule="HearsayMeals" customModuleProvider="target" sceneMemberID="viewController">
@@ -13,44 +13,93 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        <view key="tableHeaderView" contentMode="scaleToFill" id="JER-Be-dSi">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="176"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <view contentMode="scaleToFill" id="tQE-e6-B0k" userLabel="Profile Container">
+                                    <rect key="frame" x="110" y="13" width="100" height="100"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" id="n9p-nf-wgL">
+                                            <rect key="frame" x="1" y="1" width="98" height="98"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="tjL-15-OTb">
+                                                    <rect key="frame" x="1" y="1" width="96" height="96"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                            <integer key="value" value="48"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
+                                                </imageView>
+                                            </subviews>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                    <integer key="value" value="49"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                        </view>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.90000000000000002" alpha="1" colorSpace="calibratedWhite"/>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                            <integer key="value" value="50"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
+                                </view>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="First Last" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Vj2-m7-0BZ">
+                                    <rect key="frame" x="8" y="115" width="304" height="21"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="email@hearsaycorp.com" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fPu-8K-Xp7">
+                                    <rect key="frame" x="8" y="134" width="304" height="16"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                    <color key="textColor" white="0.5" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                        </view>
                         <sections>
-                            <tableViewSection headerTitle="Google Account" id="nfW-2C-ysP">
+                            <tableViewSection id="zUT-Hj-7oT">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="3Lz-8c-8Ab">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="k8h-WD-YpN" style="IBUITableViewCellStyleDefault" id="QN4-Iy-KoX" userLabel="Dietary Restrictions Cell">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3Lz-8c-8Ab" id="70N-43-6Zd">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="QN4-Iy-KoX" id="gZo-u7-G5I">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="JJc-K9-eO7">
-                                                    <rect key="frame" x="8" y="7" width="60" height="30"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <state key="normal" title="Sign Out">
-                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                    </state>
-                                                    <connections>
-                                                        <action selector="onSignOutButton:" destination="5u9-1m-BiM" eventType="touchUpInside" id="Kcg-Lw-8z0"/>
-                                                    </connections>
-                                                </button>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Dietary Restrictions" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="k8h-WD-YpN">
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="rlE-Xh-n3u">
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection id="nfW-2C-ysP">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="0bV-F3-POu" style="IBUITableViewCellStyleDefault" id="rlE-Xh-n3u" userLabel="Sign Out Cell">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="rlE-Xh-n3u" id="Bue-wp-sCv">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Hub-iY-8HZ">
-                                                    <rect key="frame" x="8" y="7" width="106" height="30"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <state key="normal" title="Revoke Access">
-                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                    </state>
-                                                    <connections>
-                                                        <action selector="onRevokeAccessButton:" destination="5u9-1m-BiM" eventType="touchUpInside" id="4AA-ii-07C"/>
-                                                    </connections>
-                                                </button>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Sign Out" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="0bV-F3-POu">
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" red="0.89019607840000003" green="0.1019607843" blue="0.10980392160000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -62,12 +111,18 @@
                             <outlet property="delegate" destination="5u9-1m-BiM" id="H0h-GI-Qho"/>
                         </connections>
                     </tableView>
-                    <tabBarItem key="tabBarItem" title="Account" image="account" id="H24-gK-KhJ"/>
-                    <navigationItem key="navigationItem" title="Settings" id="WQa-9p-BOw"/>
+                    <navigationItem key="navigationItem" title="Account" id="WQa-9p-BOw"/>
+                    <connections>
+                        <outlet property="dietaryRestrictionsCell" destination="QN4-Iy-KoX" id="VGI-nP-4cN"/>
+                        <outlet property="emailLabel" destination="fPu-8K-Xp7" id="LCY-BK-Znq"/>
+                        <outlet property="nameLabel" destination="Vj2-m7-0BZ" id="7hE-sQ-lLf"/>
+                        <outlet property="profileImageView" destination="tjL-15-OTb" id="QAR-0h-Ee8"/>
+                        <outlet property="signOutCell" destination="rlE-Xh-n3u" id="1Zq-H4-twz"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XDC-Vw-qCS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-185" y="2654"/>
+            <point key="canvasLocation" x="347" y="2654"/>
         </scene>
         <!--Dinner Tonight-->
         <scene sceneID="IQS-fK-764">
@@ -336,7 +391,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="05B-Lk-4uQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="347" y="2475"/>
+            <point key="canvasLocation" x="879" y="2475"/>
         </scene>
         <!--Lunch Menu-->
         <scene sceneID="Cy9-46-d48">
@@ -675,7 +730,7 @@
                         <segue destination="NvD-w4-U7l" kind="relationship" relationship="viewControllers" id="rGh-lR-a9i"/>
                         <segue destination="tPO-PU-nBq" kind="relationship" relationship="viewControllers" id="qXE-IC-k8I"/>
                         <segue destination="kdR-3v-mAa" kind="relationship" relationship="viewControllers" id="RHV-zj-gHF"/>
-                        <segue destination="5u9-1m-BiM" kind="relationship" relationship="viewControllers" id="391-Hr-Iyz"/>
+                        <segue destination="CeV-MH-p31" kind="relationship" relationship="viewControllers" id="391-Hr-Iyz"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hsE-MB-Sp3" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -995,6 +1050,25 @@ Allergen Key: *Vegetarian, **Vegan, (G) Gluten Safe, (D) Dairy Safe, (N) Nut Saf
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CiV-eV-8aW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-185" y="1080"/>
+        </scene>
+        <!--Account-->
+        <scene sceneID="n5h-zv-3NX">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="CeV-MH-p31" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Account" image="account" id="H24-gK-KhJ"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="hR6-fl-TF2">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="5u9-1m-BiM" kind="relationship" relationship="rootViewController" id="BbT-9I-32O"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="DSL-LL-K26" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-185" y="2654"/>
         </scene>
     </scenes>
     <resources>

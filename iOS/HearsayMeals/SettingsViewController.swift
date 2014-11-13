@@ -10,23 +10,35 @@ import UIKit
 
 class SettingsViewController: UITableViewController {
 
+    @IBOutlet weak var profileImageView: UIImageView!
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var emailLabel: UILabel!
+    
+    @IBOutlet weak var dietaryRestrictionsCell: UITableViewCell!
+    @IBOutlet weak var signOutCell: UITableViewCell!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
+        nameLabel.text = PFUser.currentUser()[kUserNameKey] as? String
+        emailLabel.text = PFUser.currentUser().email
+        profileImageView.image = loadImageFromURL(PFUser.currentUser()[kUserPictureKey] as String)
     }
-
-    @IBAction func onSignOutButton(sender: AnyObject) {
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        var selectedCell = tableView.cellForRowAtIndexPath(indexPath)
+        
+        if (selectedCell == dietaryRestrictionsCell) {
+            
+        } else if (selectedCell == signOutCell) {
+            onSignOutButton()
+        }
+    }
+    
+    func onSignOutButton() {
         GPPSignIn.sharedInstance().signOut()
-        NSLog("Signed Out")
-//        openSignInModal(self)
-        dismissViewControllerAnimated(true, completion: nil)
-    }
-
-    @IBAction func onRevokeAccessButton(sender: AnyObject) {
         GPPSignIn.sharedInstance().disconnect()
-        NSLog("Access Revoked")
-//        openSignInModal(self)
         dismissViewControllerAnimated(true, completion: nil)
     }
 }
