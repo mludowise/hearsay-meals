@@ -44,6 +44,23 @@ func tomorrowAtZero(timeZone: NSTimeZone?) -> NSDate {
     return dateTimeAtHour(NSDate(), 0, 0, 0, timeZone, 0, 0, 1, 0, 0, 0)
 }
 
+func daysInFutureAtZero(days: Int, timeZone: NSTimeZone?) -> NSDate {
+    return dateTimeAtHour(NSDate(), 0, 0, 0, timeZone, 0, 0, days, 0, 0, 0)
+}
+
+func pastSunday(date: NSDate) -> NSDate {
+    var cal = NSCalendar(identifier: NSGregorianCalendar)!
+    var dateComponents = cal.components(kCalendarComponentBits, fromDate: date)
+    var weekday = dateComponents.weekday
+    
+    // Set to midnight
+    var newDate = cal.dateBySettingHour(0, minute: 0, second: 0, ofDate: date, options: nil)!
+    
+    dateComponents = NSDateComponents()
+    dateComponents.day = -weekday
+    return cal.dateByAddingComponents(dateComponents, toDate: newDate, options: nil)!
+}
+
 func timeUntil(hour: Int, minute: Int, second: Int, inTimeZone: NSTimeZone?) -> NSTimeInterval {
     var date = dateTimeAtHour(NSDate(), hour, minute, second, inTimeZone, 0, 0, 0, 0, 0, 0)
     return date.timeIntervalSinceNow

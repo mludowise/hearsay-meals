@@ -117,10 +117,12 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
         calendarEventsFetchError = nil
         
         var startOfDay = GTLDateTime(date: todayAtZero(kOfficeTimeZone), timeZone: kOfficeTimeZone)
+        var inTwoWeeks = GTLDateTime(date: daysInFutureAtZero(14, kOfficeTimeZone), timeZone: kOfficeTimeZone)
         var query = GTLQueryCalendar.queryForEventsListWithCalendarId(kTeamCalendarId) as GTLQueryCalendar
         query.minAccessRole = kGTLCalendarMinAccessRoleReader
-        query.maxResults = 10;
+        query.maxResults = 10
         query.timeMin = startOfDay
+        query.timeMax = inTwoWeeks
         calendarService.authorizer = GPPSignIn.sharedInstance().authentication
         calendarService.executeQuery(query,
             completionHandler: { (ticket:GTLServiceTicket!, events: AnyObject!, error:NSError!) in
