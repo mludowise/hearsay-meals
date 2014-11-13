@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		E65A6B7E1A0ECAB600976FD6 /* NoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65A6B7D1A0ECAB600976FD6 /* NoteViewController.swift */; };
 		E65A6B801A0EE1FE00976FD6 /* BeerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65A6B7F1A0EE1FE00976FD6 /* BeerViewController.swift */; };
+		E65B30931A14E1900066AC05 /* SwitchTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65B30921A14E1900066AC05 /* SwitchTableCell.swift */; };
 		E65D527219EA3A73002BEDDE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65D527119EA3A73002BEDDE /* AppDelegate.swift */; };
 		E65D527719EA3A73002BEDDE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E65D527519EA3A73002BEDDE /* Main.storyboard */; };
 		E65D527C19EA3A73002BEDDE /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = E65D527A19EA3A73002BEDDE /* LaunchScreen.xib */; };
@@ -67,6 +68,7 @@
 /* Begin PBXFileReference section */
 		E65A6B7D1A0ECAB600976FD6 /* NoteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteViewController.swift; sourceTree = "<group>"; };
 		E65A6B7F1A0EE1FE00976FD6 /* BeerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeerViewController.swift; sourceTree = "<group>"; };
+		E65B30921A14E1900066AC05 /* SwitchTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwitchTableCell.swift; sourceTree = "<group>"; };
 		E65D526C19EA3A73002BEDDE /* HearsayMeals.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HearsayMeals.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E65D527019EA3A73002BEDDE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E65D527119EA3A73002BEDDE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -236,6 +238,7 @@
 				E69D92591A0EECAA00A94B98 /* BeerRequestTableViewCell.swift */,
 				E69D2E531A1303ED004FAD77 /* DinnerPeopleTableCell.swift */,
 				E6E590411A100E280002473E /* ParseKeys.swift */,
+				E65B30921A14E1900066AC05 /* SwitchTableCell.swift */,
 				E6385BDA1A0DD5DE00299C9C /* View Controllers */,
 				E65D527519EA3A73002BEDDE /* Main.storyboard */,
 				E696048B19EB0C6800FD0885 /* CalendarTableViewCell.xib */,
@@ -477,6 +480,7 @@
 				E65A6B801A0EE1FE00976FD6 /* BeerViewController.swift in Sources */,
 				E65A6B7E1A0ECAB600976FD6 /* NoteViewController.swift in Sources */,
 				E6E3ABFA1A0E9B5300B0DCA1 /* DinnerTonightViewController.swift in Sources */,
+				E65B30931A14E1900066AC05 /* SwitchTableCell.swift in Sources */,
 				E696049119EBD31600FD0885 /* LunchEventViewController.swift in Sources */,
 				E6D8AAA51A14B71000058A7F /* DietaryPreferencesViewController.swift in Sources */,
 				E6FF58D019EA8A5D008124A5 /* CalendarViewController.swift in Sources */,

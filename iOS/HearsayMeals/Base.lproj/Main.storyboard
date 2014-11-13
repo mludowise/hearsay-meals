@@ -136,7 +136,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <sections>
-                            <tableViewSection headerTitle="The Basics" id="qyH-3W-u4x">
+                            <tableViewSection headerTitle="" id="qyH-3W-u4x">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" editingAccessoryType="checkmark" textLabel="Wfg-RR-DiK" imageView="quo-qw-tAU" style="IBUITableViewCellStyleDefault" id="pnO-Hh-W0n" userLabel="Omnivore">
                                         <autoresizingMask key="autoresizingMask"/>
@@ -208,9 +208,9 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="Restrictions" id="ouv-Ko-F73">
+                            <tableViewSection headerTitle="Other Restrictions" id="ouv-Ko-F73">
                                 <cells>
-                                    <tableViewCell tag="3" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" textLabel="SBr-HS-UZK" imageView="J8E-Lm-r3t" style="IBUITableViewCellStyleDefault" id="pIQ-rT-kpR" userLabel="Gluten" customClass="DietaryRestrictionTableCell" customModule="HearsayMeals" customModuleProvider="target">
+                                    <tableViewCell tag="3" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" textLabel="SBr-HS-UZK" imageView="J8E-Lm-r3t" style="IBUITableViewCellStyleDefault" id="pIQ-rT-kpR" userLabel="Gluten" customClass="SwitchTableCell" customModule="HearsayMeals" customModuleProvider="target">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="pIQ-rT-kpR" id="mN4-kA-w8R">
                                             <autoresizingMask key="autoresizingMask"/>
@@ -227,7 +227,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell tag="5" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" textLabel="w1c-i3-ewL" imageView="0lq-Ms-RGD" style="IBUITableViewCellStyleDefault" id="fqZ-Io-RlI" userLabel="Nuts" customClass="DietaryRestrictionTableCell" customModule="HearsayMeals" customModuleProvider="target">
+                                    <tableViewCell tag="5" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" textLabel="w1c-i3-ewL" imageView="0lq-Ms-RGD" style="IBUITableViewCellStyleDefault" id="fqZ-Io-RlI" userLabel="Nuts" customClass="SwitchTableCell" customModule="HearsayMeals" customModuleProvider="target">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fqZ-Io-RlI" id="glS-8Q-izM">
                                             <autoresizingMask key="autoresizingMask"/>
@@ -244,7 +244,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell tag="6" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" textLabel="Zgs-Gt-Yes" imageView="Lvu-Bc-4b6" style="IBUITableViewCellStyleDefault" id="cle-mf-DJV" userLabel="Soy" customClass="DietaryRestrictionTableCell" customModule="HearsayMeals" customModuleProvider="target">
+                                    <tableViewCell tag="6" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" textLabel="Zgs-Gt-Yes" imageView="Lvu-Bc-4b6" style="IBUITableViewCellStyleDefault" id="cle-mf-DJV" userLabel="Soy" customClass="SwitchTableCell" customModule="HearsayMeals" customModuleProvider="target">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="cle-mf-DJV" id="0uy-3K-zrA">
                                             <autoresizingMask key="autoresizingMask"/>
@@ -261,7 +261,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell tag="7" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" textLabel="PRS-7k-Evw" imageView="FNp-a7-iYR" style="IBUITableViewCellStyleDefault" id="PjF-cY-9LO" userLabel="Eggs" customClass="DietaryRestrictionTableCell" customModule="HearsayMeals" customModuleProvider="target">
+                                    <tableViewCell tag="7" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" textLabel="PRS-7k-Evw" imageView="FNp-a7-iYR" style="IBUITableViewCellStyleDefault" id="PjF-cY-9LO" userLabel="Eggs" customClass="SwitchTableCell" customModule="HearsayMeals" customModuleProvider="target">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="PjF-cY-9LO" id="DZE-sx-2YP">
                                             <autoresizingMask key="autoresizingMask"/>
@@ -278,7 +278,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell tag="8" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" textLabel="SbT-tg-92p" imageView="cQp-w6-EK9" style="IBUITableViewCellStyleDefault" id="bOJ-lf-B40" userLabel="Dairy" customClass="DietaryRestrictionTableCell" customModule="HearsayMeals" customModuleProvider="target">
+                                    <tableViewCell tag="8" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" textLabel="SbT-tg-92p" imageView="cQp-w6-EK9" style="IBUITableViewCellStyleDefault" id="bOJ-lf-B40" userLabel="Dairy" customClass="SwitchTableCell" customModule="HearsayMeals" customModuleProvider="target">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bOJ-lf-B40" id="dIj-A9-xFQ">
                                             <autoresizingMask key="autoresizingMask"/>
@@ -295,7 +295,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell tag="9" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" textLabel="n69-xv-rRb" imageView="kXW-xc-wPQ" style="IBUITableViewCellStyleDefault" id="F04-nO-oZc" userLabel="Shellfish" customClass="DietaryRestrictionTableCell" customModule="HearsayMeals" customModuleProvider="target">
+                                    <tableViewCell tag="9" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" textLabel="n69-xv-rRb" imageView="kXW-xc-wPQ" style="IBUITableViewCellStyleDefault" id="F04-nO-oZc" userLabel="Shellfish" customClass="SwitchTableCell" customModule="HearsayMeals" customModuleProvider="target">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="F04-nO-oZc" id="cZu-IO-NSs">
                                             <autoresizingMask key="autoresizingMask"/>
@@ -312,7 +312,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell tag="10" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" textLabel="5Lv-62-6jK" imageView="2BH-sR-a19" style="IBUITableViewCellStyleDefault" id="ixb-xM-sak" userLabel="Fish" customClass="DietaryRestrictionTableCell" customModule="HearsayMeals" customModuleProvider="target">
+                                    <tableViewCell tag="10" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" textLabel="5Lv-62-6jK" imageView="2BH-sR-a19" style="IBUITableViewCellStyleDefault" id="ixb-xM-sak" userLabel="Fish" customClass="SwitchTableCell" customModule="HearsayMeals" customModuleProvider="target">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ixb-xM-sak" id="LRf-lb-MJq">
                                             <autoresizingMask key="autoresizingMask"/>
@@ -329,7 +329,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell tag="11" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" textLabel="zQU-iB-bxS" imageView="iGf-ZY-504" style="IBUITableViewCellStyleDefault" id="rO2-5E-q7P" userLabel="Pork" customClass="DietaryRestrictionTableCell" customModule="HearsayMeals" customModuleProvider="target">
+                                    <tableViewCell tag="11" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" textLabel="zQU-iB-bxS" imageView="iGf-ZY-504" style="IBUITableViewCellStyleDefault" id="rO2-5E-q7P" userLabel="Pork" customClass="SwitchTableCell" customModule="HearsayMeals" customModuleProvider="target">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="rO2-5E-q7P" id="XYd-Hd-ORL">
                                             <autoresizingMask key="autoresizingMask"/>
@@ -346,7 +346,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell tag="12" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" textLabel="qo1-5s-cey" imageView="P3R-0T-zsx" style="IBUITableViewCellStyleDefault" id="fkb-pv-CAN" userLabel="Beef" customClass="DietaryRestrictionTableCell" customModule="HearsayMeals" customModuleProvider="target">
+                                    <tableViewCell tag="12" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" textLabel="qo1-5s-cey" imageView="P3R-0T-zsx" style="IBUITableViewCellStyleDefault" id="fkb-pv-CAN" userLabel="Beef" customClass="SwitchTableCell" customModule="HearsayMeals" customModuleProvider="target">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fkb-pv-CAN" id="8AH-Xa-okj">
                                             <autoresizingMask key="autoresizingMask"/>
@@ -363,7 +363,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell tag="13" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" textLabel="dun-ZX-85t" imageView="v8v-iL-mta" style="IBUITableViewCellStyleDefault" id="16i-oZ-sYc" userLabel="Lamb" customClass="DietaryRestrictionTableCell" customModule="HearsayMeals" customModuleProvider="target">
+                                    <tableViewCell tag="13" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" textLabel="dun-ZX-85t" imageView="v8v-iL-mta" style="IBUITableViewCellStyleDefault" id="16i-oZ-sYc" userLabel="Lamb" customClass="SwitchTableCell" customModule="HearsayMeals" customModuleProvider="target">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="16i-oZ-sYc" id="mwz-5c-CCe">
                                             <autoresizingMask key="autoresizingMask"/>
@@ -380,7 +380,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell tag="14" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" textLabel="Ss7-u1-bGR" imageView="zvO-fI-XJ8" style="IBUITableViewCellStyleDefault" id="g7z-VW-BJC" userLabel="Poultry" customClass="DietaryRestrictionTableCell" customModule="HearsayMeals" customModuleProvider="target">
+                                    <tableViewCell tag="14" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" textLabel="Ss7-u1-bGR" imageView="zvO-fI-XJ8" style="IBUITableViewCellStyleDefault" id="g7z-VW-BJC" userLabel="Poultry" customClass="SwitchTableCell" customModule="HearsayMeals" customModuleProvider="target">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="g7z-VW-BJC" id="dTG-R4-ejU">
                                             <autoresizingMask key="autoresizingMask"/>
@@ -1379,22 +1379,22 @@ Allergen Key: *Vegetarian, **Vegan, (G) Gluten Safe, (D) Dairy Safe, (N) Nut Saf
     </scenes>
     <resources>
         <image name="account" width="23" height="22"/>
-        <image name="beef" width="31" height="24"/>
+        <image name="beef" width="36" height="24"/>
         <image name="beer" width="23" height="24"/>
         <image name="button-selected" width="11" height="11"/>
         <image name="button-unselected" width="11" height="11"/>
-        <image name="dairy" width="33" height="24"/>
+        <image name="dairy" width="36" height="24"/>
         <image name="dinner" width="16" height="24"/>
-        <image name="eggs" width="29" height="24"/>
-        <image name="fish" width="35" height="24"/>
-        <image name="gluten" width="35" height="24"/>
-        <image name="lamb" width="33" height="24"/>
+        <image name="eggs" width="36" height="24"/>
+        <image name="fish" width="36" height="24"/>
+        <image name="gluten" width="36" height="24"/>
+        <image name="lamb" width="36" height="24"/>
         <image name="lunch" width="28" height="24"/>
-        <image name="nuts" width="31" height="24"/>
+        <image name="nuts" width="36" height="24"/>
         <image name="omnivore" width="24" height="24"/>
         <image name="pescetarian" width="24" height="24"/>
-        <image name="pork" width="35" height="24"/>
-        <image name="poultry" width="33" height="24"/>
+        <image name="pork" width="36" height="24"/>
+        <image name="poultry" width="36" height="24"/>
         <image name="shellfish" width="36" height="24"/>
         <image name="soy" width="36" height="24"/>
         <image name="vegan" width="24" height="24"/>

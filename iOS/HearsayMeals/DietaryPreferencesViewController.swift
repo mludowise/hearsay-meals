@@ -25,6 +25,7 @@ import UIKit
 13 = Lamb
 14 = Poultry
 */
+
 class DietaryPreferencesViewController: UITableViewController {
     
     @IBOutlet weak var omnivoreRow: UITableViewCell!
@@ -32,25 +33,25 @@ class DietaryPreferencesViewController: UITableViewController {
     @IBOutlet weak var vegetarianRow: UITableViewCell!
     @IBOutlet weak var veganRow: UITableViewCell!
     
-    @IBOutlet weak var glutenRow: DietaryRestrictionTableCell!
-    @IBOutlet weak var nutsRow: DietaryRestrictionTableCell!
-    @IBOutlet weak var soyRow: DietaryRestrictionTableCell!
+    @IBOutlet weak var glutenRow: SwitchTableCell!
+    @IBOutlet weak var nutsRow: SwitchTableCell!
+    @IBOutlet weak var soyRow: SwitchTableCell!
     
-    @IBOutlet weak var eggsRow: DietaryRestrictionTableCell!
-    @IBOutlet weak var dairyRow: DietaryRestrictionTableCell!
+    @IBOutlet weak var eggsRow: SwitchTableCell!
+    @IBOutlet weak var dairyRow: SwitchTableCell!
     
-    @IBOutlet weak var shellFishRow: DietaryRestrictionTableCell!
-    @IBOutlet weak var fishRow: DietaryRestrictionTableCell!
+    @IBOutlet weak var shellFishRow: SwitchTableCell!
+    @IBOutlet weak var fishRow: SwitchTableCell!
     
-    @IBOutlet weak var porkRow: DietaryRestrictionTableCell!
-    @IBOutlet weak var beefRow: DietaryRestrictionTableCell!
-    @IBOutlet weak var lambRow: DietaryRestrictionTableCell!
-    @IBOutlet weak var poultryRow: DietaryRestrictionTableCell!
+    @IBOutlet weak var porkRow: SwitchTableCell!
+    @IBOutlet weak var beefRow: SwitchTableCell!
+    @IBOutlet weak var lambRow: SwitchTableCell!
+    @IBOutlet weak var poultryRow: SwitchTableCell!
     
-    var allRestrictions = [DietaryRestrictionTableCell]()
-    var nonVeggieRestrictions = [DietaryRestrictionTableCell]()
-    var nonVeganRestrictions = [DietaryRestrictionTableCell]()
-    var nonPescRestrictions = [DietaryRestrictionTableCell]()
+    var allRestrictions = [SwitchTableCell]()
+    var nonVeggieRestrictions = [SwitchTableCell]()
+    var nonVeganRestrictions = [SwitchTableCell]()
+    var nonPescRestrictions = [SwitchTableCell]()
     var meatRestrictions = [UITableViewCell]()
     
     var selectedMeatRestriction: UITableViewCell!
@@ -111,7 +112,7 @@ class DietaryPreferencesViewController: UITableViewController {
                     preferencesToRemove.append(meatRestriction.tag)
                 }
             }
-
+            
             PFUser.currentUser().addUniqueObject(cell!.tag, forKey: kUserPreferencesKey)
             PFUser.currentUser().saveInBackgroundWithBlock({ (b: Bool, error: NSError!) -> Void in
                 PFUser.currentUser().removeObjectsInArray(preferencesToRemove, forKey: kUserPreferencesKey)
@@ -125,11 +126,40 @@ class DietaryPreferencesViewController: UITableViewController {
         selectedMeatRestriction?.accessoryType = UITableViewCellAccessoryType.None
         selectedMeatRestriction = cell
         selectedMeatRestriction.accessoryType = UITableViewCellAccessoryType.Checkmark
+//        disableRestrictionsFromMeat(cell)
     }
     
+    private func disableRestrictionsFromMeat(meatRestriction: UITableViewCell) {
+        if (meatRestriction == omnivoreRow) {
+            setEnableCells(nonVeganRestrictions, enabled: true)
+        } else if (meatRestriction == pescetarianRow) {
+            setEnableCells(nonPescRestrictions, enabled: false)
+        } else if (meatRestriction == vegetarianRow) {
+            setEnableCells(nonVeggieRestrictions, enabled: false)
+        } else if (meatRestriction == veganRow) {
+            setEnableCells(nonVeganRestrictions, enabled: false)
+        }
+    }
+    
+    private func setEnableCells(cells: [SwitchTableCell], enabled: Bool) {
+        for cell in cells {
+            if (enabled) {
+                cell.hidden = false
+                UIView.animateWithDuration(0.2, animations: { () -> Void in
+                    cell.alpha = 1
+                })
+            } else {
+                UIView.animateWithDuration(0.2, animations: { () -> Void in
+                    cell.alpha = 0
+                    }, completion: { (Bool) -> Void in
+                        cell.hidden = true
+                })
+            }
+        }
+    }
 }
 
-class DietaryRestrictionTableCell : UITableViewCell {
+class SwitchTableCell : UITableViewCell {
     var switchView = UISwitch()
     
     required init(coder aDecoder: NSCoder) {
