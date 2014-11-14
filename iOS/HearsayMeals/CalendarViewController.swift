@@ -52,6 +52,9 @@ class LunchCalendarTableCell : UITableViewCell {
 }
 
 class CalendarViewController: UITableViewController {
+    @IBOutlet weak var loadingView: UIView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    
     private var calendarService = GTLServiceCalendar()
     private var teamCalendarEvents : GTLCalendarEvents?
     private var calendarEventsServiceTicket : GTLServiceTicket?
@@ -62,7 +65,15 @@ class CalendarViewController: UITableViewController {
         super.viewDidLoad()
         calendarService.shouldFetchNextPages = true
         calendarService.retryEnabled = true
-        fetchCalendarEvents(nil)
+        fetchCalendarEvents { () -> Void in
+            self.tableView.tableHeaderView = nil
+//            UIView.animateWithDuration(1, animations: { () -> Void in
+//                self.activityIndicator.frame.origin.y = -self.loadingView.frame.height
+//                self.tableView.tableHeaderView?.frame.size.height = 0
+//            }, completion: { (Bool) -> Void in
+//                self.tableView.tableHeaderView = nil
+//            })
+        }
     }
     
     override func numberOfSectionsInTableView(tableView: UITableView?) -> Int {
@@ -150,9 +161,8 @@ class CalendarViewController: UITableViewController {
                     self.addLunchEvents(eventsGroupedByWeek)
                     
                     NSLog("Retreived %d lunch items.", self.lunchCalendarEvents.count)
-                    self.tableView?.reloadData()
-                    
                     completion?()
+                    self.tableView?.reloadData()
                 }
         })
     }
