@@ -16,10 +16,14 @@ class LunchEventViewController: UIViewController {
     private var dateFormatter = NSDateFormatter()
     private let kDayFormat = "EEE"
     
-    var calendarEvent : GTLCalendarEvent?
-
+    var lunchEvents : [GTLCalendarEvent]?
+    var currentLunchIndex = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        var calendarEvent = lunchEvents?[currentLunchIndex]
+        
         menuTextView?.text = calendarEvent == nil ? "" : calendarEvent?.descriptionProperty
         
         println("CalendarEvent: \(calendarEvent)")
@@ -32,6 +36,12 @@ class LunchEventViewController: UIViewController {
     }
     
     @IBAction func onSwipe(sender: UISwipeGestureRecognizer) {
+        // If there is another lunch menu to swipe through...
         
+        // Copy this view & fill in the data for the next menu item
+        
+        // Initialize at the off to the left or right of the screen
+        
+        // Animate both views moving together to the left or right
     }
 }
