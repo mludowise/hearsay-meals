@@ -20,11 +20,11 @@ private let kDayFormat = "EEE"
 private let kDateFormat = "MMM d"
 
 class LunchCalendarTableCell : UITableViewCell {
-    @IBOutlet var dayLabel: UILabel?
-    @IBOutlet var dateLabel: UILabel?
-    @IBOutlet var descriptionLabel1: UILabel?
-    @IBOutlet var descriptionLabel2: UILabel?
-    @IBOutlet var descriptionLabel3: UILabel?
+    @IBOutlet var dayLabel: UILabel!
+    @IBOutlet var dateLabel: UILabel!
+    @IBOutlet var descriptionLabel1: UILabel!
+    @IBOutlet var descriptionLabel2: UILabel!
+    @IBOutlet var descriptionLabel3: UILabel!
     
     func loadItem(#description: String, date: GTLDateTime) {
         // Breakup description onto 3 lines and filter out dietary restrictions
@@ -39,15 +39,15 @@ class LunchCalendarTableCell : UITableViewCell {
                 }
             }
         }
-        descriptionLabel1?.text = matches.count > 0 ? matches[0] : description
-        descriptionLabel2?.text = matches.count > 1 ? matches[1] : ""
-        descriptionLabel3?.text = matches.count > 2 ? matches[2] : ""
+        descriptionLabel1.text = matches.count > 0 ? matches[0] : description
+        descriptionLabel2.text = matches.count > 1 ? matches[1] : ""
+        descriptionLabel3.text = matches.count > 2 ? matches[2] : ""
         
         dateFormatter.dateFormat = kDateFormat
-        dateLabel?.text = dateFormatter.stringFromDate(date.date)
+        dateLabel.text = dateFormatter.stringFromDate(date.date)
         
         dateFormatter.dateFormat = kDayFormat
-        dayLabel?.text = dateFormatter.stringFromDate(date.date)
+        dayLabel.text = dateFormatter.stringFromDate(date.date)
     }
 }
 
@@ -62,7 +62,7 @@ class CalendarViewController: UITableViewController {
         super.viewDidLoad()
         calendarService.shouldFetchNextPages = true
         calendarService.retryEnabled = true
-        fetchCalendarEvents()
+        fetchCalendarEvents(nil)
     }
     
     override func numberOfSectionsInTableView(tableView: UITableView?) -> Int {
@@ -102,7 +102,7 @@ class CalendarViewController: UITableViewController {
         }
     }
     
-    func fetchCalendarEvents() {
+    func fetchCalendarEvents(completion: (() -> Void)?) {
         NSLog("Fetching calendar events")
         
         teamCalendarEvents = nil
@@ -151,12 +151,15 @@ class CalendarViewController: UITableViewController {
                     
                     NSLog("Retreived %d lunch items.", self.lunchCalendarEvents.count)
                     self.tableView?.reloadData()
+                    
+                    completion?()
                 }
         })
     }
-    
-    @IBAction func onRefreshButton(sender: AnyObject) {
-        fetchCalendarEvents()
+    @IBAction func onRefresh(sender: UIRefreshControl) {
+        fetchCalendarEvents { () -> Void in
+            sender.endRefreshing()
+        }
     }
     
     private func addLunchEvents(eventsGroupedByWeek: [Int: [GTLCalendarEvent]]) {

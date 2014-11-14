@@ -770,7 +770,13 @@
                             <outlet property="delegate" destination="NUd-de-TNw" id="ZhG-Dv-1Yz"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Lunch Menu" id="Wiz-JM-hBJ" customClass="Cal"/>
+                    <navigationItem key="navigationItem" title="Lunch Menu" id="Wiz-JM-hBJ"/>
+                    <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="qoO-P6-h6k">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <connections>
+                            <action selector="onRefresh:" destination="NUd-de-TNw" eventType="valueChanged" id="U0l-U8-CvQ"/>
+                        </connections>
+                    </refreshControl>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DTh-61-TiW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
