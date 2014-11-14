@@ -51,9 +51,7 @@ class LunchCalendarTableCell : UITableViewCell {
     }
 }
 
-class CalendarViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-    @IBOutlet weak var tableView: UITableView?
-    
+class CalendarViewController: UITableViewController {
     private var calendarService = GTLServiceCalendar()
     private var teamCalendarEvents : GTLCalendarEvents?
     private var calendarEventsServiceTicket : GTLServiceTicket?
@@ -67,15 +65,15 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
         fetchCalendarEvents()
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView?) -> Int {
+    override func numberOfSectionsInTableView(tableView: UITableView?) -> Int {
         return lunchCalendarEvents.count
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return lunchCalendarEvents[section].events.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell = tableView.dequeueReusableCellWithIdentifier(kCellReuseIdentifier) as LunchCalendarTableCell
         
         var event = lunchCalendarEvents[indexPath.section].events[indexPath.row]
@@ -84,7 +82,7 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
         return cell
     }
     
-    func tableView(tableView: UITableView!, didSelectRowAtIndexPath indexPath: NSIndexPath!) {
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
         var lunchEventViewController = storyboard?.instantiateViewControllerWithIdentifier(kLunchEventViewController) as LunchEventViewController!
@@ -92,7 +90,7 @@ class CalendarViewController: UIViewController, UITableViewDataSource, UITableVi
         self.navigationController?.pushViewController(lunchEventViewController, animated: true)
     }
     
-    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         var week = lunchCalendarEvents[section].week
         switch (week) {
         case 0:
