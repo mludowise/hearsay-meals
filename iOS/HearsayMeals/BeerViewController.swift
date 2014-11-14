@@ -9,7 +9,6 @@
 import UIKit
 
 private let kCellIdentifier = "BeerRequestTableCell"
-private let kSectionHeaderIdentifier = "BeerRequestSectionHeader"
 private let kSectionFooterIdentifier = "BeerRequestSectionFooter"
 
 //var emptyKegReports : [String] = []
@@ -63,6 +62,10 @@ class BeerViewController: UITableViewController {
         }
     }
     
+    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return "Beer Requests"
+    }
+    
     override func numberOfSectionsInTableView(tableView: UITableView?) -> Int {
         return 1
     }
@@ -76,10 +79,6 @@ class BeerViewController: UITableViewController {
         cell.beerRequest = beerRequests[indexPath.row]
         cell.loadView()
         return cell
-    }
-    
-    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return tableView.dequeueReusableCellWithIdentifier(kSectionHeaderIdentifier) as UITableViewCell
     }
     
     private func updateKeg(completion: (() -> Void)?) {

@@ -8,6 +8,8 @@
 
 import UIKit
 
+let kLunchEventViewController = "lunchEventViewController"
+
 class LunchEventViewController: UIViewController {
     @IBOutlet weak var menuTextView: UITextView?
     
@@ -19,7 +21,17 @@ class LunchEventViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         menuTextView?.text = calendarEvent == nil ? "" : calendarEvent?.descriptionProperty
+        
+        println("CalendarEvent: \(calendarEvent)")
+        println("start: \(calendarEvent?.start)")
+        println("datetime: \(calendarEvent?.start.dateTime)")
+        println("date: \(calendarEvent?.start.dateTime.date)")
+
         var start = calendarEvent?.start.dateTime.date
         self.title = NSDateFormatter.localizedStringFromDate(start!, dateStyle: NSDateFormatterStyle.FullStyle, timeStyle: NSDateFormatterStyle.NoStyle)
+    }
+    
+    @IBAction func onSwipe(sender: UISwipeGestureRecognizer) {
+        
     }
 }
