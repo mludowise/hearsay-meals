@@ -11,6 +11,10 @@ import Foundation
 let kCalendarComponentBits = (NSCalendarUnit.CalendarUnitYear | NSCalendarUnit.CalendarUnitMonth | NSCalendarUnit.CalendarUnitDay
     | NSCalendarUnit.CalendarUnitHour | NSCalendarUnit.CalendarUnitMinute | NSCalendarUnit.CalendarUnitSecond)
 
+private var dateFormatter = NSDateFormatter()
+private let kDayFormat = "EEE"
+private let kDateFormat = "MMM d"
+
 func delay(delay:Double, closure:()->()) {
     dispatch_after(
         dispatch_time(

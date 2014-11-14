@@ -41,6 +41,7 @@
 		E65D5D9919ECF315000B52DB /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E65D5D9819ECF315000B52DB /* Social.framework */; };
 		E65D5D9B19ECF362000B52DB /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E65D5D9A19ECF362000B52DB /* Accounts.framework */; };
 		E66AB0981A13406F004EFAA2 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66AB0971A13406F004EFAA2 /* Config.swift */; };
+		E690BACE1A1592A9007C10A6 /* LunchCalendarTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E690BACD1A1592A9007C10A6 /* LunchCalendarTableCell.swift */; };
 		E696049119EBD31600FD0885 /* LunchEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E696049019EBD31600FD0885 /* LunchEventViewController.swift */; };
 		E69D2E541A1303ED004FAD77 /* DinnerPeopleTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E69D2E531A1303ED004FAD77 /* DinnerPeopleTableCell.swift */; };
 		E69D925A1A0EECAA00A94B98 /* BeerRequestTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E69D92591A0EECAA00A94B98 /* BeerRequestTableViewCell.swift */; };
@@ -134,6 +135,7 @@
 		E65D5D9819ECF315000B52DB /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		E65D5D9A19ECF362000B52DB /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		E66AB0971A13406F004EFAA2 /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		E690BACD1A1592A9007C10A6 /* LunchCalendarTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LunchCalendarTableCell.swift; sourceTree = "<group>"; };
 		E696049019EBD31600FD0885 /* LunchEventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LunchEventViewController.swift; sourceTree = "<group>"; };
 		E69D2E531A1303ED004FAD77 /* DinnerPeopleTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DinnerPeopleTableCell.swift; sourceTree = "<group>"; };
 		E69D92591A0EECAA00A94B98 /* BeerRequestTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeerRequestTableViewCell.swift; sourceTree = "<group>"; };
@@ -235,6 +237,7 @@
 				E66AB0971A13406F004EFAA2 /* Config.swift */,
 				E69D92591A0EECAA00A94B98 /* BeerRequestTableViewCell.swift */,
 				E69D2E531A1303ED004FAD77 /* DinnerPeopleTableCell.swift */,
+				E690BACD1A1592A9007C10A6 /* LunchCalendarTableCell.swift */,
 				E6E590411A100E280002473E /* ParseKeys.swift */,
 				E65B30921A14E1900066AC05 /* SwitchTableCell.swift */,
 				E6385BDA1A0DD5DE00299C9C /* View Controllers */,
@@ -490,6 +493,7 @@
 				E65D527219EA3A73002BEDDE /* AppDelegate.swift in Sources */,
 				E69F8F1819EA69020046DFCD /* SettingsViewController.swift in Sources */,
 				E69D2E541A1303ED004FAD77 /* DinnerPeopleTableCell.swift in Sources */,
+				E690BACE1A1592A9007C10A6 /* LunchCalendarTableCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

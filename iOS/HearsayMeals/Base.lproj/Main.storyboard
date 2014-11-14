@@ -772,7 +772,6 @@
                                     <outlet property="descriptionLabel1" destination="wvN-Pk-M4R" id="Rpz-H7-fBH"/>
                                     <outlet property="descriptionLabel2" destination="mN9-Dh-xc6" id="8hC-Kw-oIi"/>
                                     <outlet property="descriptionLabel3" destination="Pfz-pO-Cka" id="LZK-wo-qD5"/>
-                                    <segue destination="3vs-hF-ll7" kind="push" id="LjY-TE-Sj8"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -877,6 +876,11 @@ Allergen Key: *Vegetarian, **Vegan, (G) Gluten Safe, (D) Dairy Safe, (N) Nut Saf
                             </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="Ppp-gw-5bP" appends="YES" id="JmK-nl-EX4"/>
+                            <outletCollection property="gestureRecognizers" destination="Rix-sg-wgr" appends="YES" id="4di-7t-qKH"/>
+                        </connections>
                     </view>
                     <tabBarItem key="tabBarItem" title="Lunch" image="lunch" id="S6X-qy-avX"/>
                     <navigationItem key="navigationItem" title="Today, Oct 13" id="xDD-QE-qXm"/>
@@ -885,6 +889,16 @@ Allergen Key: *Vegetarian, **Vegan, (G) Gluten Safe, (D) Dairy Safe, (N) Nut Saf
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="byU-Gb-fE2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <swipeGestureRecognizer direction="right" id="Ppp-gw-5bP" userLabel="Swipe Right">
+                    <connections>
+                        <action selector="onSwipe:" destination="3vs-hF-ll7" id="r0w-Ds-UyT"/>
+                    </connections>
+                </swipeGestureRecognizer>
+                <swipeGestureRecognizer direction="left" id="Rix-sg-wgr" userLabel="Swipe Left">
+                    <connections>
+                        <action selector="onSwipe:" destination="3vs-hF-ll7" id="S7W-EE-06L"/>
+                    </connections>
+                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="897" y="359"/>
         </scene>
