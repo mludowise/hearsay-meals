@@ -211,9 +211,9 @@ class DinnerTonightViewController: UITableViewController {
     
     private func updateNumPeopleOrdered(numberOrdered: Int) {
         if (numberOrdered == 1) {
-            numPeopleOrdered.text = "1 Person Ordered"
+            numPeopleOrdered.text = "1 Person Ordered".uppercaseString
         } else {
-            numPeopleOrdered.text = "\(numberOrdered) People Ordered"
+            numPeopleOrdered.text = "\(numberOrdered) People Ordered".uppercaseString
         }
         
         minimumPeopleMetLabel.hidden = numberOrdered >= kMinDinnerOrders
