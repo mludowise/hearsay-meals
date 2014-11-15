@@ -790,6 +790,7 @@
                     <connections>
                         <outlet property="activityIndicator" destination="8Rw-y3-oF8" id="oEE-6Y-Vmo"/>
                         <outlet property="loadingView" destination="v05-eu-9MP" id="66H-bh-yZe"/>
+                        <segue destination="3vs-hF-ll7" kind="push" id="nSw-vi-BLG"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DTh-61-TiW" userLabel="First Responder" sceneMemberID="firstResponder"/>

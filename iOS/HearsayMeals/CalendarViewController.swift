@@ -27,6 +27,10 @@ class CalendarViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Back button on the next viewController should have no title
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: UIBarButtonItemStyle.Plain, target: self, action: "back")
+        
         calendarService.shouldFetchNextPages = true
         calendarService.retryEnabled = true
         fetchCalendarEvents { () -> Void in

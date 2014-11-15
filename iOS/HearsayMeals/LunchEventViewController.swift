@@ -9,7 +9,7 @@
 import UIKit
 
 let kLunchEventViewController = "lunchEventViewController"
-private let kDayFormat = "EEE"
+private let kDateFormat = "EEEE, MMM d"
 
 class LunchEventViewController: UIViewController {
     @IBOutlet weak var menuView: UIView!
@@ -33,16 +33,19 @@ class LunchEventViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        dateFormatter.dateFormat = kDateFormat
         updateView()
+    }
+    
+    private func updateTitle() {
+        var calendarEvent = lunchEvents[currentLunchIndex]
+        var start = calendarEvent.start.dateTime.date
+        title = dateFormatter.stringFromDate(start)
     }
     
     private func updateView() {
         var calendarEvent = lunchEvents[currentLunchIndex]
-        
         menuTextView.text = calendarEvent.descriptionProperty
-        
-        var start = calendarEvent.start.dateTime.date
-        self.title = NSDateFormatter.localizedStringFromDate(start, dateStyle: NSDateFormatterStyle.FullStyle, timeStyle: NSDateFormatterStyle.NoStyle)
     }
     
     private func createMenuViewCopy(calendarEvent: GTLCalendarEvent) -> UIView {
@@ -71,9 +74,8 @@ class LunchEventViewController: UIViewController {
             }
         }
         
-        
-        
         if (sender.state != UIGestureRecognizerState.Ended) {
+            var menuOffset = CGFloat(0)
             
             // If there's another calendar event
             if (nextIndex != nil) {
@@ -84,15 +86,25 @@ class LunchEventViewController: UIViewController {
                 } else { // Swipe Right
                     menuCopy!.frame.origin.x = -screenWidth + translation.x
                 }
-                menuView.frame.origin.x = translation.x
+                menuOffset = translation.x
                 
             } else { // No next calendar event
                 // Simulate resistive scroll
-                menuView.frame.origin.x = translation.x / 10
+                menuOffset = translation.x / 10
             }
+            
+            menuView.frame.origin.x = menuOffset
+            
+            // Fade out title
+            var titleColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1 - abs(menuOffset) / screenWidth)
+            var textAttributes = NSDictionary(object: titleColor, forKey: NSForegroundColorAttributeName)
+            navigationController?.navigationBar.titleTextAttributes = textAttributes
         } else {
             // If there's another calendar event
             if (nextIndex != nil) {
+                
+                // Update title
+                updateTitle()
                 
                 // Animate paging to next event
                 UIView.animateWithDuration(0.2, animations: { () -> Void in
@@ -113,6 +125,12 @@ class LunchEventViewController: UIViewController {
                     self.menuView.frame.origin.x = 0
                 })
             }
+            
+            // Fade in title
+            UIView.animateWithDuration(0.2, animations: { () -> Void in
+                var textAttributes = NSDictionary(object: UIColor.blackColor(), forKey: NSForegroundColorAttributeName)
+                self.navigationController?.navigationBar.titleTextAttributes = textAttributes
+            })
         }
     }
     
