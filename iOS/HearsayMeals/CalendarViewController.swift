@@ -27,6 +27,10 @@ class CalendarViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Back button on the next viewController should have no title
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: UIBarButtonItemStyle.Plain, target: self, action: "back")
+        
         calendarService.shouldFetchNextPages = true
         calendarService.retryEnabled = true
         fetchCalendarEvents { () -> Void in
@@ -62,8 +66,10 @@ class CalendarViewController: UITableViewController {
         
         var lunchEventViewController = storyboard?.instantiateViewControllerWithIdentifier(kLunchEventViewController) as LunchEventViewController!
         var event = lunchCalendarEvents[indexPath.section].events[indexPath.row]
+        
+        var flattenedEventList = flattenCalendarEvents(lunchCalendarEvents, indexPath: indexPath)
+        lunchEventViewController.initializeView(flattenedEventList.events, currentLunchIndex: flattenedEventList.index)
 
-        lunchEventViewController.calendarEvent = event
         self.navigationController?.pushViewController(lunchEventViewController, animated: true)
     }
     
@@ -155,5 +161,19 @@ class CalendarViewController: UITableViewController {
         var date1 = event1.start.dateTime.date
         var date2 = event2.start.dateTime.date
         return date2.timeIntervalSinceDate(date1) > 0
+    }
+    
+    private func flattenCalendarEvents(calendarEvents: [(week: Int, events:[GTLCalendarEvent])], indexPath: NSIndexPath) -> (events: [GTLCalendarEvent], index: Int) {
+        var events = [GTLCalendarEvent]()
+        var index = 0
+        for (section, group) in enumerate(lunchCalendarEvents) {
+            events += group.events
+            if (indexPath.section < section) {
+                index += group.events.count
+            } else if (indexPath.section == section) {
+                index += indexPath.row
+            }
+        }
+        return (events: events, index: index)
     }
 }
