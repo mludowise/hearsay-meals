@@ -14,6 +14,7 @@ let kUserPictureKey = "picture"
 let kUserNameKey = "name"
 let kUserAdminKey = "admin"
 let kUserPreferencesKey = "preferences"
+let kUserPreferenceNote = "preference_note"
 
 let kBeerRequestTableKey = "BeerRequest"
 let kBeerRequestNameKey = "name"

@@ -48,6 +48,8 @@ class DietaryPreferencesViewController: UITableViewController {
     @IBOutlet weak var lambRow: SwitchTableCell!
     @IBOutlet weak var poultryRow: SwitchTableCell!
     
+    @IBOutlet weak var additionalRestrictionsRow: UITableViewCell!
+    
     var allRestrictions = [SwitchTableCell]()
     var nonVeggieRestrictions = [SwitchTableCell]()
     var nonVeganRestrictions = [SwitchTableCell]()
@@ -59,6 +61,7 @@ class DietaryPreferencesViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Default to omnivore
         selectCell(omnivoreRow)
         
         nonPescRestrictions.append(porkRow)
@@ -66,15 +69,15 @@ class DietaryPreferencesViewController: UITableViewController {
         nonPescRestrictions.append(lambRow)
         nonPescRestrictions.append(poultryRow)
         
-        nonVeggieRestrictions = nonPescRestrictions
+        nonVeggieRestrictions += nonPescRestrictions
         nonVeggieRestrictions.append(shellFishRow)
         nonVeggieRestrictions.append(fishRow)
         
-        nonVeganRestrictions = nonVeggieRestrictions
+        nonVeganRestrictions += nonVeggieRestrictions
         nonVeganRestrictions.append(eggsRow)
         nonVeganRestrictions.append(dairyRow)
         
-        allRestrictions = nonVeganRestrictions
+        allRestrictions += nonVeganRestrictions
         allRestrictions.append(soyRow)
         allRestrictions.append(nutsRow)
         allRestrictions.append(glutenRow)
@@ -99,6 +102,8 @@ class DietaryPreferencesViewController: UITableViewController {
                 }
             }
         }
+        var preferenceNote = PFUser.currentUser()[kUserPreferenceNote] as? String
+        setPreferenceNote(preferenceNote)
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -118,6 +123,16 @@ class DietaryPreferencesViewController: UITableViewController {
                 PFUser.currentUser().removeObjectsInArray(preferencesToRemove, forKey: kUserPreferencesKey)
                 PFUser.currentUser().saveInBackground()
             })
+        } else if (cell == additionalRestrictionsRow) {
+            var noteViewController = storyboard?.instantiateViewControllerWithIdentifier(kNoteViewControllerID) as NoteViewController
+            noteViewController.titleBarText = "Additional Restrictions"
+            noteViewController.initialText = PFUser.currentUser()[kUserPreferenceNote] as? String
+            noteViewController.onDone = { (text: String) -> Void in
+                PFUser.currentUser()[kUserPreferenceNote] = text
+                PFUser.currentUser().saveInBackground()
+                self.setPreferenceNote(text)
+            }
+            presentViewController(noteViewController, animated: true, completion: nil)
         }
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
@@ -155,6 +170,18 @@ class DietaryPreferencesViewController: UITableViewController {
                         cell.hidden = true
                 })
             }
+        }
+    }
+    
+    private func setPreferenceNote(note: String?) {
+        if (note == nil || note == "") {
+            additionalRestrictionsRow.detailTextLabel?.text = "None"
+//            additionalRestrictionsRow.textLabel.text = "None"
+//            additionalRestrictionsRow.textLabel.textColor = UIColor.lightGrayColor()
+        } else {
+            additionalRestrictionsRow.detailTextLabel?.text = note
+//            additionalRestrictionsRow.textLabel.text = note
+//            additionalRestrictionsRow.textLabel.textColor = UIColor.blackColor()
         }
     }
 }
