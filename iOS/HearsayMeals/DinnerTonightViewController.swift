@@ -195,12 +195,22 @@ class DinnerTonightViewController: UITableViewController {
     
     func updateTimer() {
         var timeToOrder = timeUntil(kTimeToOrderBy.hour, kTimeToOrderBy.minute, 0, kOfficeTimeZone)
-        self.countdownLabel.text = NSString(format: "%u:%02u:%02u", Int(timeToOrder) / 3600, Int(timeToOrder) / 60 % 60, Int(timeToOrder) % 60)
+        var countdownLabelText = ""
+        
         if (timeToOrder > kCountdownRedTime) {
             self.countdownLabel.textColor = UIColor.blackColor()
         } else {
             self.countdownLabel.textColor = kCountdownRedColor
+            countdownLabelText = "-"
+            timeToOrder = -timeToOrder
         }
+        
+        var hour = Int(timeToOrder) / 3600
+        var minute = Int(timeToOrder) / 60 % 60
+        var second = Int(timeToOrder) % 60
+
+        countdownLabelText += NSString(format: "%u:%02u:%02u", hour, minute, second)
+        self.countdownLabel.text = countdownLabelText
     }
     
     private func displayDinnerOrdered(dinnerOrdered: Bool) {
