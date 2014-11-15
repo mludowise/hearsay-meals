@@ -64,8 +64,7 @@ class CalendarViewController: UITableViewController {
         var event = lunchCalendarEvents[indexPath.section].events[indexPath.row]
         
         var flattenedEventList = flattenCalendarEvents(lunchCalendarEvents, indexPath: indexPath)
-        lunchEventViewController.lunchEvents = flattenedEventList.events
-        lunchEventViewController.currentLunchIndex = flattenedEventList.index
+        lunchEventViewController.initializeView(flattenedEventList.events, currentLunchIndex: flattenedEventList.index)
 
         self.navigationController?.pushViewController(lunchEventViewController, animated: true)
     }
