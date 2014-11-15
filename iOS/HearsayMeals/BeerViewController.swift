@@ -39,8 +39,10 @@ class BeerViewController: UITableViewController {
         headerSubView.frame.origin.y -= kickedView.frame.height
         headerView.frame.size.height -= kickedView.frame.height
         tableView.tableHeaderView = headerView
-        
-        updateKeg(updateKegKickedView)
+        updateKeg { () -> Void in
+            self.updateKegKickedView()
+            self.updateTabBadge()
+        }
         updateBeerRequests(nil)
     }
     
@@ -49,6 +51,7 @@ class BeerViewController: UITableViewController {
         var updatedRequests = false
         updateKeg { () -> Void in
             self.updateKegKickedView()
+            self.updateTabBadge()
             updatedKeg = true
             if (updatedRequests) {
                 sender.endRefreshing()
@@ -108,7 +111,7 @@ class BeerViewController: UITableViewController {
             self.tableView.contentOffset.y = -self.tableView.contentInset.top
         })
         
-        if ((keg?[kKegKickedReportsKey] as [String]).count > 0) {
+        if ((keg?[kKegKickedReportsKey] as [String]).count > 0) { // Keg is kicked
             // Flash empty report off and on to update it
             UIView.animateWithDuration(0.1, animations: { () -> Void in
                 self.emptyKegReportsLabel.alpha = 0
@@ -128,7 +131,7 @@ class BeerViewController: UITableViewController {
                     self.tableView.tableHeaderView = self.headerView
                     }, completion: nil)
             }
-        } else if (!kickedView.hidden) {
+        } else if (!kickedView.hidden) { // Keg isn't kicked & we haven't marked it as such
             // If kicked banner isn't already hidden, hide it
             UIView.animateWithDuration(0.4, delay: 0.1, options: nil, animations: { () -> Void in
                 self.headerSubView.frame.origin.y -= self.kickedView.frame.height
@@ -138,6 +141,17 @@ class BeerViewController: UITableViewController {
                     self.kickedView.hidden = true
             })
         }
+    }
+    
+    private func updateTabBadge() {
+        var value : String?
+        
+        if ((keg?[kKegKickedReportsKey] as [String]).count > 0) { // Keg is kicked
+            value = "!"
+        }
+        
+        tabBarItem?.badgeValue = value
+        navigationController?.tabBarItem?.badgeValue = value
     }
     
     @IBAction func onReportEmpty(sender: AnyObject) {
@@ -153,6 +167,7 @@ class BeerViewController: UITableViewController {
             self.reportEmptyActivityIndicator.stopAnimating()
             self.reportEmptyButton.selected = !self.reportEmptyButton.selected
             self.updateKegKickedView()
+            self.updateTabBadge()
         })
     }
     
