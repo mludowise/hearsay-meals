@@ -48,6 +48,8 @@ class SignInViewController: UIViewController, GPPSignInDelegate {
                 
                 if (googlePlusUser.domain != kDomain) {
                     NSLog("Wrong domain: %@", googlePlusUser.domain == nil ? "nil" : googlePlusUser.domain)
+                    GPPSignIn.sharedInstance().signOut()
+                    GPPSignIn.sharedInstance().disconnect()
                     errorTextView.text = kDomainErrorText
                     errorTextView.hidden = false
                     return
