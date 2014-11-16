@@ -11,7 +11,7 @@ import UIKit
 private let kClientId = "966122623899-snf8rtjucf08hup8a2jjmihcina16a0j.apps.googleusercontent.com"
 private let kDomain = "hearsaycorp.com"
 
-private var kDomainErrorText = "Only Hearsay Social employees can use Hearsay Meals. Please log in with your \(kDomain) login."
+private var kDomainErrorText = "Only Hearsay Social employees can use Hearsay Meals. Please log in with your \(kDomain) account."
 
 class SignInViewController: UIViewController, GPPSignInDelegate {
     @IBOutlet weak var errorTextView: UITextView!
@@ -47,7 +47,7 @@ class SignInViewController: UIViewController, GPPSignInDelegate {
                 var googlePlusUser = sharedInstance.googlePlusUser
                 
                 if (googlePlusUser.domain != kDomain) {
-                    NSLog("Wrong domain: %@", googlePlusUser.domain)
+                    NSLog("Wrong domain: %@", googlePlusUser.domain == nil ? "nil" : googlePlusUser.domain)
                     errorTextView.text = kDomainErrorText
                     errorTextView.hidden = false
                     return
