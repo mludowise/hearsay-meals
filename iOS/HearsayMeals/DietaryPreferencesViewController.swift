@@ -125,13 +125,11 @@ class DietaryPreferencesViewController: UITableViewController {
             })
         } else if (cell == additionalRestrictionsRow) {
             var noteViewController = storyboard?.instantiateViewControllerWithIdentifier(kNoteViewControllerID) as NoteViewController
-            noteViewController.titleBarText = "Additional Restrictions"
-            noteViewController.initialText = PFUser.currentUser()[kUserPreferenceNote] as? String
-            noteViewController.onDone = { (text: String) -> Void in
+            noteViewController.initialize(PFUser.currentUser()[kUserPreferenceNote] as? String, title: "Additional Restrictions", allowEmpty: true, onDone: { (text: String) -> Void in
                 PFUser.currentUser()[kUserPreferenceNote] = text
                 PFUser.currentUser().saveInBackground()
                 self.setPreferenceNote(text)
-            }
+            })
             presentViewController(noteViewController, animated: true, completion: nil)
         }
         tableView.deselectRowAtIndexPath(indexPath, animated: true)

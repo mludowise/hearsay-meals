@@ -176,10 +176,7 @@ class DinnerTonightViewController: UITableViewController {
         var userDinnerOrder = self.dinnerOrdersTonight[self.userOrderIndex!]
         
         var noteViewController = storyboard?.instantiateViewControllerWithIdentifier(kNoteViewControllerID) as NoteViewController
-        noteViewController.titleBarText = "Dinner Request"
-        noteViewController.initialText = userDinnerOrder[kDinnerSpecialRequestKey] as? String
-        noteViewController.onDone = { (text: String) -> Void in
-            
+        noteViewController.initialize(userDinnerOrder[kDinnerSpecialRequestKey] as? String, title: "Dinner Request", allowEmpty: true) { (text: String) -> Void in
             userDinnerOrder[kDinnerSpecialRequestKey] = text
             userDinnerOrder.saveInBackground()
             

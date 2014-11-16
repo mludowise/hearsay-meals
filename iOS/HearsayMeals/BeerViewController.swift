@@ -188,8 +188,7 @@ class BeerViewController: UITableViewController {
     
     @IBAction func onMakeRequest(sender: AnyObject) {
         var noteViewController = storyboard?.instantiateViewControllerWithIdentifier(kNoteViewControllerID) as NoteViewController
-        noteViewController.titleBarText = "Beer Request"
-        noteViewController.onDone = { (text: String) -> Void in
+        noteViewController.initialize(nil, title: "Beer Request", allowEmpty: false) { (text: String) -> Void in
             
             var beerRequest = PFObject(className: kBeerRequestTableKey)
             beerRequest[kBeerRequestUserKey] = PFUser.currentUser().objectId
@@ -209,10 +208,9 @@ class BeerViewController: UITableViewController {
                     self.tableView.beginUpdates()
                     self.tableView.insertRowsAtIndexPaths([NSIndexPath(forItem: self.beerRequests.count-1, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Automatic)
                     self.tableView.endUpdates()
-
+                    
                 }
             })
-            
         }
         presentViewController(noteViewController, animated: true, completion: nil)
     }
