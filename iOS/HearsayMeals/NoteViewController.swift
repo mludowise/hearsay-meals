@@ -16,21 +16,33 @@ class NoteViewController: UIViewController, UITextViewDelegate {
     @IBOutlet weak var textArea: UITextView!
     @IBOutlet weak var doneButton: UIBarButtonItem!
     
-    var initialText : String?
-    var onDone : ((String) -> Void)?
-    var titleBarText : String?
+    private var initialText : String?
+    private var onDone : ((String) -> Void)?
+    private var titleBarText : String?
+    private var allowEmpty = false
+    
+    internal func initialize(text: String?, title: String?, allowEmpty: Bool, onDone: ((String) -> Void)?) {
+        initialText = text
+        titleBarText = title
+        self.onDone = onDone
+        self.allowEmpty = allowEmpty
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         textArea.text = initialText?
         textArea.delegate = self
+        
         textArea.becomeFirstResponder()
         titleBar.title = titleBarText?
+        doneButton.enabled = allowEmpty || initialText == nil || initialText == ""
     }
     
     func textViewDidChange(textView: UITextView) {
-        doneButton.enabled = textArea.text != ""
+        if (!allowEmpty) {
+            doneButton.enabled = textArea.text != ""
+        }
     }
     
     @IBAction func onDone(sender: AnyObject) {
