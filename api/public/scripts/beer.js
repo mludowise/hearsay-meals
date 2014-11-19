@@ -95,10 +95,6 @@ function toggleBeerRequestVoteForUser(beerRequestId, userId){
     apiRequest('/1/classes/BeerRequest/'+ beerRequestId, {'votes': request.votes}, 'PUT');
 }
 
-function toggleBeerRequestInactive(beerRequest){
-    apiRequest('/1/classes/BeerRequest/'+ beerRequest.objectId, {'inactive': !beerRequest.inactive}, 'PUT');
-}
-
 function displayBeerRequests(){
     var user = getCurrentUser();
     var beerRequests = getBeerRequests();
