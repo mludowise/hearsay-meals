@@ -59,6 +59,10 @@ form.requestBeer {
 	float: right;
 }
 
+.kicked-alert {
+	display: none;
+}
+
 div.kicked span {
 	font-weight: normal;
 }

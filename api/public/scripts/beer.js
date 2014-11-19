@@ -1,34 +1,25 @@
 $(document).ready(function() {
     var user = getCurrentUser();
     displayBeerRequests();
-    var keg = getBeerOnTap().results[0];
+
+    var keg = getBeerOnTap();
     $('#beerOnTap').html('<h3>' + keg.beerName);
-    if (keg.kickedReports.indexOf(user.objectId) > 0) {
+    if (keg.kickedReports.indexOf(user.objectId) >= 0) {
         $('#kickedKeg').prop('checked', true);
     }
-    if (keg.kickedReports.length > 0) {
-        var alert = '<div class="alert alert-danger" role="alert">' + keg.kickedReports.length + ' people reported the keg is kicked</div>';
-        $('.alerts').html(alert);
-    }
+    displayKegKickedAlert(keg.kickedReports.length);
+
     $('#kickedKeg').on('click', function() {
-        if (keg.kickedReports.indexOf(user.objectId) < 0) {
+        var index = keg.kickedReports.indexOf(user.objectId);
+        if (index < 0) {
             keg.kickedReports.push(user.objectId);
-            var resp = apiRequest('/1/classes/Keg/'+ keg.objectId, {'kickedReports': keg.kickedReports}, 'PUT')
-            if (resp) {
-                var alert = '<div class="alert alert-danger" role="alert">' + keg.kickedReports.length + ' people reported the keg is kicked</div>';
-                $('.alerts').html(alert);
-            }
         }
         else {
-            var index = keg.kickedReports.indexOf(user.objectId);
             keg.kickedReports.splice(index, 1);
-            var resp = apiRequest('/1/classes/Keg/'+ keg.objectId, {'kickedReports': keg.kickedReports}, 'PUT');
-            if (resp) {
-                var alert = '<div class="alert alert-danger" role="alert">' + keg.kickedReports.length + ' people reported the keg is kicked</div>';
-                $('.alerts').html(alert);
-            }                
         }
-    });    
+        updateKickedKegReports(keg);
+        displayKegKickedAlert(keg.kickedReports.length);
+    });
 
     $('#request-beer').click(function(){
         var beerType = $('#beerType').val();
@@ -39,52 +30,111 @@ $(document).ready(function() {
         beerRequestResult = saveBeerRequest(beerRequest);
         displayBeerRequests();
     });
+
+    $('.beer-vote').click(function(event){
+        event.preventDefault();
+        var beerRequestId = $(this).attr('beer-request');
+        var voteCount = parseInt($(this).text());
+        if ($(this).hasClass('btn-primary')){
+            voteCount = voteCount - 1;
+        }
+        else
+        {
+            voteCount = voteCount + 1;
+        }
+        $(this).text(voteCount).toggleClass('btn-primary').toggleClass('btn-default');
+        toggleBeerRequestVoteForUser(beerRequestId, user.objectId);
+    });
 });
 
+function getBeerOnTap() {
+    var where = {
+        order: '-createdAt',
+        limit: 1
+    };
+    var results = apiRequest('/1/classes/Keg', where);
+    return results.results[0];
+}
+
+function updateKickedKegReports(keg){
+    apiRequest('/1/classes/Keg/'+ keg.objectId, {'kickedReports': keg.kickedReports}, 'PUT');
+}
+
 function saveBeerRequest(beerRequest){
-    requestResults = apiRequest('/1/classes/BeerRequest', beerRequest, 'POST');
-    vote = {
+    var requestResults = apiRequest('/1/classes/BeerRequest', beerRequest, 'POST');
+    var vote = {
         user_id: beerRequest.user_id,
         beer_request_id: requestResults.objectId
     };
-    voteResults = apiRequest('/1/classes/BeerVotes', vote, 'POST');
+    var voteResults = apiRequest('/1/classes/BeerVotes', vote, 'POST');
     return requestResults;
 }
 
 function getBeerRequests(){
-    var results = apiRequest('/1/classes/BeerRequest');
+    var where = {
+        order: 'name'
+    };
+    var results = apiRequest('/1/classes/BeerRequest', where);
     for (var i = 0; i < results.results.length; i++){
-        request = results.results[i];
-        request.votes = getBeerRequestVotes(request.objectId);
+        var request = results.results[i];
         results.results[i] = request;
     }
     return results.results;
 }
 
-function getBeerOnTap() {
-    return apiRequest('/1/classes/Keg');
+function toggleBeerRequestVoteForUser(beerRequestId, userId){
+    var request = apiRequest('/1/classes/BeerRequest/'+ beerRequestId);
+    var index = request.votes.indexOf(userId);
+    if (index < 0){
+        request.votes.push(userId);
+    }
+    else
+    {
+        request.votes.splice(index, 1);
+    }
+    apiRequest('/1/classes/BeerRequest/'+ beerRequestId, {'votes': request.votes}, 'PUT');
 }
 
-function getBeerRequestVotes(beerRequestId){
-    where = {
-        where: {
-            beer_request_id: beerRequestId
-        }
-    };
-    var results = apiRequest('/1/classes/BeerVotes', where);
-    return results.results;
+function toggleBeerRequestInactive(beerRequest){
+    apiRequest('/1/classes/BeerRequest/'+ beerRequest.objectId, {'inactive': !beerRequest.inactive}, 'PUT');
 }
 
 function displayBeerRequests(){
+    var user = getCurrentUser();
     var beerRequests = getBeerRequests();
     var $tbody = $("#beer-request-list tbody");
     $tbody.empty();
     for (var i = 0; i < beerRequests.length; i++){
         var request = beerRequests[i];
+        var voteBtnClass = 'btn-default';
+        if (request.votes.indexOf(user.objectId) >= 0){
+            voteBtnClass = 'btn-primary';
+        }
         var $row = $('<tr>');
         var $beerType = $('<td>').text(request.name);
-        var $voteCount = $('<td>').text(request.votes.length);
+        var $voteCount = $('<a beer-request="' + request.objectId + '" href="#" class="btn ' + voteBtnClass + ' beer-vote">').text(request.votes.length);
+        $voteCount = $('<td>').append($voteCount);
         $row.append($beerType).append($voteCount);
         $tbody.append($row);
     }
+}
+
+function displayKegKickedAlert(numberOfReports){
+    var text = numberOfReports.toString();
+    if (numberOfReports > 0){
+        if (numberOfReports == 1){
+            text = text + ' person';
+        }
+        else
+        {
+            text = text + ' people';
+        }
+        $('.kicked-alert').show();
+    }
+    else
+    {
+        text = text + ' people';
+        $('.kicked-alert').hide();
+    }
+    $('.kicked-count').text(text);
 }
