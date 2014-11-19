@@ -9,9 +9,9 @@
 /* Begin PBXBuildFile section */
 		E65A6B7E1A0ECAB600976FD6 /* NoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65A6B7D1A0ECAB600976FD6 /* NoteViewController.swift */; };
 		E65A6B801A0EE1FE00976FD6 /* BeerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65A6B7F1A0EE1FE00976FD6 /* BeerViewController.swift */; };
+		E65B30931A14E1900066AC05 /* SwitchTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65B30921A14E1900066AC05 /* SwitchTableCell.swift */; };
 		E65D527219EA3A73002BEDDE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65D527119EA3A73002BEDDE /* AppDelegate.swift */; };
 		E65D527719EA3A73002BEDDE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E65D527519EA3A73002BEDDE /* Main.storyboard */; };
-		E65D527919EA3A73002BEDDE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E65D527819EA3A73002BEDDE /* Images.xcassets */; };
 		E65D527C19EA3A73002BEDDE /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = E65D527A19EA3A73002BEDDE /* LaunchScreen.xib */; };
 		E65D528819EA3A73002BEDDE /* HearsayMealsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65D528719EA3A73002BEDDE /* HearsayMealsTests.swift */; };
 		E65D52CB19EA3BA3002BEDDE /* GTLCalendar_Sources.m in Sources */ = {isa = PBXBuildFile; fileRef = E65D529519EA3BA3002BEDDE /* GTLCalendar_Sources.m */; };
@@ -40,13 +40,18 @@
 		E65D5D9519ECF25E000B52DB /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E65D531519EA4C3D002BEDDE /* Security.framework */; };
 		E65D5D9919ECF315000B52DB /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E65D5D9819ECF315000B52DB /* Social.framework */; };
 		E65D5D9B19ECF362000B52DB /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E65D5D9A19ECF362000B52DB /* Accounts.framework */; };
-		E696048D19EB0C6800FD0885 /* CalendarTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E696048B19EB0C6800FD0885 /* CalendarTableViewCell.xib */; };
+		E66AB0981A13406F004EFAA2 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66AB0971A13406F004EFAA2 /* Config.swift */; };
+		E690BACE1A1592A9007C10A6 /* LunchCalendarTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E690BACD1A1592A9007C10A6 /* LunchCalendarTableCell.swift */; };
 		E696049119EBD31600FD0885 /* LunchEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E696049019EBD31600FD0885 /* LunchEventViewController.swift */; };
-		E69D925A1A0EECAA00A94B98 /* RequestTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E69D92591A0EECAA00A94B98 /* RequestTableViewCell.swift */; };
+		E69D2E541A1303ED004FAD77 /* DinnerPeopleTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E69D2E531A1303ED004FAD77 /* DinnerPeopleTableCell.swift */; };
+		E69D925A1A0EECAA00A94B98 /* BeerRequestTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E69D92591A0EECAA00A94B98 /* BeerRequestTableViewCell.swift */; };
 		E69D925C1A0F6C0D00A94B98 /* VoteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E69D925B1A0F6C0D00A94B98 /* VoteButton.swift */; };
 		E69F8F1819EA69020046DFCD /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E69F8F1719EA69020046DFCD /* SettingsViewController.swift */; };
+		E6D8AAA51A14B71000058A7F /* DietaryPreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D8AAA41A14B71000058A7F /* DietaryPreferencesViewController.swift */; };
+		E6DA59E51A14C3F90061AF20 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E6DA59E41A14C3F90061AF20 /* Images.xcassets */; };
 		E6E3ABFA1A0E9B5300B0DCA1 /* DinnerTonightViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E3ABF91A0E9B5300B0DCA1 /* DinnerTonightViewController.swift */; };
 		E6E3ABFC1A0EC1F900B0DCA1 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E3ABFB1A0EC1F900B0DCA1 /* Util.swift */; };
+		E6E590421A100E280002473E /* ParseKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E590411A100E280002473E /* ParseKeys.swift */; };
 		E6FF58D019EA8A5D008124A5 /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FF58CF19EA8A5D008124A5 /* CalendarViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -63,11 +68,11 @@
 /* Begin PBXFileReference section */
 		E65A6B7D1A0ECAB600976FD6 /* NoteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteViewController.swift; sourceTree = "<group>"; };
 		E65A6B7F1A0EE1FE00976FD6 /* BeerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeerViewController.swift; sourceTree = "<group>"; };
+		E65B30921A14E1900066AC05 /* SwitchTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwitchTableCell.swift; sourceTree = "<group>"; };
 		E65D526C19EA3A73002BEDDE /* HearsayMeals.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HearsayMeals.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E65D527019EA3A73002BEDDE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E65D527119EA3A73002BEDDE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E65D527619EA3A73002BEDDE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		E65D527819EA3A73002BEDDE /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		E65D527B19EA3A73002BEDDE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		E65D528119EA3A73002BEDDE /* HearsayMealsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HearsayMealsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E65D528619EA3A73002BEDDE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -129,13 +134,18 @@
 		E65D5D9619ECF2B0000B52DB /* libz.1.1.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.1.3.dylib; path = usr/lib/libz.1.1.3.dylib; sourceTree = SDKROOT; };
 		E65D5D9819ECF315000B52DB /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		E65D5D9A19ECF362000B52DB /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
-		E696048B19EB0C6800FD0885 /* CalendarTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CalendarTableViewCell.xib; sourceTree = "<group>"; };
+		E66AB0971A13406F004EFAA2 /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		E690BACD1A1592A9007C10A6 /* LunchCalendarTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LunchCalendarTableCell.swift; sourceTree = "<group>"; };
 		E696049019EBD31600FD0885 /* LunchEventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LunchEventViewController.swift; sourceTree = "<group>"; };
-		E69D92591A0EECAA00A94B98 /* RequestTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestTableViewCell.swift; sourceTree = "<group>"; };
+		E69D2E531A1303ED004FAD77 /* DinnerPeopleTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DinnerPeopleTableCell.swift; sourceTree = "<group>"; };
+		E69D92591A0EECAA00A94B98 /* BeerRequestTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeerRequestTableViewCell.swift; sourceTree = "<group>"; };
 		E69D925B1A0F6C0D00A94B98 /* VoteButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VoteButton.swift; sourceTree = "<group>"; };
 		E69F8F1719EA69020046DFCD /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		E6D8AAA41A14B71000058A7F /* DietaryPreferencesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DietaryPreferencesViewController.swift; sourceTree = "<group>"; };
+		E6DA59E41A14C3F90061AF20 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		E6E3ABF91A0E9B5300B0DCA1 /* DinnerTonightViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DinnerTonightViewController.swift; sourceTree = "<group>"; };
 		E6E3ABFB1A0EC1F900B0DCA1 /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
+		E6E590411A100E280002473E /* ParseKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseKeys.swift; sourceTree = "<group>"; };
 		E6FF58CF19EA8A5D008124A5 /* CalendarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -183,6 +193,7 @@
 		E6385BDA1A0DD5DE00299C9C /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				E6D8AAA41A14B71000058A7F /* DietaryPreferencesViewController.swift */,
 				E65A6B7D1A0ECAB600976FD6 /* NoteViewController.swift */,
 				E6FF58CF19EA8A5D008124A5 /* CalendarViewController.swift */,
 				E65A6B7F1A0EE1FE00976FD6 /* BeerViewController.swift */,
@@ -223,12 +234,16 @@
 				E65D52EE19EA3ED4002BEDDE /* -Bridging-Header.h */,
 				E65D527119EA3A73002BEDDE /* AppDelegate.swift */,
 				E6E3ABFB1A0EC1F900B0DCA1 /* Util.swift */,
-				E69D92591A0EECAA00A94B98 /* RequestTableViewCell.swift */,
+				E66AB0971A13406F004EFAA2 /* Config.swift */,
+				E69D92591A0EECAA00A94B98 /* BeerRequestTableViewCell.swift */,
+				E69D2E531A1303ED004FAD77 /* DinnerPeopleTableCell.swift */,
+				E690BACD1A1592A9007C10A6 /* LunchCalendarTableCell.swift */,
+				E6E590411A100E280002473E /* ParseKeys.swift */,
+				E65B30921A14E1900066AC05 /* SwitchTableCell.swift */,
 				E6385BDA1A0DD5DE00299C9C /* View Controllers */,
 				E65D527519EA3A73002BEDDE /* Main.storyboard */,
-				E696048B19EB0C6800FD0885 /* CalendarTableViewCell.xib */,
-				E65D527819EA3A73002BEDDE /* Images.xcassets */,
 				E65D527A19EA3A73002BEDDE /* LaunchScreen.xib */,
+				E6DA59E41A14C3F90061AF20 /* Images.xcassets */,
 				E65D526F19EA3A73002BEDDE /* Supporting Files */,
 				E69D925B1A0F6C0D00A94B98 /* VoteButton.swift */,
 			);
@@ -441,10 +456,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				E65D527719EA3A73002BEDDE /* Main.storyboard in Resources */,
+				E6DA59E51A14C3F90061AF20 /* Images.xcassets in Resources */,
 				E65D527C19EA3A73002BEDDE /* LaunchScreen.xib in Resources */,
-				E696048D19EB0C6800FD0885 /* CalendarTableViewCell.xib in Resources */,
 				E65D52E619EA3BA3002BEDDE /* GooglePlus.bundle in Resources */,
-				E65D527919EA3A73002BEDDE /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -465,15 +479,21 @@
 				E65A6B801A0EE1FE00976FD6 /* BeerViewController.swift in Sources */,
 				E65A6B7E1A0ECAB600976FD6 /* NoteViewController.swift in Sources */,
 				E6E3ABFA1A0E9B5300B0DCA1 /* DinnerTonightViewController.swift in Sources */,
+				E65B30931A14E1900066AC05 /* SwitchTableCell.swift in Sources */,
 				E696049119EBD31600FD0885 /* LunchEventViewController.swift in Sources */,
+				E6D8AAA51A14B71000058A7F /* DietaryPreferencesViewController.swift in Sources */,
 				E6FF58D019EA8A5D008124A5 /* CalendarViewController.swift in Sources */,
-				E69D925A1A0EECAA00A94B98 /* RequestTableViewCell.swift in Sources */,
+				E66AB0981A13406F004EFAA2 /* Config.swift in Sources */,
+				E69D925A1A0EECAA00A94B98 /* BeerRequestTableViewCell.swift in Sources */,
 				E6E3ABFC1A0EC1F900B0DCA1 /* Util.swift in Sources */,
 				E65D52ED19EA3D41002BEDDE /* SignInViewController.swift in Sources */,
+				E6E590421A100E280002473E /* ParseKeys.swift in Sources */,
 				E69D925C1A0F6C0D00A94B98 /* VoteButton.swift in Sources */,
 				E65D52CB19EA3BA3002BEDDE /* GTLCalendar_Sources.m in Sources */,
 				E65D527219EA3A73002BEDDE /* AppDelegate.swift in Sources */,
 				E69F8F1819EA69020046DFCD /* SettingsViewController.swift in Sources */,
+				E69D2E541A1303ED004FAD77 /* DinnerPeopleTableCell.swift in Sources */,
+				E690BACE1A1592A9007C10A6 /* LunchCalendarTableCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
