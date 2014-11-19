@@ -192,16 +192,11 @@ class BeerViewController: UITableViewController {
             var beerRequest = PFObject(className: kBeerRequestTableKey)
             beerRequest[kBeerRequestUserKey] = PFUser.currentUser().objectId
             beerRequest[kBeerRequestNameKey] = text
+            beerRequest.addUniqueObject(PFUser.currentUser().objectId, forKey: kBeerRequestVotesKey)
             beerRequest.saveInBackgroundWithBlock({ (b: Bool, error: NSError!) -> Void in
                 if (error != nil) {
                     NSLog("%@", error)
                 } else {
-                    // User implicitly votes for beer
-                    var beerVote = PFObject(className: kBeerVotesTableKey)
-                    beerVote[kBeerVotesUserKey] = PFUser.currentUser().objectId
-                    beerVote[kBeerVotesBeerKey] = beerRequest.objectId
-                    beerVote.saveInBackground()
-                    
                     // Update table
                     self.beerRequests.append(beerRequest)
                     self.tableView.beginUpdates()
