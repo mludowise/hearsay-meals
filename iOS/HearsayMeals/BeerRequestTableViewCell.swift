@@ -13,15 +13,13 @@ class BeerRequestTableViewCell: UITableViewCell {
     @IBOutlet weak var beerLabel: UILabel!
     @IBOutlet weak var voteButton: UIButton!
     
-    var beerRequest : PFObject?
+    private var beerRequest : PFObject?
     
-    func loadView() {
-        if (beerRequest != nil) {
-            beerLabel.text = beerRequest![kBeerRequestNameKey] as? String
-            updateVotes(nil)
-        } else {
-            voteButton.hidden = true
-        }
+    func loadView(beerRequest: PFObject) {
+        self.beerRequest = beerRequest
+        
+        beerLabel.text = beerRequest[kBeerRequestNameKey] as? String
+        updateVotes(nil)
     }
     
     private func updateVotes(completion: (() -> Void)?) {
