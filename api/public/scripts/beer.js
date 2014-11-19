@@ -4,7 +4,7 @@ $(document).ready(function() {
     displayBeerRequests();
 
     var keg = getBeerOnTap();
-    $('#beerOnTap').html('<h3>' + keg.beerName);
+    displayBeerOnTap(keg);
     if (keg.kickedReports.indexOf(user.objectId) >= 0) {
         $('#kickedKeg').prop('checked', true);
     }
@@ -47,6 +47,12 @@ $(document).ready(function() {
         $(this).text('+' + voteCount.toString()).toggleClass('btn-primary').toggleClass('btn-default');
         toggleBeerRequestVoteForUser(beerRequestId, user.objectId);
     });
+
+    $('.update-keg').click(function(event){
+        event.preventDefault();
+        var beerRequestId = $(this).attr('beer-request');
+        updateBeerOnTap(beerRequestId);
+    });
 });
 
 function getBeerOnTap() {
@@ -62,19 +68,34 @@ function updateKickedKegReports(keg){
     apiRequest('/1/classes/Keg/'+ keg.objectId, {'kickedReports': keg.kickedReports}, 'PUT');
 }
 
+function updateBeerOnTap(beerRequestId){
+    var request = apiRequest('/1/classes/BeerRequest/'+ beerRequestId);
+    var newKeg = {
+        beerName: request.name,
+        kickedReports: []
+    };
+    apiRequest('/1/classes/Keg', newKeg, 'POST');
+    displayBeerOnTap(newKeg);
+    $('#kickedKeg').prop('checked', false);
+    var beerRequests = getBeerRequests();
+    for (var i = 0; i < beerRequests.length; i++){
+        var currentRequest = beerRequests[i];
+        setBeerRequestInactive(currentRequest.objectId);
+    }
+    displayBeerRequests();
+}
+
 function saveBeerRequest(beerRequest){
     var requestResults = apiRequest('/1/classes/BeerRequest', beerRequest, 'POST');
-    var vote = {
-        user_id: beerRequest.user_id,
-        beer_request_id: requestResults.objectId
-    };
-    var voteResults = apiRequest('/1/classes/BeerVotes', vote, 'POST');
     return requestResults;
 }
 
 function getBeerRequests(){
     var where = {
-        order: 'name'
+        order: 'name',
+        where: JSON.stringify({
+            inactive: false
+        })
     };
     var results = apiRequest('/1/classes/BeerRequest', where);
     for (var i = 0; i < results.results.length; i++){
@@ -97,8 +118,8 @@ function toggleBeerRequestVoteForUser(beerRequestId, userId){
     apiRequest('/1/classes/BeerRequest/'+ beerRequestId, {'votes': request.votes}, 'PUT');
 }
 
-function toggleBeerRequestInactive(beerRequest){
-    apiRequest('/1/classes/BeerRequest/'+ beerRequest.objectId, {'inactive': !beerRequest.inactive}, 'PUT');
+function setBeerRequestInactive(beerRequestId){
+    apiRequest('/1/classes/BeerRequest/'+ beerRequestId, {'inactive': true}, 'PUT');
 }
 
 function displayBeerRequests(){
@@ -115,10 +136,18 @@ function displayBeerRequests(){
         var $row = $('<tr>');
         var $beerType = $('<td>').text(request.name);
         var $voteCount = $('<a beer-request="' + request.objectId + '" href="#" class="btn ' + voteBtnClass + ' beer-vote">').text('+' + request.votes.length.toString());
-        $voteCount = $('<td>').append($voteCount);
+        var $updateKeg = $('<a beer-request="' + request.objectId + '" href="#" class="btn btn-danger admin update-keg">').text('Fill Keg');
+        $voteCount = $('<td>').append($voteCount).append($updateKeg);
         $row.append($beerType).append($voteCount);
         $tbody.append($row);
     }
+    if (user.admin){
+        $('.admin').show();
+    }
+}
+
+function displayBeerOnTap(keg){
+    $('#beerOnTap').html('<h3>' + keg.beerName);
 }
 
 function displayKegKickedAlert(numberOfReports){

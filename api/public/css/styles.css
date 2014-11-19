@@ -2,6 +2,10 @@ body {
 	overflow-x: hidden;
 }
 
+.admin {
+	display: none;
+}
+
 .countdown {
 	display: inline;
 	float: right;
@@ -63,10 +67,13 @@ form.requestBeer {
 	display: none;
 }
 
+.update-keg {
+	margin-left: 18px;
+}
+
 div.kicked span {
 	font-weight: normal;
 }
-
 li.user a {
 	float: right;
 }

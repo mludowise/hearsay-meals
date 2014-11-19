@@ -108,7 +108,8 @@ function onSignInCallback(response) {
                             password : 'password',
                             username : resp.email,
                             name : resp.name,
-                            picture : resp.picture
+                            picture : resp.picture,
+                            admin: false
                         };
                         user = apiRequest('/1/users', data, 'POST');
                     }
