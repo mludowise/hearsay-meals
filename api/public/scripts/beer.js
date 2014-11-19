@@ -34,7 +34,7 @@ $(document).ready(function() {
     $('.beer-vote').click(function(event){
         event.preventDefault();
         var beerRequestId = $(this).attr('beer-request');
-        var voteCount = parseInt($(this).text());
+        var voteCount = parseInt($(this).text().split('+')[1], 10);
         if ($(this).hasClass('btn-primary')){
             voteCount = voteCount - 1;
         }
@@ -42,7 +42,7 @@ $(document).ready(function() {
         {
             voteCount = voteCount + 1;
         }
-        $(this).text(voteCount).toggleClass('btn-primary').toggleClass('btn-default');
+        $(this).text('+' + voteCount.toString()).toggleClass('btn-primary').toggleClass('btn-default');
         toggleBeerRequestVoteForUser(beerRequestId, user.objectId);
     });
 });
@@ -112,7 +112,7 @@ function displayBeerRequests(){
         }
         var $row = $('<tr>');
         var $beerType = $('<td>').text(request.name);
-        var $voteCount = $('<a beer-request="' + request.objectId + '" href="#" class="btn ' + voteBtnClass + ' beer-vote">').text(request.votes.length);
+        var $voteCount = $('<a beer-request="' + request.objectId + '" href="#" class="btn ' + voteBtnClass + ' beer-vote">').text('+' + request.votes.length.toString());
         $voteCount = $('<td>').append($voteCount);
         $row.append($beerType).append($voteCount);
         $tbody.append($row);
