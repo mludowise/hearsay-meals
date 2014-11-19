@@ -1,5 +1,5 @@
 body {
-	overflow: hidden;
+	overflow-x: hidden;
 }
 
 .countdown {
@@ -41,4 +41,24 @@ body {
 .preferences ul li span {
 	float: right;
 	font-size: 12px;
+}
+
+#dinner-request-list img {
+	width: 20px;
+}
+
+.beers {
+	display: inline;
+}
+
+.onTap {
+	float: left;
+}
+
+form.requestBeer {
+	float: right;
+}
+
+div.kicked span {
+	font-weight: normal;
 }

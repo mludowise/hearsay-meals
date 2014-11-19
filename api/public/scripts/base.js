@@ -50,6 +50,7 @@ function getCurrentUser(){
     return results;
 }
 
+
 function findUser(id){
     results = apiRequest('/1/users/' + id);
     return results;
@@ -107,5 +108,10 @@ function onSignInCallback(response) {
               });
             });
         }
+        window.location.href = "dinner.html";
     }
 }
+
+$(document).ready(function() {
+    
+});

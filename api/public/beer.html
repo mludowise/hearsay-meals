@@ -4,6 +4,7 @@
         <title>Hearsay Meals - Beer</title>
         <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="css/styles.css">        
     </head>
     <body>
     <nav class="navbar navbar-default" role="navigation">
@@ -24,23 +25,31 @@
           <ul class="nav navbar-nav">
             <li><a href="dinner.html">Dinner</a></li>
             <li class="active"><a href="beer.html">Beer</a></li>
-            <li><a href="snacks.html">Snacks</a></li>           
-          </ul>
+            </ul>
           <ul class="nav navbar-nav navbar-right">
             <li><a href="#">Log in</a></li>
           </ul>
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->
     </nav>
+    <div class="alerts"></div>
     <div class="row">
       <div class="col-xs-1"></div>
-      <div class="col-xs-4">
-        <form role="form">
+      <div class="col-xs-5 beers">
+        <div class="onTap">
+          <h4>Currently on tap:</h4>
+          <div id="beerOnTap"></div>
+          <div class="kicked">
+            <input id="kickedKeg" type="checkbox">
+            <label for="kickedKeg"><span>Is keg kicked?</span></label>            
+          </div>
+        </div>
+        <form role="form" class="requestBeer">
           <div class="form-group">
-            <label for="beerType">Beer Type</label>
+            <label for="beerType"><h4>Beer Type</h4></label>
             <input type="text" class="form-control" id="beerType">
           </div>
-          <button type="button" class="btn btn-danger btn-lg" id="request-beer">
+          <button type="button" class="btn btn-danger btn-sm" id="request-beer">
             Request Beer
           </button>
         </form>

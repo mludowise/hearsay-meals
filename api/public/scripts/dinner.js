@@ -1,6 +1,7 @@
 $(document).ready(function() {
 	var user = getCurrentUser();
-	var dinnerRequest = apiRequest('/1/classes/Dinner', {where: {'user_id' : user.objectId}}, 'GET');	
+	var dinnerRequest = apiRequest('/1/classes/Dinner', {where: {'user_id' : user.objectId}}, 'GET');
+
 	if (dinnerRequest.results[0]) {
 		$('#order-dinner').addClass('btn-danger');
 		$('#order-dinner').text('Dinner Ordered!');
@@ -11,14 +12,40 @@ $(document).ready(function() {
 	}
 	$('#order-dinner').on('click', function() {
 		toggleDinner(user);
+		getOrderedDinners();
 	});
 
 	var dinners = getOrderedDinners();
+	$tbody = $('#dinner-request-list tbody');
+	$tbody.empty();
 
 	for (var i = 0; i < dinners.length; i++) {
-		console.log(dinners[i]);
-	}
+        var request = dinners[i];
+        var currentUser = findUser(request.user_id);
+        var $row = $('<tr>');
+        var $name = $('<td>').html("<img src='" + currentUser.picture + "'> " + currentUser.name);
+        var pref = currentUser.preferences;
+        var $p = $('<td>');
+        if (pref) {
+	        for (var j = 0; j < pref.length; j++) {
+	        	if (pref[j] === 0) {
+	        		$p.append('<img src="images/meat.png" alt="Omnivore">');
+	        	}
+				else if (pref[j] === 1) {
+	        		$p.append('<img src="images/vegetarian.png" alt="Vegetarian">');
+	        	}        	
+	        	else if (pref[j] === 2) {
+	        		$p.append('<img src="images/vegan.png" alt="Vegan">');
+	        	}
 
+	        	if (pref[j] === 3) {
+	        		$p.append('<img src="images/gluten.png" alt="Gluten Free">');
+	        	}
+	        }
+        	$row.append($name).append($p);
+        	$tbody.append($row);	        
+        }
+	}
 });
 
 function getOrderedDinners() {
@@ -28,7 +55,7 @@ function getOrderedDinners() {
 	var today = new Date();
 	today.setUTCHours(24, 0, 0, 0);
 	today = today.toISOString();
-	var data =  {where: {'createdAt' : {"$gte": { "__type": "Date", "iso": yesterday }, "$lte": { "__type": "Date", "iso": today}}}};
+	var data =  {where: {'order_date' : {"$gte": { "__type": "Date", "iso": yesterday }, "$lte": { "__type": "Date", "iso": today}}}};
 	data = JSON.stringify(data);
 	var dinnerRequest = apiRequest('/1/classes/Dinner', data, 'GET');		
 	return dinnerRequest.results;
@@ -36,7 +63,7 @@ function getOrderedDinners() {
 
 function toggleDinner(user) {
 	if ($('#order-dinner').hasClass('btn-danger')) {
-		var dinnerRequest = apiRequest('/1/classes/Dinner', {'user_id' : user.objectId}, 'GET');
+		var dinnerRequest = apiRequest('/1/classes/Dinner', {where: {'user_id' : user.objectId}}, 'GET');
 		var removed = apiRequest('/1/classes/Dinner/' + dinnerRequest.results[0].objectId ,{}, 'DELETE');		
 		$('#order-dinner').removeClass('btn-danger');
 		$('#order-dinner').text('Order Dinner Tonight!');		
@@ -56,8 +83,16 @@ function toggleDinner(user) {
 function countdown() {
 	var now = new Date();
 	var hoursLeft = 15-now.getHours();
-	var minutesleft = 59-now.getMinutes();
-	var secondsleft = 59-now.getSeconds();	
+	if (hoursLeft < 0) {
+		hoursLeft = 16-now.getHours();		
+		var minutesleft = now.getMinutes();
+		var secondsleft = now.getSeconds();		
+	}
+	else {
+		var minutesleft = 59-now.getMinutes();
+		var secondsleft = 59-now.getSeconds();		
+	}
+		
 	//format 0 prefixes
 	if(minutesleft<10) minutesleft = "0"+minutesleft;
 	if(secondsleft<10) secondsleft = "0"+secondsleft;
