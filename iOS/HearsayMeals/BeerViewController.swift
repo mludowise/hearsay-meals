@@ -173,7 +173,7 @@ class BeerViewController: UITableViewController {
     
     private func updateBeerRequests(completion: (() -> Void)?) {
         var beerRequestQuery = PFQuery(className: kBeerRequestTableKey)
-        beerRequestQuery.orderByAscending(kCreatedAtKey)
+        beerRequestQuery.orderByAscending(kBeerRequestNameKey)
         beerRequestQuery.findObjectsInBackgroundWithBlock { (objects: [AnyObject]!, error: NSError!) -> Void in
             if (error != nil) {
                 NSLog("%@", error)
