@@ -59,7 +59,7 @@ form.requestBeer {
 	float: right;
 }
 
-.alert .kicked-count {
+.kicked-alert {
 	display: none;
 }
 
