@@ -1,6 +1,10 @@
 var parseApiUrl = "https://api.parse.com";
 
 function updateLoginInfo(user) {
+    if (!user) {
+        window.location.href = "index.html";
+        return;
+    }
     if (user.picture) {
         $('li.user').append("<img src='" + user.picture + "' width='30px'>");
     }
@@ -115,7 +119,9 @@ function onSignInCallback(response) {
               });
             });
         }
-        window.location.href = "dinner.html";
+        else {
+            window.location.href = "dinner.html";            
+        }
     }
 }
 
