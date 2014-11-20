@@ -24,7 +24,7 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
             <li><a href="dinner.html">Dinner</a></li>
-            <li class="active"><a href="beer.html">Beer</a></li>
+            <li><a href="beer.html">Beer</a></li>
             </ul>
           <ul class="nav navbar-nav navbar-right">
             <li><a href="preferences.html">Log in</a></li>
@@ -32,51 +32,37 @@
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->
     </nav>
-    <div class="alerts">
-      <div class="alert alert-danger kicked-alert" role="alert"><span class='kicked-count'></span> reported the keg is kicked</div>
-    </div>
-    <div class="row">
-      <div class="col-xs-1"></div>
-      <div class="col-xs-5 beers">
-        <div class="onTap">
-          <h4>Currently on tap:</h4>
-          <div id="beerOnTap"></div>
-          <div class="kicked">
-            <input id="kickedKeg" type="checkbox">
-            <label for="kickedKeg"><span>Keg is kicked!</span></label>            
-          </div>
-        </div>
-        <form role="form" class="requestBeer">
-          <div class="form-group">
-            <label for="beerType"><h4>Beer Type</h4></label>
-            <input type="text" class="form-control" id="beerType">
-          </div>
-          <button type="button" class="btn btn-danger btn-sm" id="request-beer">
-            Request Beer
-          </button>
-        </form>
+    <div class="preferences">
+      <div class="col-md-1"></div>        
+      <div class="col-md-4">
+        <h4>Dietary Preferences:</h4>          
+        <ul>
+          <li>
+            <img src="images/meat.png" alt="Omnivore">  Omnivore
+            <span><input id="0" name="preferences" checked="true" type="radio"></span>
+          </li>            
+          <li>
+            <img src="images/vegetarian.png" alt="Vegetarian">  Vegetarian
+            <span><input id="1" name="preferences" type="radio" value="1"></span>
+          </li>
+          <li>
+            <img src="images/vegan.png" alt="Vegan">  Vegan
+            <span><input id="2" name="preferences" type="radio" value="2"></span>
+          </li>  
+        </ul>            
+        <h4>Restrictions:</h4>          
+        <ul>
+          <li>
+            <img src="images/gluten.png" alt="Gluten">  Gluten
+            <span><input id="3" name="restrictions" type="checkbox" value="3"></span>
+          </li>
+        </ul>
       </div>
-    </div>
-    <div class="row">
-      <div class="col-xs-1"></div>      
-      <div class="col-xs-9">
-        <table id="beer-request-list" class="table table-striped">
-          <thead>
-            <tr>
-              <th>Beer Type</th>
-              <th>Votes</th>
-            </tr>
-          </thead>
-          <tbody>
-          </tbody>
-        </table>
-      </div>
-    </div>
-    
+    </div>    
     </body>
     <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script type="text/javascript" src="scripts/bootstrap.min.js"></script>
     <script type="text/javascript" src="scripts/base.js"></script>
-    <script type="text/javascript" src="scripts/beer.js"></script>
+    <script type="text/javascript" src="scripts/dinner.js"></script>
   </body>
 </html>

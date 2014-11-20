@@ -1,6 +1,11 @@
 $(document).ready(function() {
 	var user = getCurrentUser();
-	var dinnerRequest = apiRequest('/1/classes/Dinner', {where: {'user_id' : user.objectId}}, 'GET');
+	if (user) {
+		var dinnerRequest = apiRequest('/1/classes/Dinner', {where: {'user_id' : user.objectId}}, 'GET');		
+	}
+	else {
+		return;
+	}
 
 	if (dinnerRequest.results[0]) {
 		$('#order-dinner').addClass('btn-danger');
@@ -24,6 +29,7 @@ $(document).ready(function() {
         var currentUser = findUser(request.user_id);
         var $row = $('<tr>');
         var $name = $('<td>').html("<img src='" + currentUser.picture + "'> " + currentUser.name);
+        var $notes = $('<td>');        
         var pref = currentUser.preferences;
         var $p = $('<td>');
         if (pref) {
@@ -41,24 +47,30 @@ $(document).ready(function() {
 	        	if (pref[j] === 3) {
 	        		$p.append('<img src="images/gluten.png" alt="Gluten Free">');
 	        	}
-	        }
-        	$row.append($name).append($p);
-        	$tbody.append($row);	        
+	        }	        
         }
+        if (currentUser.special_request) {
+        	$notes.append(currentUser.special_request);
+        }        
+        $row.append($name).append($p).append($notes);
+        $tbody.append($row);
 	}
 });
 
 function getOrderedDinners() {
 	var yesterday = new Date();
 	yesterday.setUTCHours(0, 0, 0, 0);
-	yesterday = yesterday.toISOString();
-	var today = new Date();
-	today.setUTCHours(24, 0, 0, 0);
-	today = today.toISOString();
-	var data =  {where: {'order_date' : {"$gte": { "__type": "Date", "iso": yesterday }, "$lte": { "__type": "Date", "iso": today}}}};
-	data = JSON.stringify(data);
-	var dinnerRequest = apiRequest('/1/classes/Dinner', data, 'GET');		
-	return dinnerRequest.results;
+	var dinnerRequest = apiRequest('/1/classes/Dinner', 'GET');
+	var dinners = dinnerRequest.results;
+	var y = [];
+	for (var i = 0; i < dinners.length; i++) { 
+		var orderDateISO = dinners[i].order_date.iso;
+	    var date = new Date(orderDateISO);
+	    if (date > yesterday) {
+	    	y.push(dinners[i]);
+	    }  
+	}			
+	return y;
 }
 
 function toggleDinner(user) {
@@ -74,7 +86,7 @@ function toggleDinner(user) {
 		if (restrictions) {
 			preferences.push(restrictions);
 		}
-		var dinnerRequest = apiRequest('/1/classes/Dinner', {'picture': user.picture, 'name': user.name, 'user_id' : user.objectId, 'preferences' : preferences} ,'POST');
+		var dinnerRequest = apiRequest('/1/classes/Dinner', {'picture': user.picture, 'name': user.name, 'user_id' : user.objectId, 'preferences' : preferences},'POST');
 		$('#order-dinner').addClass('btn-danger');
 		$('#order-dinner').text('Dinner Ordered!');
 	}
