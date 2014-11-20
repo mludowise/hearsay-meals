@@ -28,14 +28,14 @@
             <li><a href="beer.html">Beer</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">Log in</a></li>
+            <li><a href="preferences.html">Log in</a></li>
           </ul>
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->
     </nav>
     <div class="row">
   		<div class="col-xs-1"></div>    	
-  		<div class="col-xs-5">
+  		<div class="col-xs-10">
   	      <button type="button" class="btn btn-primary btn-lg" id="order-dinner">
   	        Order Dinner Tonight
   	      </button>      
@@ -43,36 +43,9 @@
   	 </div>
     </div>
     <div class="row">
-      <div class="preferences">
-      <div class="col-md-1"></div>        
-        <div class="col-md-4">
-          <h4>Dietary Preferences:</h4>          
-          <ul>
-            <li>
-              <img src="images/meat.png" alt="Omnivore">  Omnivore
-              <span><input id="0" name="preferences" checked="true" type="radio"></span>
-            </li>            
-            <li>
-              <img src="images/vegetarian.png" alt="Vegetarian">  Vegetarian
-              <span><input id="1" name="preferences" type="radio" value="1"></span>
-            </li>
-            <li>
-              <img src="images/vegan.png" alt="Vegan">  Vegan
-              <span><input id="2" name="preferences" type="radio" value="2"></span>
-            </li>  
-          </ul>            
-          <h4>Restrictions:</h4>          
-          <ul>
-            <li>
-              <img src="images/gluten.png" alt="Gluten">  Gluten
-              <span><input id="3" name="restrictions" type="checkbox" value="3"></span>
-            </li>
-          </ul>
-        </div>
-      </div>
       <div class="people">
         <div class="col-md-1"></div>                
-        <div class="col-md-5">
+        <div class="col-md-10">
           <h4>People ordering dinner tonight:</h4>
           <div class="dinner-orders">
             <table id="dinner-request-list" class="table table-striped">
@@ -80,6 +53,7 @@
                 <tr>
                   <th>Name</th>
                   <th>Preferences</th>
+                  <th>Notes</th>                  
                 </tr>
               </thead>
               <tbody>
