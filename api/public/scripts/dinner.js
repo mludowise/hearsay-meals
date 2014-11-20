@@ -41,17 +41,17 @@ function updateDinnerTable() {
         if (pref) {
 	        for (var j = 0; j < pref.length; j++) {
 	        	if (pref[j] === 0) {
-	        		$p.append('<i class="icon-omnivore" alt="Omnivore" title="Omnivore" data-toggle="tooltip" data-placement="bottom"></i>');
+	        		$p.append('<i class="icon-omnivore" alt="Omnivore" title="Omnivore" data-toggle="tooltip" data-placement="bottom"></i>&nbsp;');
 	        	}
 				else if (pref[j] === 1) {
-	        		$p.append('<i class="icon-vegetarian" alt="Vegetarian" title="Vegetarian" data-toggle="tooltip" data-placement="bottom"></i>');
+	        		$p.append('<i class="icon-vegetarian" alt="Vegetarian" title="Vegetarian" data-toggle="tooltip" data-placement="bottom"></i>&nbsp;');
 	        	}        	
 	        	else if (pref[j] === 2) {
-	        		$p.append('<i class="icon-vegan" alt="Vegan" title="Vegan" data-toggle="tooltip" data-placement="bottom"></i>');
+	        		$p.append('<i class="icon-vegan" alt="Vegan" title="Vegan" data-toggle="tooltip" data-placement="bottom"></i>&nbsp;');
 	        	}
 
 	        	if (pref[j] === 3) {
-	        		$p.append('<i class="icon-gluten" alt="No Gluten" title="No Gluten" data-toggle="tooltip" data-placement="bottom"></i>');
+	        		$p.append('<i class="icon-gluten" alt="No Gluten" title="No Gluten" data-toggle="tooltip" data-placement="bottom"></i>&nbsp;');
 	        	}
 	        }	        
         }
