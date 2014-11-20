@@ -19,6 +19,7 @@ $(document).ready(function() {
 	$('#order-dinner').on('click', function() {
 		toggleDinner(user);
 		getOrderedDinners();
+                $(".cat-image").show();
 	});
 
 	var dinners = getOrderedDinners();

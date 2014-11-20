@@ -85,3 +85,7 @@ li.user img {
 .dinner {
 	margin-top: 20px;
 }
+
+.cat-image {
+        display: none;
+}
