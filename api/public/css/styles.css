@@ -89,3 +89,242 @@ li.user img {
 .cat-image {
         display: none;
 }
+
+/* Food Preference Icons */
+
+.icon-omnivore,
+.icon-pescetarian,
+.icon-vegan,
+.icon-vegetarian,
+.icon-beef,
+.icon-dairy,
+.icon-eggs,
+.icon-fish,
+.icon-garlic,
+.icon-gluten,
+.icon-lamb,
+.icon-nuts,
+.icon-pork,
+.icon-poultry,
+.icon-shellfish,
+.icon-soy {
+	background: url("../images/food_preferences_sprite.png");
+	background-image: url("../images/food_preferences_sprite.svg"), none;
+	background-size: 24px 288px;
+	background-repeat: no-repeat;
+    display: inline-block;
+    vertical-align: text-bottom;
+}
+
+.icon-omnivore {
+	background-position: 0px 0px;
+	width: 16px;
+	height: 16px;
+}
+
+.icon-pescetarian {
+	background-position: 0px -18px;
+	width: 16px;
+	height: 16px;
+}
+
+.icon-vegetarian {
+	background-position: 0px -36px;
+	width: 16px;
+	height: 16px;
+}
+
+.icon-vegan {
+	background-position: 0px -54px;
+	width: 16px;
+	height: 16px;
+}
+
+.icon-beef {
+	background-position: 0px -72px;
+	width: 21px;
+	height: 16px;
+}
+
+.icon-dairy {
+	background-position: 0px -90px;
+	width: 22px;
+	height: 16px;
+}
+
+.icon-eggs {
+	background-position: 0px -108px;
+	width: 22px;
+	height: 16px;
+}
+
+.icon-fish {
+	background-position: 0px -126px;
+	width: 24px;
+	height: 16px;
+}
+
+.icon-garlic {
+	background-position: 0px -144px;
+	width: 24px;
+	height: 16px;
+}
+
+.icon-gluten {
+	background-position: 0px -162px;
+	width: 24px;
+	height: 16px;
+}
+
+.icon-lamb {
+	background-position: 0px -180px;
+	width: 22px;
+	height: 16px;
+}
+
+.icon-nuts {
+	background-position: 0px -198px;
+	width: 21px;
+	height: 16px;
+}
+
+.icon-pork {
+	background-position: 0px -216px;
+	width: 24px;
+	height: 16px;
+}
+
+.icon-poultry {
+	background-position: 0px -234px;
+	width: 22px;
+	height: 16px;
+}
+
+.icon-shellfish {
+	background-position: 0px -252px;
+	width: 24px;
+	height: 16px;
+}
+
+.icon-soy {
+	background-position: 0px -270px;
+	width: 24px;
+	height: 16px;
+}
+
+.icon-omnivore.icon-24,
+.icon-pescetarian.icon-24,
+.icon-vegan.icon-24,
+.icon-vegetarian.icon-24,
+.icon-beef.icon-24,
+.icon-dairy.icon-24,
+.icon-eggs.icon-24,
+.icon-fish.icon-24,
+.icon-garlic.icon-24,
+.icon-gluten.icon-24,
+.icon-lamb.icon-24,
+.icon-nuts.icon-24,
+.icon-pork.icon-24,
+.icon-poultry.icon-24,
+.icon-shellfish.icon-24,
+.icon-soy.icon-24 {
+	background: url("../images/food_preferences_sprite_24.png");
+	background-image: url("../images/food_preferences_sprite.svg"), none;
+	background-size: 36px 432px
+}
+
+.icon-omnivore.icon-24 {
+	background-position: 0px 0px;
+	width: 24px;
+	height: 24px;
+}
+
+.icon-pescetarian.icon-24 {
+	background-position: 0px -27px;
+	width: 24px;
+	height: 24px;
+}
+
+.icon-vegetarian.icon-24 {
+	background-position: 0px -54px;
+	width: 24px;
+	height: 24px;
+}
+
+.icon-vegan.icon-24 {
+	background-position: 0px -81px;
+	width: 24px;
+	height: 24px;
+}
+
+.icon-beef.icon-24 {
+	background-position: 0px -108px;
+	width: 32px;
+	height: 24px;
+}
+
+.icon-dairy.icon-24 {
+	background-position: 0px -135px;
+	width: 33px;
+	height: 24px;
+}
+
+.icon-eggs.icon-24 {
+	background-position: 0px -162px;
+	width: 33px;
+	height: 24px;
+}
+
+.icon-fish.icon-24 {
+	background-position: 0px -189px;
+	width: 36px;
+	height: 24px;
+}
+
+.icon-garlic.icon-24 {
+	background-position: 0px -216px;
+	width: 36px;
+	height: 24px;
+}
+
+.icon-gluten.icon-24 {
+	background-position: 0px -243px;
+	width: 36px;
+	height: 24px;
+}
+
+.icon-lamb.icon-24 {
+	background-position: 0px -270px;
+	width: 33px;
+	height: 24px;
+}
+
+.icon-nuts.icon-24 {
+	background-position: 0px -297px;
+	width: 32px;
+	height: 24px;
+}
+
+.icon-pork.icon-24 {
+	background-position: 0px -324px;
+	width: 36px;
+	height: 24px;
+}
+
+.icon-poultry.icon-24 {
+	background-position: 0px -351px;
+	width: 33px;
+	height: 24px;
+}
+
+.icon-shellfish.icon-24 {
+	background-position: 0px -378px;
+	width: 36px;
+	height: 24px;
+}
+
+.icon-soy.icon-24 {
+	background-position: 0px -405px;
+	width: 36px;
+	height: 24px;
+}

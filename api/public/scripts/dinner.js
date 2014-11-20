@@ -41,17 +41,17 @@ function updateDinnerTable() {
         if (pref) {
 	        for (var j = 0; j < pref.length; j++) {
 	        	if (pref[j] === 0) {
-	        		$p.append('<img src="images/meat.png" alt="Omnivore">');
+	        		$p.append('<i class="icon-omnivore" alt="Omnivore" title="Omnivore" data-toggle="tooltip" data-placement="bottom"></i>');
 	        	}
 				else if (pref[j] === 1) {
-	        		$p.append('<img src="images/vegetarian.png" alt="Vegetarian">');
+	        		$p.append('<i class="icon-vegetarian" alt="Vegetarian" title="Vegetarian" data-toggle="tooltip" data-placement="bottom"></i>');
 	        	}        	
 	        	else if (pref[j] === 2) {
-	        		$p.append('<img src="images/vegan.png" alt="Vegan">');
+	        		$p.append('<i class="icon-vegan" alt="Vegan" title="Vegan" data-toggle="tooltip" data-placement="bottom"></i>');
 	        	}
 
 	        	if (pref[j] === 3) {
-	        		$p.append('<img src="images/gluten.png" alt="Gluten Free">');
+	        		$p.append('<i class="icon-gluten" alt="No Gluten" title="No Gluten" data-toggle="tooltip" data-placement="bottom"></i>');
 	        	}
 	        }	        
         }
@@ -60,6 +60,7 @@ function updateDinnerTable() {
         }        
         $row.append($name).append($p).append($notes);
         $tbody.append($row);
+	  	$('[data-toggle="tooltip"]').tooltip()
 	}	
 }
 
