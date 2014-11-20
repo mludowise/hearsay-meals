@@ -119,7 +119,7 @@ class CalendarViewController: UITableViewController {
                         var calendarEvent = item as GTLCalendarEvent
                         
                         // Is a lunch item & not a generic "TBA" lunch
-                        if (calendarEvent.summary == kLunchEventSummary && calendarEvent.descriptionProperty != kGenericLunchEventDescription) {
+                        if (calendarEvent.summary? == kLunchEventSummary && calendarEvent.descriptionProperty? != kGenericLunchEventDescription) {
                             var timeSinceSunday = calendarEvent.start.dateTime.date.timeIntervalSinceDate(sunday)
                             
                             var week = convertToWeeks(timeSinceSunday)
