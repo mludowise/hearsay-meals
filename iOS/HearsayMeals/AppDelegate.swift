@@ -11,6 +11,8 @@ import UIKit
 private let kParseApplicationId = "myq9zbMzdkBqqEyudRcwIR5yxnmwihlslqUvYh34"
 private let kParseClientKey = "sSDcYzwEBOuOGKYjuY28Skvalo2sImKNwXRt7v4q"
 
+internal let kThemeColor = UIColor(red: 31/255.0, green: 120/255.0, blue: 179/255.0, alpha: 1)
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -20,6 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         openURL url: NSURL,
         sourceApplication: String,
         annotation: AnyObject?) -> Bool {
+            setupColors()
             return GPPURLHandler.handleURL(url,
                 sourceApplication:sourceApplication,
                 annotation:annotation)
@@ -30,7 +33,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Parse.setApplicationId(kParseApplicationId,
             clientKey: kParseClientKey)
         PFAnalytics.trackAppOpenedWithLaunchOptions(launchOptions);
-        
+        setupColors()
         return true
     }
 
@@ -56,6 +59,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
-
+    private func setupColors() {
+        // Custom tab bar color
+        UITabBar.appearance().tintColor = kThemeColor
+        UIButton.appearance().tintColor = kThemeColor
+        UINavigationBar.appearance().tintColor = kThemeColor
+    }
 }
 

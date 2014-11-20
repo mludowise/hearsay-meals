@@ -11,8 +11,6 @@ import UIKit
 private let kCellIdentifier = "BeerRequestTableCell"
 private let kSectionFooterIdentifier = "BeerRequestSectionFooter"
 
-//var emptyKegReports : [String] = []
-
 class BeerViewController: UITableViewController {
     
     @IBOutlet weak var headerView: UIView!
@@ -32,6 +30,9 @@ class BeerViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Set background to clear so it doesn't look blue when selected
+        reportEmptyButton.backgroundColor = UIColor.clearColor()
+        reportEmptyButton.tintColor = UIColor.clearColor()
         
         kickedView.hidden = true
         currentKegLabel.text = ""
