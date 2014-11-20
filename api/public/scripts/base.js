@@ -1,5 +1,12 @@
 var parseApiUrl = "https://api.parse.com";
 
+function updateLoginInfo(user) {
+    if (user.picture) {
+        $('li.user').append("<img src='" + user.picture + "' width='30px'>");
+    }
+    $('li.user a').text(user.name);    
+}
+
 function apiRequest(url, data, method) {
     if (typeof method === "undefined"){
         method = "GET";

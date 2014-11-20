@@ -66,3 +66,22 @@ form.requestBeer {
 div.kicked span {
 	font-weight: normal;
 }
+
+li.user a {
+	float: right;
+}
+
+li.user img {
+	display: inline;
+	float: left;
+	margin-top: 10px;	
+}
+
+#savePrefs {
+	float: right;
+	margin-top: 20px;
+}
+
+.dinner {
+	margin-top: 20px;
+}

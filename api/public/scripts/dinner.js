@@ -1,5 +1,6 @@
 $(document).ready(function() {
 	var user = getCurrentUser();
+	updateLoginInfo(user);
 	if (user) {
 		var dinnerRequest = apiRequest('/1/classes/Dinner', {where: {'user_id' : user.objectId}}, 'GET');		
 	}
@@ -83,10 +84,23 @@ function toggleDinner(user) {
 	else {
 		var preferences = [parseInt($("input:radio[name ='preferences']:checked").attr('id'))];
 		var restrictions = parseInt($("input:checkbox[name ='restrictions']:checked").attr('id'));
+		var today = new Date();
+		today.setUTCHours(24, 0, 0, 0);
+		today.toISOString();
 		if (restrictions) {
 			preferences.push(restrictions);
 		}
-		var dinnerRequest = apiRequest('/1/classes/Dinner', {'picture': user.picture, 'name': user.name, 'user_id' : user.objectId, 'preferences' : preferences},'POST');
+		var data = {
+			'picture': user.picture, 
+			'name': user.name, 
+			'user_id' : user.objectId, 
+			'preferences' : preferences,
+			'order_date': {
+				'__type': 'Date',
+				'iso': today
+			}
+		};
+		var dinnerRequest = apiRequest('/1/classes/Dinner', data ,'POST');
 		$('#order-dinner').addClass('btn-danger');
 		$('#order-dinner').text('Dinner Ordered!');
 	}

@@ -27,14 +27,14 @@
             <li><a href="beer.html">Beer</a></li>
             </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="preferences.html">Log in</a></li>
+            <li class="user"><a href="preferences.html">Log in</a></li>
           </ul>
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->
     </nav>
     <div class="preferences">
-      <div class="col-md-1"></div>        
-      <div class="col-md-4">
+      <div class="col-md-3"></div>        
+      <div class="col-md-6">
         <h4>Dietary Preferences:</h4>          
         <ul>
           <li>
@@ -57,12 +57,13 @@
             <span><input id="3" name="restrictions" type="checkbox" value="3"></span>
           </li>
         </ul>
+        <button id="savePrefs" class="btn btn-primary">Save</button>        
       </div>
     </div>    
     </body>
     <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script type="text/javascript" src="scripts/bootstrap.min.js"></script>
     <script type="text/javascript" src="scripts/base.js"></script>
-    <script type="text/javascript" src="scripts/dinner.js"></script>
+    <script type="text/javascript" src="scripts/prefs.js"></script>
   </body>
 </html>
