@@ -18,10 +18,14 @@ $(document).ready(function() {
 	}
 	$('#order-dinner').on('click', function() {
 		toggleDinner(user);
-		getOrderedDinners();
-                $(".cat-image").show();
+		$(".cat-image").show();
+		updateDinnerTable();
 	});
 
+	updateDinnerTable();
+});
+
+function updateDinnerTable() {
 	var dinners = getOrderedDinners();
 	$tbody = $('#dinner-request-list tbody');
 	$tbody.empty();
@@ -56,8 +60,8 @@ $(document).ready(function() {
         }        
         $row.append($name).append($p).append($notes);
         $tbody.append($row);
-	}
-});
+	}	
+}
 
 function getOrderedDinners() {
 	var yesterday = new Date();
