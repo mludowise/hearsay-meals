@@ -35,10 +35,11 @@ class LunchEventViewController: UIViewController {
         super.viewDidLoad()
         dateFormatter.dateFormat = kDateFormat
         updateView()
+        updateTitle(currentLunchIndex)
     }
     
-    private func updateTitle() {
-        var calendarEvent = lunchEvents[currentLunchIndex]
+    private func updateTitle(forIndex: Int) {
+        var calendarEvent = lunchEvents[forIndex]
         var start = calendarEvent.start.dateTime.date
         title = dateFormatter.stringFromDate(start)
     }
@@ -104,7 +105,7 @@ class LunchEventViewController: UIViewController {
             if (nextIndex != nil) {
                 
                 // Update title
-                updateTitle()
+                updateTitle(nextIndex!)
                 
                 // Animate paging to next event
                 UIView.animateWithDuration(0.2, animations: { () -> Void in
