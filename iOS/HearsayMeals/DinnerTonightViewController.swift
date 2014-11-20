@@ -84,8 +84,9 @@ class DinnerTonightViewController: UITableViewController {
         var cell = tableView.dequeueReusableCellWithIdentifier(kCellIdentifier) as DinnerPeopleTableCell
         cell.nameLabel.text = ""
         
+        var userId = dinnerOrdersTonight[indexPath.row][kDinnerUserIdKey] as String
         var query = PFUser.query()
-        query.whereKey(kObjectId, equalTo: PFUser.currentUser().objectId)
+        query.whereKey(kObjectId, equalTo: userId)
         query.getFirstObjectInBackgroundWithBlock { (object: PFObject!, error: NSError!) -> Void in
             if (error != nil) {
                 NSLog("%@", error)
