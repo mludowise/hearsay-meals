@@ -85,7 +85,8 @@ function toggleDinner(user) {
 		var preferences = [parseInt($("input:radio[name ='preferences']:checked").attr('id'))];
 		var restrictions = parseInt($("input:checkbox[name ='restrictions']:checked").attr('id'));
 		var today = new Date();
-		today.setUTCHours(24, 0, 0, 0).toISOString();
+		today.setUTCHours(24, 0, 0, 0);
+		today.toISOString();
 		if (restrictions) {
 			preferences.push(restrictions);
 		}
