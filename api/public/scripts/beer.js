@@ -1,5 +1,6 @@
 $(document).ready(function() {
     var user = getCurrentUser();
+    updateLoginInfo(user);
     displayBeerRequests();
 
     var keg = getBeerOnTap();
