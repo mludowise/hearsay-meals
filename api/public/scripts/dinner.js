@@ -95,7 +95,10 @@ function toggleDinner(user) {
 			'name': user.name, 
 			'user_id' : user.objectId, 
 			'preferences' : preferences,
-			'order_date': today
+			'order_date': {
+				'__type': 'Date',
+				'iso': today
+			}
 		};
 		var dinnerRequest = apiRequest('/1/classes/Dinner', data ,'POST');
 		$('#order-dinner').addClass('btn-danger');
