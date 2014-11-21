@@ -51,6 +51,10 @@ body {
 	width: 20px;
 }
 
+#beer-request-list img {
+	vertical-align: middle;
+}
+
 .beers {
 	display: inline;
 }
