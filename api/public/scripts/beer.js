@@ -26,7 +26,8 @@ $(document).ready(function() {
         var beerType = $('#beerType').val();
         var beerRequest = {
             name: beerType,
-            user_id: user.objectId
+            user_id: user.objectId,
+            votes: [user.objectId]
         };
         beerRequestResult = saveBeerRequest(beerRequest);
         displayBeerRequests();
