@@ -67,7 +67,11 @@ form.requestBeer {
 	display: none;
 }
 
-.update-keg {
+.update-keg, .dismiss-request {
+	margin-left: 18px;
+}
+
+#add-new-keg {
 	margin-left: 18px;
 }
 

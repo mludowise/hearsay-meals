@@ -61,6 +61,16 @@ function getCurrentUser(){
     return results;
 }
 
+function currentUserIsAdmin(){    
+    var user = getCurrentUser();
+    var isAdmin = false;
+    // Rather than return user.admin
+    // we only change the value in case this is not a valid value
+    if (user.admin === true){
+        isAdmin = user.admin;
+    }
+    return isAdmin;
+}
 
 function findUser(id){
     results = apiRequest('/1/users/' + id);
