@@ -8,7 +8,7 @@ function updateLoginInfo(user) {
     if (user.picture) {
         $('li.user').append("<img src='" + user.picture + "' width='30px'>");
     }
-    $('li.user a').text(user.name);    
+    $('li.user a').text(user.name);
 }
 
 function apiRequest(url, data, method) {
@@ -61,7 +61,7 @@ function getCurrentUser(){
     return results;
 }
 
-function currentUserIsAdmin(){    
+function currentUserIsAdmin(){
     var user = getCurrentUser();
     var isAdmin = false;
     // Rather than return user.admin
@@ -70,6 +70,16 @@ function currentUserIsAdmin(){
         isAdmin = user.admin;
     }
     return isAdmin;
+}
+
+function showAdmin(){
+    if (currentUserIsAdmin()){
+        $('.admin').show();
+    }
+    else
+    {
+        $('.admin').hide();
+    }
 }
 
 function findUser(id){
@@ -137,5 +147,5 @@ function onSignInCallback(response) {
 }
 
 $(document).ready(function() {
-    
+    showAdmin();
 });
