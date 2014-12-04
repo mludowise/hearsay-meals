@@ -2,6 +2,12 @@ body {
 	overflow-x: hidden;
 }
 
+.loading {
+	display: none;
+	height: 40px;
+	margin-top: 15px;
+}
+
 .countdown {
 	display: inline;
 	float: right;
@@ -47,12 +53,29 @@ body {
 	width: 20px;
 }
 
-.beers {
-	display: inline;
+#beer-request-list img {
+	vertical-align: middle;
 }
 
-.onTap {
-	float: left;
+.beer-request-name {
+	vertical-align: middle !important;
+}
+
+.on-tap {
+	background-color: #f9f9f9;
+	margin: 0px 15px;
+	padding-bottom: 15px;
+	border: 1px solid #ddd;
+}
+
+.row.kicked-keg {
+	margin: 10px 0px;
+}
+
+.beer-text-input {
+	width: 200px;
+	vertical-align: middle;
+	display: inline-block;
 }
 
 form.requestBeer {
@@ -63,10 +86,18 @@ form.requestBeer {
 	display: none;
 }
 
+.dismiss-request {
+	margin-left: 9px;
+}
+
+.update-keg, .dismiss-request {
+	vertical-align: middle;
+	display: inline-block !important;
+}
+
 div.kicked span {
 	font-weight: normal;
 }
-
 li.user a {
 	float: right;
 }
@@ -327,4 +358,10 @@ li.user img {
 	background-position: 0px -405px;
 	width: 36px;
 	height: 24px;
+}
+
+/* Admin Classes - These must be last */
+
+.admin {
+	display: none;
 }

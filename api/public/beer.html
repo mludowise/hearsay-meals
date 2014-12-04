@@ -37,24 +37,33 @@
     </div>
     <div class="row">
       <div class="col-xs-1"></div>
-      <div class="col-xs-5 beers">
-        <div class="onTap">
-          <h4>Currently on tap:</h4>
-          <div id="beerOnTap"></div>
-          <div class="kicked">
-            <input id="kickedKeg" type="checkbox">
-            <label for="kickedKeg"><span>Keg is kicked!</span></label>            
-          </div>
-        </div>
-        <form role="form" class="requestBeer">
-          <div class="form-group">
-            <label for="beerType"><h4>Beer Type</h4></label>
-            <input type="text" class="form-control" id="beerType">
-          </div>
-          <button type="button" class="btn btn-danger btn-sm" id="request-beer">
-            Request Beer
-          </button>
-        </form>
+      <div class="col-xs-5">
+        <h1>Currently on tap:</h1>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-1"></div>
+      <div class="col-xs-9 on-tap img-rounded">
+          <img src="/images/ajax-loader.gif" class="loading"></img>
+          <div id="beer-on-tap"></div>
+      </div>
+    </div>
+    <div class="row kicked-keg">
+      <div class="col-xs-1"></div>
+      <div class="col-xs-9">
+        <button type="button" class="btn btn-danger" id="kicked-keg">
+          Report Keg Kicked
+        </button>
+        <input type="text" class="form-control admin beer-text-input" id="update-keg" placeholder="Update Keg">
+        <button type="button" class="btn btn-default admin" id="add-new-keg">
+          Update Keg
+        </button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-1"></div>
+      <div class="col-xs-5">
+        <h1>Beer Requests:</h1>
       </div>
     </div>
     <div class="row">
@@ -63,13 +72,24 @@
         <table id="beer-request-list" class="table table-striped">
           <thead>
             <tr>
-              <th>Beer Type</th>
-              <th>Votes</th>
+              <th class="col-md-5">Beer Type</th>
+              <th class="col-md-2">Votes</th>
+              <th class="col-md-4 admin" style="display:none;">Admin Actions</th>
             </tr>
           </thead>
           <tbody>
           </tbody>
         </table>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-1"></div>
+      <div class="col-xs-9">
+          <input type="text" class="form-control beer-text-input" id="beer-type" placeholder="Request Another Beer">
+          <button type="button" class="btn btn-default" id="request-beer">
+            Request
+          </button>
+        </form>
       </div>
     </div>
     
