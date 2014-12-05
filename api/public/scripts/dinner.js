@@ -101,11 +101,13 @@ function toggleDinner(user) {
         $('#order-dinner').text('Order Dinner Tonight');
     }
     else {
+        var specialRequest = $('#special-notes').val();
+        $('#special-notes').val('');
         var data = {
             'picture': user.picture,
             'name': user.name,
             'user_id' : user.objectId,
-            'special_request' : $('#special-notes').val(),
+            'special_request' : specialRequest,
             'order_date': {
                 '__type': 'Date',
                 'iso': getOrderDateISO()
