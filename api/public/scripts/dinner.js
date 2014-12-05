@@ -7,17 +7,26 @@ $(document).ready(function() {
 	else {
 		return;
 	}
-
-	if (dinnerRequest.results[0]) {
-		$('#order-dinner').addClass('btn-danger');
-		$('#order-dinner').text('Dinner Ordered!');
-		var prefs = dinnerRequest.results[0].preferences;
-		for (pref in prefs) {
-			$('#'+prefs[pref]).attr('checked', true);
-		}
+	var userDinners = dinnerRequest.results;
+	var yesterday = new Date();
+	yesterday.setUTCHours(0, 0, 0, 0);	
+	var dinnerReqToday;
+	for (var i = 0; i < userDinners.length; i++) {
+		var orderDateISO = userDinners[i].order_date.iso;
+	    var date = new Date(orderDateISO);
+	    if (date > yesterday) {
+	    	dinnerReqToday = userDinners[i];
+			$('#order-dinner').addClass('btn-danger');
+			$('#order-dinner').text('Dinner Ordered!');
+			var prefs = user.preferences;
+			for (pref in prefs) {
+				$('#'+prefs[pref]).attr('checked', true);
+			}	    	
+	    }  
 	}
+
 	$('#order-dinner').on('click', function() {
-		toggleDinner(user);
+		toggleDinner(user, dinnerReqToday);
 		$(".cat-image").show();
 		updateDinnerTable();
 	});
@@ -67,7 +76,7 @@ function updateDinnerTable() {
 function getOrderedDinners() {
 	var yesterday = new Date();
 	yesterday.setUTCHours(0, 0, 0, 0);
-	var dinnerRequest = apiRequest('/1/classes/Dinner', 'GET');
+	var dinnerRequest = apiRequest('/1/classes/Dinner', {}, 'GET');
 	var dinners = dinnerRequest.results;
 	var y = [];
 	for (var i = 0; i < dinners.length; i++) { 
@@ -80,10 +89,9 @@ function getOrderedDinners() {
 	return y;
 }
 
-function toggleDinner(user) {
-	if ($('#order-dinner').hasClass('btn-danger')) {
-		var dinnerRequest = apiRequest('/1/classes/Dinner', {where: {'user_id' : user.objectId}}, 'GET');
-		var removed = apiRequest('/1/classes/Dinner/' + dinnerRequest.results[0].objectId ,{}, 'DELETE');		
+function toggleDinner(user, dinnerReqToday) {
+	if ($('#order-dinner').hasClass('btn-danger') && dinnerReqToday) {
+		var removed = apiRequest('/1/classes/Dinner/' + dinnerReqToday.objectId , {}, 'DELETE');		
 		$('#order-dinner').removeClass('btn-danger');
 		$('#order-dinner').text('Order Dinner Tonight!');		
 	}
@@ -93,6 +101,7 @@ function toggleDinner(user) {
 		var today = new Date();
 		today.setUTCHours(24, 0, 0, 0);
 		today.toISOString();
+		console.log(today);
 		if (restrictions) {
 			preferences.push(restrictions);
 		}
