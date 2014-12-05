@@ -76,7 +76,15 @@ li.user img {
 }
 
 .cat-image {
-        display: none;
+	display: none;
+}
+
+#order-dinner {
+	margin-bottom: 10px;
+}
+
+#special-notes {
+	margin-bottom: 20px;
 }
 
 /* beer.html styles

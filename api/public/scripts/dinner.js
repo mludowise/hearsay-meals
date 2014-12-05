@@ -55,8 +55,8 @@ function updateDinnerTable() {
             }
           }         
         }
-        if (currentUser.special_request) {
-          $notes.append(currentUser.special_request);
+        if (request.special_request) {
+          $notes.append(request.special_request);
         }        
         $row.append($name).append($p).append($notes);
         $tbody.append($row);
@@ -80,27 +80,21 @@ function getOrderedDinners() {
   return y;
 }
 
-function toggleDinner(user) {
-  if ($('#order-dinner').hasClass('btn-danger')) {
-    var dinnerRequest = apiRequest('/1/classes/Dinner', {where: {'user_id' : user.objectId}}, 'GET');
-    var removed = apiRequest('/1/classes/Dinner/' + dinnerRequest.results[0].objectId ,{}, 'DELETE');   
+function toggleDinner(user, dinnerReqToday) {
+  if ($('#order-dinner').hasClass('btn-danger') && dinnerReqToday) {
+    var removed = apiRequest('/1/classes/Dinner/' + dinnerReqToday.objectId , {}, 'DELETE');    
     $('#order-dinner').removeClass('btn-danger');
     $('#order-dinner').text('Order Dinner Tonight!');   
   }
   else {
-    var preferences = [parseInt($("input:radio[name ='preferences']:checked").attr('id'))];
-    var restrictions = parseInt($("input:checkbox[name ='restrictions']:checked").attr('id'));
     var today = new Date();
     today.setUTCHours(24, 0, 0, 0);
     today.toISOString();
-    if (restrictions) {
-      preferences.push(restrictions);
-    }
     var data = {
       'picture': user.picture, 
       'name': user.name, 
       'user_id' : user.objectId, 
-      'preferences' : preferences,
+      'special_request' : $('#special-notes').val(),
       'order_date': {
         '__type': 'Date',
         'iso': today
@@ -108,7 +102,7 @@ function toggleDinner(user) {
     };
     var dinnerRequest = apiRequest('/1/classes/Dinner', data ,'POST');
     $('#order-dinner').addClass('btn-danger');
-    $('#order-dinner').text('Dinner Ordered!');
+    $('#order-dinner').text('Cancel dinner order!');
   }
 }
 
