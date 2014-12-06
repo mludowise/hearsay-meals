@@ -66,7 +66,7 @@ function currentUserIsAdmin(){
     var isAdmin = false;
     // Rather than return user.admin
     // we only change the value in case this is not a valid value
-    if (user.admin === true){
+    if (user && user.admin === true){
         isAdmin = user.admin;
     }
     return isAdmin;
