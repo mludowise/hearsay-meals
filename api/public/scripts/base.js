@@ -102,7 +102,6 @@ function userSignedIn(){
 }
 
 function onSignInCallback(response) {
-    console.log(response);
     key = "AIzaSyAW7z4SEmncGb9ElHfWlCOn6gejEPm0vHo";
     if (response.status.signed_in) {
         $('#gConnect').hide();
@@ -141,9 +140,7 @@ function onSignInCallback(response) {
               });
             });
         }
-        else {
-            window.location.href = "dinner.html";            
-        }
+        window.location.href = "dinner.html";
     }
 }
 
