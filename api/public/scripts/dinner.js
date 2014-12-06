@@ -32,7 +32,7 @@ $(document).ready(function() {
 
 function getOrderDateISO(){
     var orderDate = new Date();
-    orderDate.setUTCHours(16, 0, 0, 0);
+    orderDate.setHours(16, 0, 0, 0);
     return orderDate.toISOString();
 }
 
