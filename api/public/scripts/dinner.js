@@ -124,14 +124,19 @@ function countdown() {
     var hoursLeft = 15-now.getHours();
     var secondsLeft;
     var minutesLeft;
+    var prefix = "";
     if (hoursLeft < 0) {
         hoursLeft = 16-now.getHours();
         minutesLeft = now.getMinutes();
         secondsLeft = now.getSeconds();
+        if (hoursLeft === 0) {
+            prefix = "-";
+        }
     }
     else {
         minutesLeft = 59-now.getMinutes();
         secondsLeft = 59-now.getSeconds();
+        prefix = "";        
     }
     
     //format 0 prefixes
@@ -139,5 +144,5 @@ function countdown() {
     if(secondsLeft<10) secondsLeft = "0"+secondsLeft;
     var label = "<span class='dinner-label'>Time left to order dinner:</span>";
     $('.countdown').html(label +
-        "<span class='time'>" + hoursLeft+":"+minutesLeft+":"+secondsLeft + "</span>");
+        "<span class='time'>" + prefix + hoursLeft+":"+minutesLeft+":"+secondsLeft + "</span>");
 }
