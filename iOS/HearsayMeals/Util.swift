@@ -15,6 +15,8 @@ private var dateFormatter = NSDateFormatter()
 private let kDayFormat = "EEE"
 private let kDateFormat = "MMM d"
 
+//This is a comment.
+
 func delay(delay:Double, closure:()->()) {
     dispatch_after(
         dispatch_time(
