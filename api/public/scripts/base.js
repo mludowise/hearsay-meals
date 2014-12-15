@@ -8,7 +8,7 @@ function updateLoginInfo(user) {
     if (user.picture) {
         $('li.user').append("<img src='" + user.picture + "' width='30px'>");
     }
-    $('li.user a').text("Dietary Preferences");
+    $('li.user a').text(user.name);
 }
 
 function apiRequest(url, data, method) {
