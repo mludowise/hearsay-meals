@@ -4,7 +4,6 @@ var utils = {
         return number;
     }
 }
-
 var xmas = {};
 xmas.imagesBaseUrl = './images/xmas/';
 xmas.imageNames = ['','spikey-plant.png','reindeer.png', 'bells.png', 'bird.png'];

@@ -1,82 +1,131 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Hearsay Meals - Dietary Preferences</title>
-        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-        <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
-        <link rel="stylesheet" type="text/css" href="css/styles.css">        
-    </head>
-    <body>
+
+<head>
+    <title>Hearsay Meals - Dietary Preferences</title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
+</head>
+
+<body>
     <nav class="navbar navbar-default" role="navigation">
-      <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="index.html">Hearsay Meals</a>
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">Hearsay Meals</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li><a href="dinner.html">Dinner</a>
+                    </li>
+                    <li><a href="beer.html">Beer</a>
+                    </li>
+                    <li class="active"><a href="preference.html">Dietary Preferences</a>
+                    </li>
+
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="user">
+                        <p class="navbar-text">Log in</p>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
         </div>
-
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          <ul class="nav navbar-nav">
-            <li><a href="dinner.html">Dinner</a></li>
-            <li><a href="beer.html">Beer</a></li>
-            <li class="active"><a  href="preference.html">Dietary Preferences</a></li>
-
-            </ul>
-          <ul class="nav navbar-nav navbar-right">
- <li class="user"><p class="navbar-text">Log in</p></li>
-          </ul>
-        </div><!-- /.navbar-collapse -->
-      </div><!-- /.container-fluid -->
+        <!-- /.container-fluid -->
     </nav>
-    <div class="preferences">
-      <div class="col-md-3"></div>        
-      <div class="col-md-6">
-        <h4>Dietary Preferences:</h4>          
-        <ul>
-          <li>
-            <i class="icon-omnivore icon-24" alt="Omnivore"></i> Omnivore
-            <span><input id="0" name="preferences" checked="true" type="radio"></span>
-          </li>            
-          <li>
-            <i class="icon-vegetarian icon-24" alt="Vegetarian"></i> Vegetarian
-            <span><input id="1" name="preferences" type="radio" value="1"></span>
-          </li>
-          <li>
-            <i class="icon-vegan icon-24" alt="Vegan"></i> Vegan
-            <span><input id="2" name="preferences" type="radio" value="2"></span>
-          </li>  
-        </ul>            
-        <h4>Restrictions:</h4>          
-        <ul>
-          <li>
-            <i class="icon-gluten icon-24" alt="No Gluten"></i> No Gluten
-            <span><input id="3" name="restrictions" type="checkbox" value="3"></span>
-          </li>
-        </ul>
-        <button id="savePrefs" class="btn btn-primary">Save</button>        
-      </div>
-    </div>    
+    <div>
+        <div class="col-md-1"></div>
+        <div class="col-md-5">
+            <h1>Dietary Preferences</h1> 
+            <form role="form">
+
+                <div class="well form-group">
+                    <h4>Diet</h4> 
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
+                            <i class="icon-omnivore icon-small" alt="Omnivore"></i> Omnivore
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
+                            <i class="icon-vegetarian icon-small" alt="Vegetarian"></i> Vegetarian</label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
+                            <i class="icon-vegan icon-small" alt="Vegan"></i> Vegan</label>
+                    </div>
+                    <hr/>
+                    <h4>Restrictions</h4> 
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" value=""><i class="icon-gluten icon-small" alt="No Gluten"></i> No gluten
+                        </label>
+                    </div>
+                    <hr/>
+                    <h4>Custom note</h4> 
+                    <textarea class="form-control" rows="4" placeholder="Ex: I don't eat garlic but I like onion."></textarea>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-lg">Save preferences</button>
+                </div>
+            </form>
+            <!-- Temp br to space the two from blocks -->
+            <br/>
+
+            <ul>
+                <li>
+                    <i class="icon-omnivore icon-24" alt="Omnivore"></i> Omnivore
+                    <span><input id="0" name="preferences" checked="true" type="radio"></span>
+                </li>
+                <li>
+                    <i class="icon-vegetarian icon-24" alt="Vegetarian"></i> Vegetarian
+                    <span><input id="1" name="preferences" type="radio" value="1"></span>
+                </li>
+                <li>
+                    <i class="icon-vegan icon-24" alt="Vegan"></i> Vegan
+                    <span><input id="2" name="preferences" type="radio" value="2"></span>
+                </li>
+            </ul>
+            <h4>Restrictions:</h4> 
+            <ul>
+                <li>
+                    <i class="icon-gluten icon-24" alt="No Gluten"></i> No Gluten
+                    <span><input id="3" name="restrictions" type="checkbox" value="3"></span>
+                </li>
+            </ul>
+            <button id="savePrefs" class="btn btn-primary">Save</button>
+        </div>
+    </div>
     <footer class="footer">
-      <div class="container">
-        <p class="text-muted">
-        <a href="mailto:hearsaymeals-dev@hearsaycorp.com?Subject=Feedback" target="_top">
+        <div class="container">
+            <p class="text-muted">
+                <a href="mailto:hearsaymeals-dev@hearsaycorp.com?Subject=Feedback" target="_top">
 Send Feedback</a> |
-        <a href="mailto:hearsaymeals-dev@hearsaycorp.com?Subject=Bug%20Report" target="_top">
+                <a href="mailto:hearsaymeals-dev@hearsaycorp.com?Subject=Bug%20Report" target="_top">
 Report a Bug</a> |
-		<a href="http://goo.gl/forms/tmTroqEdQi" target="_blank">Contribute</a>
-</p>
-      </div>
+                <a href="http://goo.gl/forms/tmTroqEdQi" target="_blank">Contribute</a>
+            </p>
+        </div>
     </footer>
-    </body>
-    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
-    <script type="text/javascript" src="scripts/bootstrap.min.js"></script>
-    <script type="text/javascript" src="scripts/base.js"></script>
-    <script type="text/javascript" src="scripts/prefs.js"></script>
-  </body>
+</body>
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript" src="scripts/bootstrap.min.js"></script>
+<script type="text/javascript" src="scripts/base.js"></script>
+<script type="text/javascript" src="scripts/prefs.js"></script>
+<script type="text/javascript" src="scripts/xmas.js"></script>
+</body>
+
 </html>
