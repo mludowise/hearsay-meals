@@ -53,60 +53,37 @@
                     <h4>Diet</h4> 
                     <div class="radio">
                         <label>
-                            <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
+                            <input type="radio" name="preferences" id="0" value="0" checked>
                             <i class="icon-omnivore icon-small" alt="Omnivore"></i> Omnivore
                         </label>
                     </div>
                     <div class="radio">
                         <label>
-                            <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
+                            <input type="radio" name="preferences" id="1" value="1" checked>
                             <i class="icon-vegetarian icon-small" alt="Vegetarian"></i> Vegetarian</label>
                     </div>
                     <div class="radio">
                         <label>
-                            <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
+                            <input type="radio" name="preferences" id="2" value="2" checked>
                             <i class="icon-vegan icon-small" alt="Vegan"></i> Vegan</label>
                     </div>
                     <hr/>
                     <h4>Restrictions</h4> 
                     <div class="checkbox">
                         <label>
-                            <input type="checkbox" value=""><i class="icon-gluten icon-small" alt="No Gluten"></i> No gluten
+                            <input id="3" type="checkbox" name="restrictions" value="3"><i class="icon-gluten icon-small" alt="No Gluten"></i> No gluten
                         </label>
                     </div>
                     <hr/>
                     <h4>Custom note</h4> 
-                    <textarea class="form-control" rows="4" placeholder="Ex: I don't eat garlic but I like onion."></textarea>
+                    <textarea id="customPrefs" class="form-control" rows="4" placeholder="Ex: I don't eat garlic but I like onion."></textarea>
                 </div>
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary btn-lg">Save preferences</button>
+                    <button id="savePrefs" type="submit" class="btn btn-primary btn-lg">Save preferences</button>
                 </div>
             </form>
             <!-- Temp br to space the two from blocks -->
             <br/>
-
-            <ul>
-                <li>
-                    <i class="icon-omnivore icon-24" alt="Omnivore"></i> Omnivore
-                    <span><input id="0" name="preferences" checked="true" type="radio"></span>
-                </li>
-                <li>
-                    <i class="icon-vegetarian icon-24" alt="Vegetarian"></i> Vegetarian
-                    <span><input id="1" name="preferences" type="radio" value="1"></span>
-                </li>
-                <li>
-                    <i class="icon-vegan icon-24" alt="Vegan"></i> Vegan
-                    <span><input id="2" name="preferences" type="radio" value="2"></span>
-                </li>
-            </ul>
-            <h4>Restrictions:</h4> 
-            <ul>
-                <li>
-                    <i class="icon-gluten icon-24" alt="No Gluten"></i> No Gluten
-                    <span><input id="3" name="restrictions" type="checkbox" value="3"></span>
-                </li>
-            </ul>
-            <button id="savePrefs" class="btn btn-primary">Save</button>
         </div>
     </div>
     <footer class="footer">
