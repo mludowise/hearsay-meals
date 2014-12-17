@@ -6,7 +6,7 @@ function updateLoginInfo(user) {
         return;
     }
     if (user.picture) {
-        $('li.user').append("<img src='" + user.picture + "' width='30px'>");
+        $('li.user').prepend("<img src='" + user.picture + "' width='30px'>");
     }
     $('li.user p').text(user.name);
 }
