@@ -32,6 +32,7 @@ function apiRequest(url, data, method) {
         'X-Parse-Application-Id': 'myq9zbMzdkBqqEyudRcwIR5yxnmwihlslqUvYh34',
         'X-Parse-REST-API-Key': '8Zwn2jGVUZEimJ9YYJUorF305QCAg9qZaWsUVVPZ'
     };
+
     var sessionToken = localStorage.getItem('sessionToken');
 
     if (sessionToken !== null) {
