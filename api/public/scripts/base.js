@@ -6,24 +6,23 @@ function updateLoginInfo(user) {
         return;
     }
     if (user.picture) {
-        $('li.user').append("<img src='" + user.picture + "' width='30px'>");
+        $('li.user').prepend("<img src='" + user.picture + "' width='30px'>");
     }
-    $('li.user a').text(user.name);
+    $('li.user p').text(user.name);
 }
 
 function apiRequest(url, data, method) {
-    if (typeof method === "undefined"){
+    if (typeof method === "undefined") {
         method = "GET";
     }
-    if (typeof data === "undefined"){
+    if (typeof data === "undefined") {
         data = {};
     }
 
-    if ($.inArray(method, ['POST', 'PUT']) >= 0){
+    if ($.inArray(method, ['POST', 'PUT']) >= 0) {
         data = JSON.stringify(data);
         contentType = 'application/json';
-    }
-    else {
+    } else {
         contentType = 'application/x-www-form-urlencoded; charset=UTF-8';
     }
 
@@ -36,7 +35,7 @@ function apiRequest(url, data, method) {
 
     var sessionToken = localStorage.getItem('sessionToken');
 
-    if (sessionToken !== null){
+    if (sessionToken !== null) {
         headers['X-Parse-Session-Token'] = sessionToken;
     }
 
@@ -48,7 +47,7 @@ function apiRequest(url, data, method) {
         contentType: contentType,
         dataType: 'json',
         async: false,
-        success: function(data, status, jqXHR){
+        success: function (data, status, jqXHR) {
             results = data;
         }
     });
@@ -56,38 +55,36 @@ function apiRequest(url, data, method) {
     return results;
 }
 
-function getCurrentUser(){
+function getCurrentUser() {
     results = apiRequest('/1/users/me');
     return results;
 }
 
-function currentUserIsAdmin(){
+function currentUserIsAdmin() {
     var user = getCurrentUser();
     var isAdmin = false;
     // Rather than return user.admin
     // we only change the value in case this is not a valid value
-    if (user && user.admin === true){
+    if (user && user.admin === true) {
         isAdmin = user.admin;
     }
     return isAdmin;
 }
 
-function showAdmin(){
-    if (currentUserIsAdmin()){
+function showAdmin() {
+    if (currentUserIsAdmin()) {
         $('.admin').show();
-    }
-    else
-    {
+    } else {
         $('.admin').hide();
     }
 }
 
-function findUser(id){
+function findUser(id) {
     results = apiRequest('/1/users/' + id);
     return results;
 }
 
-function userLogin(email){
+function userLogin(email) {
     var data = {
         username: email,
         password: 'password'
@@ -96,7 +93,7 @@ function userLogin(email){
     return results;
 }
 
-function userSignedIn(){
+function userSignedIn() {
     var sessionToken = localStorage.getItem('sessionToken');
     return sessionToken !== null;
 }
@@ -105,29 +102,26 @@ function onSignInCallback(response) {
     key = "AIzaSyAW7z4SEmncGb9ElHfWlCOn6gejEPm0vHo";
     if (response.status.signed_in) {
         $('#gConnect').hide();
-        if (!userSignedIn()){
-            gapi.client.load('oauth2', 'v2', function() {
-                gapi.client.oauth2.userinfo.get().execute(function(resp) {
+        if (!userSignedIn()) {
+            gapi.client.load('oauth2', 'v2', function () {
+                gapi.client.oauth2.userinfo.get().execute(function (resp) {
                     if (resp.hd !== 'hearsaycorp.com') {
                         alert('You must have a Hearsay email to use this app');
                         return;
                     }
                     var storedEmail = localStorage.getItem('email');
                     var user = null;
-                    if (storedEmail !== null)
-                    {
+                    if (storedEmail !== null) {
                         user = userLogin(storedEmail);
-                    }
-                    else
-                    {
+                    } else {
                         user = userLogin(resp.email);
-                        if (user === null){
+                        if (user === null) {
                             var data = {
-                                email : resp.email,
-                                password : 'password',
-                                username : resp.email,
-                                name : resp.name,
-                                picture : resp.picture,
+                                email: resp.email,
+                                password: 'password',
+                                username: resp.email,
+                                name: resp.name,
+                                picture: resp.picture,
                                 admin: false,
                                 preferences: [0]
                             };
@@ -140,13 +134,12 @@ function onSignInCallback(response) {
                     window.location.href = "dinner.html";
                 });
             });
-        }
-        else {
+        } else {
             window.location.href = "dinner.html";
         }
     }
 }
 
-$(document).ready(function() {
+$(document).ready(function () {
     showAdmin();
 });
