@@ -1,3 +1,5 @@
+var parseApiUrl = "https://api.parse.com";
+
 function updateLoginInfo(user) {
     if (!user) {
         window.location.href = "index.html";

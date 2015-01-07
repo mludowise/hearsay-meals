@@ -1,4 +1,3 @@
-var parseApiUrl = "https://api.parse.com";
 var googleKey = "AIzaSyAW7z4SEmncGb9ElHfWlCOn6gejEPm0vHo";
 
 function getParseKeys() {
