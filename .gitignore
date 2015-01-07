@@ -1,4 +1,5 @@
-
 *.xcuserstate
+
 api/config/global.json
 api/config
+api/public/scripts/keys.js
