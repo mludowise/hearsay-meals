@@ -7,15 +7,21 @@
 //
 
 import UIKit
+import MessageUI
 
-class SettingsViewController: UITableViewController {
+class SettingsViewController: UITableViewController, MFMailComposeViewControllerDelegate {
 
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var emailLabel: UILabel!
     
     @IBOutlet weak var dietaryRestrictionsCell: UITableViewCell!
+    @IBOutlet weak var checkForUpdatesCell: UITableViewCell!
+    @IBOutlet weak var sendFeedbackCell: UITableViewCell!
+    @IBOutlet weak var reportBugCell: UITableViewCell!
     @IBOutlet weak var signOutCell: UITableViewCell!
+    
+    var mailComposeViewController = MFMailComposeViewController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,10 +37,38 @@ class SettingsViewController: UITableViewController {
         
         if (selectedCell == signOutCell) {
             onSignOutButton()
+        } else if (selectedCell == checkForUpdatesCell) {
+            
+        } else if (selectedCell == sendFeedbackCell) {
+            sendMail("Feedback")
+        } else if (selectedCell == reportBugCell) {
+            sendMail("Bug Report")
         }
     }
     
-    func onSignOutButton() {
+    private func sendMail(subject: String) {
+        if (MFMailComposeViewController.canSendMail()) {
+//            mailComposeViewController.mailComposeDelegate = self
+            mailComposeViewController.setSubject(subject)
+            // TODO: update 
+//            mail.setToRecipients([kReportBugAddress])
+            mailComposeViewController.setToRecipients(["mludowise@gmail.com"])
+            self.presentViewController(mailComposeViewController, animated: true, completion: nil)
+        } else {
+            var alert = UIAlertView(title: "This device cannot send mail.",
+                message: "Please email \(kReportBugAddress) to send feedback or report bugs.",
+                delegate: nil,
+                cancelButtonTitle: "OK")
+            alert.show()
+        }
+    }
+    
+//    func mailComposeController(controller: MFMailComposeViewController!, didFinishWithResult result: MFMailComposeResult, error: NSError!) {
+//        println("dismissed")
+//        self.dismissViewControllerAnimated(true, completion: nil)
+//    }
+    
+    private func onSignOutButton() {
         GPPSignIn.sharedInstance().signOut()
         GPPSignIn.sharedInstance().disconnect()
         dismissViewControllerAnimated(true, completion: nil)
