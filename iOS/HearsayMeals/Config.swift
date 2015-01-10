@@ -11,3 +11,4 @@ import Foundation
 let kOfficeTimeZone = NSTimeZone(name: "US/Pacific")!
 let kMinDinnerOrders = 4
 let kTimeToOrderBy = (hour: 16, minute: 0) // 4pm
+let kReportBugAddress = "hearsaymeals-dev@hearsaycorp.com"
