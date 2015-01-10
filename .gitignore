@@ -2,8 +2,7 @@
 iOS/HearsayMeals.xcodeproj/xcuserdata/*
 *.xcuserstate
 
-api/config/global.json
-api/config
-api/public/scripts/keys.js
+api/config/local.json
 
 .DS_Store
+
