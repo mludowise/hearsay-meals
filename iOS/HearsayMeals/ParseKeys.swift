@@ -19,11 +19,7 @@ let kUserPreferenceNote = "preference_note"
 let kBeerRequestTableKey = "BeerRequest"
 let kBeerRequestNameKey = "name"
 let kBeerRequestUserKey = "user_id"
-let kBeerRequestInactiveKey = "inactive"
-
-let kBeerVotesTableKey = "BeerVotes"
-let kBeerVotesBeerKey = "beer_request_id"
-let kBeerVotesUserKey = "user_id"
+let kBeerRequestVotesKey = "votes"
 
 let kKegTableKey = "Keg"
 let kKegBeerNameKey = "beerName"
