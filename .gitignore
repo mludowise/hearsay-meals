@@ -2,3 +2,5 @@
 *.xcuserstate
 api/config/global.json
 api/config
+
+.DS_Store
