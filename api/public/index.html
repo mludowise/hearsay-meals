@@ -40,10 +40,8 @@
       <button class="g-signin"
           data-scope="https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/userinfo.email"
           data-requestvisibleactions="http://schemas.google.com/AddActivity"
-          data-clientId="966122623899-07cog3u9lpipk8q4qo9bvmn51v7h01m5.apps.googleusercontent.com"
           data-callback="onSignInCallback"
           data-theme="dark"
-          key="AIzaSyAW7z4SEmncGb9ElHfWlCOn6gejEPm0vHo"
           data-cookiepolicy="single_host_origin">
       </button>
     </div>
@@ -61,4 +59,8 @@ Report a Bug</a> |
     </footer>
     </body>
     <script type="text/javascript" src="scripts/bootstrap.min.js"></script>
+    <script type="text/javascript">
+    	$(".g-signin").attr("data-clientId", getGoogleClientId());
+    	$(".g-signin").attr("key", googleKey);
+    </script>
 </html>

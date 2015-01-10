@@ -1,0 +1,22 @@
+{
+    "applications": {
+        "Hearsay Meals": {
+            "applicationId": "myq9zbMzdkBqqEyudRcwIR5yxnmwihlslqUvYh34", 
+            "masterKey": "sAG9ecM32AnFOANz4h4hnknW2NOC9Rz8P17hzR48"
+        }, 
+        "Hearsay Meals (Mel)": {
+            "applicationId": "F23K1fxL2OJpfZphfH0lR0Nryz7QCuI1dwIFT6kU", 
+            "masterKey": "dRB8KTH26R3HkamoQIpwXrZdq5jyJE61elkqgJAm"
+        }, 
+        "Hearsay Meals Staging": {
+            "applicationId": "ryopGELyjc2gdNRLbOcFJCWu0QKorxgF7wNcvoSd", 
+            "masterKey": "86QMEmODFu1tQfouFeUzM2tLEwLaVGm4VlmTJPAU"
+        }, 
+        "_default": {
+            "link": "Hearsay Meals (Mel)"
+        }
+    }, 
+    "global": {
+        "parseVersion": "1.3.1"
+    }
+}
