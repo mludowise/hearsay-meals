@@ -5,7 +5,10 @@
         <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
         <link rel="stylesheet" type="text/css" href="css/styles.css">
-        <script src="https://apis.google.com/js/client:platform.js" async defer></script>        
+        <script src="https://apis.google.com/js/client:platform.js" async defer></script>
+		<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>    
+		<script type="text/javascript" src="scripts/keys.js"></script>
+		<script type="text/javascript" src="scripts/base.js"></script>    
     </head>
     <body>
     <nav class="navbar navbar-default" role="navigation">
@@ -34,16 +37,12 @@
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->
     </nav>
-    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>    
-    <script type="text/javascript" src="scripts/base.js"></script>    
     <div id="gConnect">
       <button class="g-signin"
           data-scope="https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/userinfo.email"
           data-requestvisibleactions="http://schemas.google.com/AddActivity"
-          data-clientId="966122623899-07cog3u9lpipk8q4qo9bvmn51v7h01m5.apps.googleusercontent.com"
           data-callback="onSignInCallback"
           data-theme="dark"
-          key="AIzaSyAW7z4SEmncGb9ElHfWlCOn6gejEPm0vHo"
           data-cookiepolicy="single_host_origin">
       </button>
     </div>
@@ -61,4 +60,8 @@ Report a Bug</a> |
     </footer>
     </body>
     <script type="text/javascript" src="scripts/bootstrap.min.js"></script>
+    <script type="text/javascript">
+    	$(".g-signin").attr("data-clientId", getGoogleClientId());
+    	$(".g-signin").attr("key", googleKey);
+    </script>
 </html>

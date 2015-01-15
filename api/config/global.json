@@ -1,15 +1,15 @@
 {
     "applications": {
-        "Hearsay Meals": {
+        "_default": {
+            "link": "staging"
+        }, 
+        "production": {
             "applicationId": "myq9zbMzdkBqqEyudRcwIR5yxnmwihlslqUvYh34", 
             "masterKey": "sAG9ecM32AnFOANz4h4hnknW2NOC9Rz8P17hzR48"
         }, 
-        "Hearsay Meals Staging": {
+        "staging": {
             "applicationId": "ryopGELyjc2gdNRLbOcFJCWu0QKorxgF7wNcvoSd", 
             "masterKey": "86QMEmODFu1tQfouFeUzM2tLEwLaVGm4VlmTJPAU"
-        }, 
-        "_default": {
-            "link": "Hearsay Meals Staging"
         }
     }, 
     "global": {

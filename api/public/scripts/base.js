@@ -28,10 +28,7 @@ function apiRequest(url, data, method) {
 
     var results = null;
 
-    var headers = {
-        'X-Parse-Application-Id': 'myq9zbMzdkBqqEyudRcwIR5yxnmwihlslqUvYh34',
-        'X-Parse-REST-API-Key': '8Zwn2jGVUZEimJ9YYJUorF305QCAg9qZaWsUVVPZ'
-    };
+ 	var headers = getParseKeys();
 
     var sessionToken = localStorage.getItem('sessionToken');
 
@@ -99,7 +96,7 @@ function userSignedIn() {
 }
 
 function onSignInCallback(response) {
-    key = "AIzaSyAW7z4SEmncGb9ElHfWlCOn6gejEPm0vHo";
+    key = googleKey;
     if (response.status.signed_in) {
         $('#gConnect').hide();
         if (!userSignedIn()) {
