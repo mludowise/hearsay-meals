@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E615715F1A6CF7B700FBAE31 /* LunchCalendarEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = E615715E1A6CF7B700FBAE31 /* LunchCalendarEvents.swift */; };
+		E61571621A6D174D00FBAE31 /* Regex.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61571611A6D174D00FBAE31 /* Regex.swift */; };
 		E63D6A5C1A6CC5A300C21370 /* UpdateUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63D6A5B1A6CC5A300C21370 /* UpdateUtil.swift */; };
 		E63D6A5F1A6CC61900C21370 /* TimeUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63D6A5E1A6CC61900C21370 /* TimeUtil.swift */; };
 		E65A6B7E1A0ECAB600976FD6 /* NoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65A6B7D1A0ECAB600976FD6 /* NoteViewController.swift */; };
@@ -66,6 +68,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E615715E1A6CF7B700FBAE31 /* LunchCalendarEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LunchCalendarEvents.swift; sourceTree = "<group>"; };
+		E61571611A6D174D00FBAE31 /* Regex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Regex.swift; sourceTree = "<group>"; };
 		E63D6A5B1A6CC5A300C21370 /* UpdateUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdateUtil.swift; sourceTree = "<group>"; };
 		E63D6A5E1A6CC61900C21370 /* TimeUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeUtil.swift; sourceTree = "<group>"; };
 		E65A6B7D1A0ECAB600976FD6 /* NoteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteViewController.swift; sourceTree = "<group>"; };
@@ -190,6 +194,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E61571601A6D173800FBAE31 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				E6E3ABFB1A0EC1F900B0DCA1 /* UIUtil.swift */,
+				E63D6A5E1A6CC61900C21370 /* TimeUtil.swift */,
+				E61571611A6D174D00FBAE31 /* Regex.swift */,
+			);
+			name = Util;
+			sourceTree = "<group>";
+		};
 		E6385BDA1A0DD5DE00299C9C /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -207,6 +221,7 @@
 			isa = PBXGroup;
 			children = (
 				E6FF58CF19EA8A5D008124A5 /* CalendarViewController.swift */,
+				E615715E1A6CF7B700FBAE31 /* LunchCalendarEvents.swift */,
 				E696049019EBD31600FD0885 /* LunchEventViewController.swift */,
 				E690BACD1A1592A9007C10A6 /* LunchCalendarTableCell.swift */,
 			);
@@ -276,12 +291,11 @@
 			children = (
 				E65D527119EA3A73002BEDDE /* AppDelegate.swift */,
 				E65D52EE19EA3ED4002BEDDE /* -Bridging-Header.h */,
-				E6E3ABFB1A0EC1F900B0DCA1 /* UIUtil.swift */,
-				E63D6A5E1A6CC61900C21370 /* TimeUtil.swift */,
 				E66AB0971A13406F004EFAA2 /* Config.swift */,
 				E6E590411A100E280002473E /* ParseKeys.swift */,
 				E6385BDA1A0DD5DE00299C9C /* View Controllers */,
 				E63D6A5A1A6CC59200C21370 /* AppUpdate */,
+				E61571601A6D173800FBAE31 /* Util */,
 				E65D527519EA3A73002BEDDE /* Main.storyboard */,
 				E65D527A19EA3A73002BEDDE /* LaunchScreen.xib */,
 				E6DA59E41A14C3F90061AF20 /* Images.xcassets */,
@@ -518,6 +532,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E65A6B801A0EE1FE00976FD6 /* BeerViewController.swift in Sources */,
+				E61571621A6D174D00FBAE31 /* Regex.swift in Sources */,
 				E63D6A5F1A6CC61900C21370 /* TimeUtil.swift in Sources */,
 				E65A6B7E1A0ECAB600976FD6 /* NoteViewController.swift in Sources */,
 				E6E3ABFA1A0E9B5300B0DCA1 /* DinnerTonightViewController.swift in Sources */,
@@ -528,6 +543,7 @@
 				E69D925A1A0EECAA00A94B98 /* BeerRequestTableViewCell.swift in Sources */,
 				E6E3ABFC1A0EC1F900B0DCA1 /* UIUtil.swift in Sources */,
 				E65D52ED19EA3D41002BEDDE /* SignInViewController.swift in Sources */,
+				E615715F1A6CF7B700FBAE31 /* LunchCalendarEvents.swift in Sources */,
 				E6E590421A100E280002473E /* ParseKeys.swift in Sources */,
 				E65D52CB19EA3BA3002BEDDE /* GTLCalendar_Sources.m in Sources */,
 				E65D527219EA3A73002BEDDE /* AppDelegate.swift in Sources */,

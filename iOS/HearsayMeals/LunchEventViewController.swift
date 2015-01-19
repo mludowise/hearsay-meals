@@ -20,13 +20,13 @@ class LunchEventViewController: UIViewController {
     
     // Needed for swipe animation
     private var menuCopy: UIView?
-    private var nextIndex: Int?
+    private var nextIndex: LunchIndex?
 
     // These should be set when the view is instantiated
-    private var lunchEvents : [GTLCalendarEvent] = []
-    private var currentLunchIndex = 0
+    private var lunchEvents : LunchCalendarEvents?
+    private var currentLunchIndex = LunchIndex(weekIndex: 0, eventInWeek: 0)
     
-    internal func initializeView(lunchEvents: [GTLCalendarEvent], currentLunchIndex: Int) {
+    internal func initializeView(lunchEvents: LunchCalendarEvents, currentLunchIndex: LunchIndex) {
         self.lunchEvents = lunchEvents
         self.currentLunchIndex = currentLunchIndex
     }
@@ -38,15 +38,15 @@ class LunchEventViewController: UIViewController {
         updateTitle(currentLunchIndex)
     }
     
-    private func updateTitle(forIndex: Int) {
-        var calendarEvent = lunchEvents[forIndex]
-        var start = calendarEvent.start.dateTime.date
-        title = dateFormatter.stringFromDate(start)
+    private func updateTitle(forIndex: LunchIndex) {
+        var calendarEvent = lunchEvents?.getEvent(forIndex)
+        var start = calendarEvent?.start.dateTime.date
+        title = start == nil ? "" : dateFormatter.stringFromDate(start!)
     }
     
     private func updateView() {
-        var calendarEvent = lunchEvents[currentLunchIndex]
-        menuTextView.text = calendarEvent.descriptionProperty
+        var calendarEvent = lunchEvents?.getEvent(currentLunchIndex)
+        menuTextView.text = calendarEvent?.descriptionProperty
     }
     
     private func createMenuViewCopy(calendarEvent: GTLCalendarEvent) -> UIView {
@@ -63,14 +63,14 @@ class LunchEventViewController: UIViewController {
         var translation = sender.translationInView(view)
         
         if (sender.state == UIGestureRecognizerState.Began) {
-            nextIndex = getNextIndex(translation.x < 0)
+            nextIndex = translation.x < 0 ? lunchEvents?.nextIndex(currentLunchIndex) : lunchEvents?.previousIndex(currentLunchIndex)
             
             // If there's another calendar event
             if (nextIndex != nil) {
                 
                 // Copy this menu & fill in the data for the next menu item
-                var nextCalendarEvent = lunchEvents[nextIndex!]
-                menuCopy = createMenuViewCopy(nextCalendarEvent)
+                var nextCalendarEvent = lunchEvents?.getEvent(nextIndex!)
+                menuCopy = createMenuViewCopy(nextCalendarEvent!)
                 view.addSubview(menuCopy!)
             }
         }
@@ -133,21 +133,5 @@ class LunchEventViewController: UIViewController {
                 self.navigationController?.navigationBar.titleTextAttributes = textAttributes
             })
         }
-    }
-    
-    private func getNextIndex(isSwipeLeft: Bool) -> Int? {
-        var nextIndex = currentLunchIndex
-        if (isSwipeLeft) {
-            nextIndex++
-        } else {
-            nextIndex--
-        }
-        
-        // If there is no other lunch menu to swipe through...
-        if (nextIndex < 0 || nextIndex >= lunchEvents.count) {
-            return nil
-        }
-        
-        return nextIndex
     }
 }

@@ -38,10 +38,12 @@ class SettingsViewController: UITableViewController, MFMailComposeViewController
         if (selectedCell == signOutCell) {
             onSignOutButton()
         } else if (selectedCell == checkForUpdatesCell) {
-            if (!checkForUpdates()) {
-                var alert = UIAlertView(title: "Up to Date!", message: nil, delegate: nil, cancelButtonTitle: "OK")
-                alert.show()
-            }
+            checkForUpdates({ (needsUpdate: Bool) -> Void in
+                if (!needsUpdate) {
+                    var alert = UIAlertView(title: "Up to date!", message: nil, delegate: nil, cancelButtonTitle: "OK")
+                    alert.show()
+                }
+            })
         } else if (selectedCell == sendFeedbackCell) {
             sendMail("Feedback")
         } else if (selectedCell == reportBugCell) {
