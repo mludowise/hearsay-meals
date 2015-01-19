@@ -9,9 +9,11 @@
 import Foundation
 
 private var delegate = UpdateAlertViewDelegate()
+//private var appVersion : Float = 0
+//private var bundleID = ""
 
 // Returns whether the app needs to be updated or not
-func checkForUpdates() -> Bool {
+func checkForUpdates(finished: ((Bool) -> Void)?) {
     // Check app version
     var appVersion = (NSBundle.mainBundle().objectForInfoDictionaryKey("CFBundleShortVersionString") as NSString).floatValue
     var bundleID = NSBundle.mainBundle().objectForInfoDictionaryKey(kCFBundleIdentifierKey) as String
@@ -22,24 +24,30 @@ func checkForUpdates() -> Bool {
     var query = PFQuery(className: kApplicationPropertiesTableKey)
     query.whereKey(kApplicationPropertiesTypeKey, equalTo: "iOS")
     query.whereKey(kApplicationPropertiesIdKey, equalTo: bundleID)
-    var applicationProperties = query.getFirstObject()
-    var latestVersion = applicationProperties[kApplicationPropertiesLatestVersionKey] as Float
-    
-    if (latestVersion <= appVersion) {
-        return false
+    query.getFirstObjectInBackgroundWithBlock { (applicationProperties: PFObject!, error: NSError!) -> Void in
+        if (error != nil) {
+            NSLog("\(error)")
+            return
+        }
+        var latestVersion = applicationProperties[kApplicationPropertiesLatestVersionKey] as Float
+        println("Latest Version: \(latestVersion)")
+        
+        if (latestVersion <= appVersion) {
+            finished?(false)
+            return
+        }
+        
+        // Present modal asking the user if they'd like to update to the latest version
+        delegate.applicationUrl = applicationProperties[kApplicationPropertiesDownloadUrlKey] as? String
+        
+        var alertView = UIAlertView(title: "Version \(latestVersion) Available",
+            message: "Please update to the latest version.",
+            delegate: delegate,
+            cancelButtonTitle: "Not Now",
+            otherButtonTitles: "Update")
+        alertView.show()
+        finished?(true)
     }
-    
-    // Present modal asking the user if they'd like to update to the latest version
-    delegate.applicationUrl = applicationProperties[kApplicationPropertiesDownloadUrlKey] as? String
-    
-    var alertView = UIAlertView(title: "Version \(latestVersion) Available",
-        message: "Please update to the latest version.",
-        delegate: delegate,
-        cancelButtonTitle: "Not Now",
-        otherButtonTitles: "Update")
-    alertView.show()
-    
-    return true
 }
 
 private class UpdateAlertViewDelegate: NSObject, UIAlertViewDelegate {
