@@ -47,7 +47,6 @@
 		E69D2E541A1303ED004FAD77 /* DinnerPeopleTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E69D2E531A1303ED004FAD77 /* DinnerPeopleTableCell.swift */; };
 		E69D925A1A0EECAA00A94B98 /* BeerRequestTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E69D92591A0EECAA00A94B98 /* BeerRequestTableViewCell.swift */; };
 		E69F8F1819EA69020046DFCD /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E69F8F1719EA69020046DFCD /* SettingsViewController.swift */; };
-		E6C7FBBD1A6123B7003D260F /* UpdateAlertViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6C7FBBC1A6123B7003D260F /* UpdateAlertViewDelegate.swift */; };
 		E6D8AAA51A14B71000058A7F /* DietaryPreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D8AAA41A14B71000058A7F /* DietaryPreferencesViewController.swift */; };
 		E6DA59E51A14C3F90061AF20 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E6DA59E41A14C3F90061AF20 /* Images.xcassets */; };
 		E6E3ABFA1A0E9B5300B0DCA1 /* DinnerTonightViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E3ABF91A0E9B5300B0DCA1 /* DinnerTonightViewController.swift */; };
@@ -142,7 +141,6 @@
 		E69D2E531A1303ED004FAD77 /* DinnerPeopleTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DinnerPeopleTableCell.swift; sourceTree = "<group>"; };
 		E69D92591A0EECAA00A94B98 /* BeerRequestTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeerRequestTableViewCell.swift; sourceTree = "<group>"; };
 		E69F8F1719EA69020046DFCD /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
-		E6C7FBBC1A6123B7003D260F /* UpdateAlertViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdateAlertViewDelegate.swift; sourceTree = "<group>"; };
 		E6D8AAA41A14B71000058A7F /* DietaryPreferencesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DietaryPreferencesViewController.swift; sourceTree = "<group>"; };
 		E6DA59E41A14C3F90061AF20 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		E6E3ABF91A0E9B5300B0DCA1 /* DinnerTonightViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DinnerTonightViewController.swift; sourceTree = "<group>"; };
@@ -245,7 +243,6 @@
 		E63D6A5A1A6CC59200C21370 /* AppUpdate */ = {
 			isa = PBXGroup;
 			children = (
-				E6C7FBBC1A6123B7003D260F /* UpdateAlertViewDelegate.swift */,
 				E63D6A5B1A6CC5A300C21370 /* UpdateUtil.swift */,
 			);
 			name = AppUpdate;
@@ -537,7 +534,6 @@
 				E69F8F1819EA69020046DFCD /* SettingsViewController.swift in Sources */,
 				E69D2E541A1303ED004FAD77 /* DinnerPeopleTableCell.swift in Sources */,
 				E690BACE1A1592A9007C10A6 /* LunchCalendarTableCell.swift in Sources */,
-				E6C7FBBD1A6123B7003D260F /* UpdateAlertViewDelegate.swift in Sources */,
 				E63D6A5C1A6CC5A300C21370 /* UpdateUtil.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

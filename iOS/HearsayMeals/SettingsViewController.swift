@@ -21,7 +21,7 @@ class SettingsViewController: UITableViewController, MFMailComposeViewController
     @IBOutlet weak var reportBugCell: UITableViewCell!
     @IBOutlet weak var signOutCell: UITableViewCell!
     
-    var mailComposeViewController = MFMailComposeViewController()
+    private var mailComposeViewController : MFMailComposeViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,13 +51,12 @@ class SettingsViewController: UITableViewController, MFMailComposeViewController
     
     private func sendMail(subject: String) {
         if (MFMailComposeViewController.canSendMail()) {
-//            mailComposeViewController.mailComposeDelegate = self
-            mailComposeViewController.setSubject(subject)
-            // TODO: update 
-//            mail.setToRecipients([kReportBugAddress])
-            mailComposeViewController.setToRecipients(["mludowise@gmail.com"])
-            mailComposeViewController.mailComposeDelegate = self
-            self.presentViewController(mailComposeViewController, animated: true, completion: nil)
+            mailComposeViewController = MFMailComposeViewController()
+            mailComposeViewController?.mailComposeDelegate = self
+            mailComposeViewController?.setSubject(subject)
+            mailComposeViewController?.setToRecipients([kReportBugAddress])
+            mailComposeViewController?.mailComposeDelegate = self
+            self.presentViewController(mailComposeViewController!, animated: true, completion: nil)
         } else {
             var alert = UIAlertView(title: "This device cannot send mail.",
                 message: "Please email \(kReportBugAddress) to send feedback or report bugs.",
@@ -68,17 +67,7 @@ class SettingsViewController: UITableViewController, MFMailComposeViewController
     }
     
     func mailComposeController(controller: MFMailComposeViewController!, didFinishWithResult result: MFMailComposeResult, error: NSError!) {
-        println(result)
-//        switch (result) {
-//        case MFMailComposeResultCancelled:
-//            println("cancelled")
-//            break
-//        }
-        if (result.value == MFMailComposeResultCancelled.value) {
-            println("dismissed")
-//            self.dismissViewControllerAnimated(true, completion: nil)
-//            mailComposeViewController.dismissViewControllerAnimated(true, completion: nil)
-        }
+            dismissViewControllerAnimated(true, completion: nil)
     }
     
     private func onSignOutButton() {

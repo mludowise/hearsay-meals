@@ -8,6 +8,8 @@
 
 import Foundation
 
+private var delegate = UpdateAlertViewDelegate()
+
 // Returns whether the app needs to be updated or not
 func checkForUpdates() -> Bool {
     // Check app version
@@ -18,17 +20,17 @@ func checkForUpdates() -> Bool {
     println("Bundle ID: \(bundleID)")
     
     var query = PFQuery(className: kApplicationPropertiesTableKey)
-    query.whereKey(kApplicationPropertiesType, equalTo: "iOS")
-    query.whereKey(kApplicationPropertiesId, equalTo: bundleID)
+    query.whereKey(kApplicationPropertiesTypeKey, equalTo: "iOS")
+    query.whereKey(kApplicationPropertiesIdKey, equalTo: bundleID)
     var applicationProperties = query.getFirstObject()
-    var latestVersion = applicationProperties[kApplicationPropertiesLatestVersion] as Float
+    var latestVersion = applicationProperties[kApplicationPropertiesLatestVersionKey] as Float
     
     if (latestVersion <= appVersion) {
         return false
     }
     
     // Present modal asking the user if they'd like to update to the latest version
-    delegate.applicationUrl = applicationProperties[kApplicationPropertiesDownloadUrl] as? String
+    delegate.applicationUrl = applicationProperties[kApplicationPropertiesDownloadUrlKey] as? String
     
     var alertView = UIAlertView(title: "Version \(latestVersion) Available",
         message: "Please update to the latest version.",
@@ -39,3 +41,18 @@ func checkForUpdates() -> Bool {
     
     return true
 }
+
+private class UpdateAlertViewDelegate: NSObject, UIAlertViewDelegate {
+    var applicationUrl : String?
+    
+    override init() {
+        super.init()
+    }
+    
+    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
+        if (buttonIndex != 0) { // Update button
+            UIApplication.sharedApplication().openURL(NSURL(string: applicationUrl!)!)
+        }
+    }
+}
+
