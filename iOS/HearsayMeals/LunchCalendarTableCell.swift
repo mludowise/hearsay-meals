@@ -24,7 +24,7 @@ class LunchCalendarTableCell : UITableViewCell {
         var lines = description.componentsSeparatedByCharactersInSet(NSCharacterSet.newlineCharacterSet())
         var matches = [String]()
         for line in lines {
-            if (line != "") {
+            if (line != "" && !(line =~ "^Allergen Key.*")) {
                 var contents = line.componentsSeparatedByCharactersInSet(NSCharacterSet(charactersInString: "*("))
                 var text = contents[0].stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
                 if (text != "") {
