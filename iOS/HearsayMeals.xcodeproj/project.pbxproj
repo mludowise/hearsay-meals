@@ -34,7 +34,6 @@
 		E65D5D8019ECECB4000B52DB /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E65D5D7A19ECECB4000B52DB /* libz.dylib */; };
 		E65D5D8119ECECB4000B52DB /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E65D5D7B19ECECB4000B52DB /* MobileCoreServices.framework */; };
 		E65D5D8219ECECB4000B52DB /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E65D5D7C19ECECB4000B52DB /* QuartzCore.framework */; };
-		E65D5D8319ECECB4000B52DB /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E65D5D7D19ECECB4000B52DB /* StoreKit.framework */; };
 		E65D5D8C19ECF18A000B52DB /* GoogleOpenSource.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E65D52C819EA3BA3002BEDDE /* GoogleOpenSource.framework */; };
 		E65D5D8D19ECF18A000B52DB /* GooglePlus.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E65D52CA19EA3BA3002BEDDE /* GooglePlus.framework */; };
 		E65D5D9219ECF1BD000B52DB /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E65D5D8E19ECF193000B52DB /* Bolts.framework */; };
@@ -131,7 +130,6 @@
 		E65D5D7A19ECECB4000B52DB /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		E65D5D7B19ECECB4000B52DB /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		E65D5D7C19ECECB4000B52DB /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		E65D5D7D19ECECB4000B52DB /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		E65D5D8619ECF06E000B52DB /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		E65D5D8719ECF06E000B52DB /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		E65D5D8E19ECF193000B52DB /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
@@ -171,7 +169,6 @@
 				E65D5D8019ECECB4000B52DB /* libz.dylib in Frameworks */,
 				E65D5D8119ECECB4000B52DB /* MobileCoreServices.framework in Frameworks */,
 				E65D5D8219ECECB4000B52DB /* QuartzCore.framework in Frameworks */,
-				E65D5D8319ECECB4000B52DB /* StoreKit.framework in Frameworks */,
 				E65D531919EA4C3D002BEDDE /* CoreGraphics.framework in Frameworks */,
 				E65D531A19EA4C3D002BEDDE /* CoreLocation.framework in Frameworks */,
 				E65D531819EA4C3D002BEDDE /* AssetsLibrary.framework in Frameworks */,
@@ -404,7 +401,6 @@
 				E65D5D7A19ECECB4000B52DB /* libz.dylib */,
 				E65D5D7B19ECECB4000B52DB /* MobileCoreServices.framework */,
 				E65D5D7C19ECECB4000B52DB /* QuartzCore.framework */,
-				E65D5D7D19ECECB4000B52DB /* StoreKit.framework */,
 				E65D530E19EA4C3D002BEDDE /* AssetsLibrary.framework */,
 				E65D530F19EA4C3D002BEDDE /* CoreGraphics.framework */,
 				E65D531019EA4C3D002BEDDE /* CoreLocation.framework */,
@@ -479,6 +475,11 @@
 					E65D526B19EA3A73002BEDDE = {
 						CreatedOnToolsVersion = 6.0.1;
 						DevelopmentTeam = UWX4368CMH;
+						SystemCapabilities = {
+							com.apple.InAppPurchase = {
+								enabled = 0;
+							};
+						};
 					};
 					E65D528019EA3A73002BEDDE = {
 						CreatedOnToolsVersion = 6.0.1;
