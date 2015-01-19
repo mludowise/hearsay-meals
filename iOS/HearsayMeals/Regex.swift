@@ -20,7 +20,6 @@ class Regex {
     
     func test(input: String) -> Bool {
         let matches = self.internalExpression.matchesInString(input, options: nil, range:NSMakeRange(0, countElements(input)))
-//        println(matches)
         return matches.count > 0
     }
 }
