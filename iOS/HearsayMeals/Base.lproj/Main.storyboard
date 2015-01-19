@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="vXZ-lx-hvc">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
     <scenes>
         <!--Account-->
@@ -75,7 +75,7 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="QN4-Iy-KoX" id="gZo-u7-G5I">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Dietary Restrictions" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="k8h-WD-YpN">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Dietary Preferences" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="k8h-WD-YpN">
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -91,6 +91,48 @@
                             </tableViewSection>
                             <tableViewSection id="nfW-2C-ysP">
                                 <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="GHb-Py-K9e" style="IBUITableViewCellStyleDefault" id="p4v-cI-mlA" userLabel="Check for Updates Cell">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="p4v-cI-mlA" id="HtF-L0-iOt">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Check for Updates" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="GHb-Py-K9e">
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="APo-G6-dmF" style="IBUITableViewCellStyleDefault" id="elX-Ko-d4v" userLabel="Send Feedback Cell">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="elX-Ko-d4v" id="eka-TG-TZu">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Send Feedback" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="APo-G6-dmF">
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="7g4-Za-4tX" style="IBUITableViewCellStyleDefault" id="NLD-Yp-MJc" userLabel="Report a Bug Cell">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="NLD-Yp-MJc" id="0NJ-k8-4UE">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Report a Bug" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="7g4-Za-4tX">
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="0bV-F3-POu" style="IBUITableViewCellStyleDefault" id="rlE-Xh-n3u" userLabel="Sign Out Cell">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
@@ -116,10 +158,13 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Account" id="WQa-9p-BOw"/>
                     <connections>
+                        <outlet property="checkForUpdatesCell" destination="p4v-cI-mlA" id="ILs-G5-e8u"/>
                         <outlet property="dietaryRestrictionsCell" destination="QN4-Iy-KoX" id="VGI-nP-4cN"/>
                         <outlet property="emailLabel" destination="fPu-8K-Xp7" id="LCY-BK-Znq"/>
                         <outlet property="nameLabel" destination="Vj2-m7-0BZ" id="7hE-sQ-lLf"/>
                         <outlet property="profileImageView" destination="tjL-15-OTb" id="QAR-0h-Ee8"/>
+                        <outlet property="reportBugCell" destination="NLD-Yp-MJc" id="W4g-Dj-gsU"/>
+                        <outlet property="sendFeedbackCell" destination="elX-Ko-d4v" id="EmX-Wb-K6i"/>
                         <outlet property="signOutCell" destination="rlE-Xh-n3u" id="1Zq-H4-twz"/>
                     </connections>
                 </tableViewController>
@@ -1137,11 +1182,11 @@ Allergen Key: *Vegetarian, **Vegan, (G) Gluten Safe, (D) Dairy Safe, (N) Nut Saf
             </objects>
             <point key="canvasLocation" x="-185" y="1080"/>
         </scene>
-        <!--Account-->
+        <!--More-->
         <scene sceneID="n5h-zv-3NX">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="CeV-MH-p31" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Account" image="account" id="H24-gK-KhJ"/>
+                    <tabBarItem key="tabBarItem" title="More" image="more" id="H24-gK-KhJ"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="hR6-fl-TF2">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -1177,7 +1222,6 @@ Allergen Key: *Vegetarian, **Vegan, (G) Gluten Safe, (D) Dairy Safe, (N) Nut Saf
         </scene>
     </scenes>
     <resources>
-        <image name="account" width="23" height="22"/>
         <image name="beef" width="36" height="24"/>
         <image name="beer" width="23" height="24"/>
         <image name="button-selected" width="11" height="11"/>
@@ -1189,6 +1233,7 @@ Allergen Key: *Vegetarian, **Vegan, (G) Gluten Safe, (D) Dairy Safe, (N) Nut Saf
         <image name="gluten" width="36" height="24"/>
         <image name="lamb" width="36" height="24"/>
         <image name="lunch" width="28" height="24"/>
+        <image name="more" width="24" height="15"/>
         <image name="nuts" width="36" height="24"/>
         <image name="omnivore" width="24" height="24"/>
         <image name="pescetarian" width="24" height="24"/>

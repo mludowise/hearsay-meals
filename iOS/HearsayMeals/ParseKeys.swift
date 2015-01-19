@@ -32,3 +32,10 @@ let kDinnerSpecialRequestKey = "special_request"
 
 let kCreatedAtKey = "createdAt"
 let kObjectId = "objectId"
+
+let kApplicationPropertiesTableKey = "ApplicationProperties"
+let kApplicationPropertiesTypeKey = "applicationType"
+let kApplicationPropertiesIdKey = "applicationId"
+let kApplicationPropertiesLatestVersionKey = "latestVersion"
+let kApplicationPropertiesDownloadUrlKey = "downloadUrl"
+let kApplicationPropertiesBinaryKey = "binary"
