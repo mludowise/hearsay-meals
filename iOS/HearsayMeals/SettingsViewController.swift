@@ -56,6 +56,7 @@ class SettingsViewController: UITableViewController, MFMailComposeViewController
             // TODO: update 
 //            mail.setToRecipients([kReportBugAddress])
             mailComposeViewController.setToRecipients(["mludowise@gmail.com"])
+            mailComposeViewController.mailComposeDelegate = self
             self.presentViewController(mailComposeViewController, animated: true, completion: nil)
         } else {
             var alert = UIAlertView(title: "This device cannot send mail.",
@@ -66,10 +67,19 @@ class SettingsViewController: UITableViewController, MFMailComposeViewController
         }
     }
     
-//    func mailComposeController(controller: MFMailComposeViewController!, didFinishWithResult result: MFMailComposeResult, error: NSError!) {
-//        println("dismissed")
-//        self.dismissViewControllerAnimated(true, completion: nil)
-//    }
+    func mailComposeController(controller: MFMailComposeViewController!, didFinishWithResult result: MFMailComposeResult, error: NSError!) {
+        println(result)
+//        switch (result) {
+//        case MFMailComposeResultCancelled:
+//            println("cancelled")
+//            break
+//        }
+        if (result.value == MFMailComposeResultCancelled.value) {
+            println("dismissed")
+//            self.dismissViewControllerAnimated(true, completion: nil)
+//            mailComposeViewController.dismissViewControllerAnimated(true, completion: nil)
+        }
+    }
     
     private func onSignOutButton() {
         GPPSignIn.sharedInstance().signOut()
