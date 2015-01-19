@@ -10,12 +10,12 @@ import UIKit
 
 private let kCellReuseIdentifier = "LunchCalendarTableCell"
 
-//private let kTeamCalendarId = "hearsaycorp.com_b8edk8m1lmv57al9uiferecurk@group.calendar.google.com"
-private let kTeamCalendarId = "hearsaycorp.com_0ofjbo5gdaod56rm0u19phdmq4@group.calendar.google.com"
+private let kTeamCalendarId = "hearsaycorp.com_b8edk8m1lmv57al9uiferecurk@group.calendar.google.com"
+//private let kTeamCalendarId = "hearsaycorp.com_0ofjbo5gdaod56rm0u19phdmq4@group.calendar.google.com"
 
 class CalendarViewController: UITableViewController {
-    @IBOutlet weak var loadingView: UIView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var emptyView: UIView!
     
     private var calendarService = GTLServiceCalendar()
     private var teamCalendarEvents : GTLCalendarEvents?
@@ -34,6 +34,7 @@ class CalendarViewController: UITableViewController {
         calendarService.retryEnabled = true
         fetchCalendarEvents { () -> Void in
             self.tableView.tableHeaderView = nil
+            self.updateEmptyView()
         }
     }
     
@@ -111,6 +112,10 @@ class CalendarViewController: UITableViewController {
         })
     }
     
+    private func updateEmptyView() {
+        emptyView.hidden = lunchCalendarEvents?.numberOfEvents() > 0
+    }
+    
     private func showLunchEvent(event: GTLCalendarEvent) -> Bool {
         return event.summary? == "Lunch Menu (see below)"
             && event.descriptionProperty? != "TBA"
@@ -121,6 +126,7 @@ class CalendarViewController: UITableViewController {
     @IBAction func onRefresh(sender: UIRefreshControl) {
         fetchCalendarEvents { () -> Void in
             sender.endRefreshing()
+            self.updateEmptyView()
         }
     }
 }
