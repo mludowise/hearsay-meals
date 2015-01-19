@@ -10,10 +10,8 @@ import UIKit
 
 private let kCellReuseIdentifier = "LunchCalendarTableCell"
 
-
 private let kTeamCalendarId = "hearsaycorp.com_b8edk8m1lmv57al9uiferecurk@group.calendar.google.com"
-private let kLunchEventSummary = "Lunch Menu (see below)"
-private let kGenericLunchEventDescription = "TBA"
+//private let kTeamCalendarId = "hearsaycorp.com_0ofjbo5gdaod56rm0u19phdmq4@group.calendar.google.com"
 
 class CalendarViewController: UITableViewController {
     @IBOutlet weak var loadingView: UIView!
@@ -114,7 +112,10 @@ class CalendarViewController: UITableViewController {
     }
     
     private func showLunchEvent(event: GTLCalendarEvent) -> Bool {
-        return event.summary? == kLunchEventSummary && event.descriptionProperty? != kGenericLunchEventDescription
+        return event.summary? == "Lunch Menu (see below)"
+            && event.descriptionProperty? != "TBA"
+            && !(event.descriptionProperty =~ "^Allergen Key:.*(\r|\n)*TBA$")
+            && !(event.descriptionProperty =~ "^TBA(\r|\n)*Allergen Key:.*$")
     }
     
     @IBAction func onRefresh(sender: UIRefreshControl) {
