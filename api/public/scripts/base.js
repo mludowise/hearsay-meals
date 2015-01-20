@@ -140,8 +140,12 @@ function onSignInCallback(response) {
 $(document).ready(function () {
     showAdmin();
     
-    var agent = $('#UserAgent').val(navigator.userAgent);
-//     if (agent.match(/(iPad|iPhone|iPod)/g)) {
-//     	
-//     }
+	var iOS = /(iPhone|iPod)/g.test( navigator.userAgent );
+	if (iOS) {
+    	$banner = $("#banner");
+    	$alert = $('<div class="alert alert-info alert-dismissible fade in" role="alert">');
+    	$banner.append($alert);
+    	$alert.append('<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>');
+    	$alert.append('<strong>Get the app!</strong>');
+    }
 });
