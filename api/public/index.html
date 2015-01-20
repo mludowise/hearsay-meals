@@ -9,6 +9,7 @@
 		<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>    
 		<script type="text/javascript" src="scripts/keys.js"></script>
 		<script type="text/javascript" src="scripts/base.js"></script>    
+		<meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
     <body>
     <nav class="navbar navbar-default" role="navigation">
@@ -37,18 +38,19 @@
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->
     </nav>
-    <div id="gConnect">
-      <button class="g-signin"
-          data-scope="https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/userinfo.email"
-          data-requestvisibleactions="http://schemas.google.com/AddActivity"
-          data-callback="onSignInCallback"
-          data-theme="dark"
-          data-cookiepolicy="single_host_origin">
-      </button>
-    </div>
-
+    <div class="container-fluid">
+		<div id="gConnect">
+		  <button class="g-signin"
+			  data-scope="https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/userinfo.email"
+			  data-requestvisibleactions="http://schemas.google.com/AddActivity"
+			  data-callback="onSignInCallback"
+			  data-theme="dark"
+			  data-cookiepolicy="single_host_origin">
+		  </button>
+		</div>
+	</div>
     <footer class="footer">
-      <div class="container">
+      <div class="container-fluid">
         <p class="text-muted">
         <a href="mailto:hearsaymeals-dev@hearsaycorp.com?Subject=Feedback" target="_top">
 Send Feedback</a> |
