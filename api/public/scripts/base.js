@@ -158,7 +158,7 @@ $(document).ready(function () {
 			$banner.append($alert);
 			$description = $('<span class="mobile-banner-description">Order dinner on the go!</span>'); 
 			$alert.append($description)
-			$alert.append('<a class="mobile-banner-download" href="' + appProperties.downloadUrl + '" target="_blank">Install</a>');
+			$alert.append('<a class="mobile-banner-download" href="' + appProperties.downloadUrl + '" target="_blank">INSTALL</a>');
      	}
      }
 });
