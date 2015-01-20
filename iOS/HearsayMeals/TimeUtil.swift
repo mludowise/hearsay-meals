@@ -18,9 +18,10 @@ private let kDateFormat = "MMM d"
 func dateTimeAtHour(date: NSDate, hour: Int, minute: Int, second: Int, timeZone: NSTimeZone?, offsetYear: Int, offsetMonth: Int, offsetDay: Int, offsetHour: Int, offsetMinute: Int, offsetSecond:Int) -> NSDate {
     var cal = NSCalendar(identifier: NSGregorianCalendar)!
     var dateComponents = cal.components(kCalendarComponentBits, fromDate: date)
-    dateComponents.timeZone = timeZone?
     var newDate = cal.dateBySettingHour(hour, minute: minute, second: second, ofDate: date, options: nil)!
     
+    dateComponents = NSDateComponents()
+    dateComponents.timeZone = timeZone?
     dateComponents = NSDateComponents()
     dateComponents.year = offsetYear
     dateComponents.month = offsetMonth

@@ -43,16 +43,13 @@ class DinnerTonightViewController: UITableViewController {
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        
     }
     
     private func getPeopleEatingTonight(updateOrderedView: Bool, completion: (() -> Void)?) {
-        var today = todayAtZero(nil)
-        var tomorrow = tomorrowAtZero(nil)
+        var today = dinnerTime()
         
         var query = PFQuery(className: kDinnerTableKey)
-        query.whereKey(kDinnerOrderDateKey, greaterThanOrEqualTo: today)
-        query.whereKey(kDinnerOrderDateKey, lessThan: tomorrow)
+        query.whereKey(kDinnerOrderDateKey, equalTo: today)
         query.orderByAscending(kCreatedAtKey)
         query.findObjectsInBackgroundWithBlock { (results: [AnyObject]!, error: NSError!) -> Void in
             if (error != nil) {
@@ -110,7 +107,7 @@ class DinnerTonightViewController: UITableViewController {
         orderButtonActivityIndicator.startAnimating()
         
         var userDinnerOrder = PFObject(className: kDinnerTableKey)
-        userDinnerOrder[kDinnerOrderDateKey] = todayAtZero(nil)
+        userDinnerOrder[kDinnerOrderDateKey] = dinnerTime()
         userDinnerOrder[kDinnerUserIdKey] = PFUser.currentUser().objectId
         
         // Save locally
@@ -246,5 +243,9 @@ class DinnerTonightViewController: UITableViewController {
             }
         }
         return nil
+    }
+    
+    private func dinnerTime() -> NSDate {
+        return dateTimeAtHour(NSDate(), kTimeToOrderBy.hour, kTimeToOrderBy.minute, 0, kOfficeTimeZone, 0, 0, 0, 0, 0, 0)
     }
 }

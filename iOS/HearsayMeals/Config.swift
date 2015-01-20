@@ -8,7 +8,8 @@
 
 import Foundation
 
-let kOfficeTimeZone = NSTimeZone(name: "US/Pacific")!
+let kOfficeTimeZone = NSTimeZone(name: "US/Pacific")
+let kGmtTimeZone = NSTimeZone(forSecondsFromGMT: 0)
 let kMinDinnerOrders = 4
 let kTimeToOrderBy = (hour: 16, minute: 0) // 4pm
 let kReportBugAddress = "hearsaymeals-dev@hearsaycorp.com"
