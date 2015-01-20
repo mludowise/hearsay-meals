@@ -141,11 +141,14 @@ $(document).ready(function () {
     showAdmin();
     
 	var iOS = /(iPhone|iPod)/g.test( navigator.userAgent );
-	if (iOS) {
+ 	if (iOS) {
     	$banner = $("#banner");
-    	$alert = $('<div class="alert alert-info alert-dismissible fade in" role="alert">');
-    	$banner.append($alert);
+    	$alert = $('<div class="alert alert-dismissible fade in" role="alert">');
     	$alert.append('<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>');
-    	$alert.append('<strong>Get the app!</strong>');
+    	$alert.append('<img class="ios_app_icon" src="images/app_icon.png"/>');
+    	$banner.append($alert);
+    	$description = $('<span class="mobile-banner-description">Order dinner on the go!</span>'); 
+    	$alert.append($description)
+     	$alert.append('<a class="mobile-banner-download" href="#">Download</a>');
     }
 });
