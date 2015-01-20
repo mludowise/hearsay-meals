@@ -5,9 +5,13 @@
         <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
         <link rel="stylesheet" type="text/css" href="css/styles.css">
-
+		<meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
     <body>
+    <div class="alert alert-info alert-dismissible fade in" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+      <strong>Get the app!</strong>
+    </div>
     <nav class="navbar navbar-default" role="navigation">
       <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -35,46 +39,50 @@
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->
     </nav>
-    <div class="row">
-  		<div class="col-xs-1"></div>    	
-  		<div class="dinner col-xs-10">
-  	      <button type="button" class="btn btn-primary btn-lg" id="order-dinner">
-  	        Order Dinner Tonight
-  	      </button>
-          <div class="countdown"></div>
-  	  </div>
-    </div>
-    <div class="row">
-      <div class="col-xs-1"></div>
-      <div class="col-xs-3">      
-        <div class="input-notes">
-          <input type="text" class="form-control special-note-input" id="special-notes" placeholder="Any special requests?">
-        </div>     
-      </div>        
-    </div>    
-    <div class="row">
-      <div class="people">
-        <div class="col-md-1"></div>                
-        <div class="col-md-10">
-          <img class="cat-image" src="http://thecatapi.com/api/images/get?format=src&type=gif" />
-          <h4>People ordering dinner tonight:</h4>
-          <div class="dinner-orders">
-            <table id="dinner-request-list" class="table table-striped">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Preferences</th>
-                  <th>Notes</th>                  
-                </tr>
-              </thead>
-              <tbody>
-              </tbody>
-            </table>            
-          </div>
-        </div>
-      </div>       
-    </div>
-
+	<div class="container-fluid">
+		<div class="row">
+			<div class="dinner col-md-offset-1 col-md-10 col-xs-12">
+			  <div class="row">
+				  <div class="col-md-6 col-xs-12">
+					  <button type="button" class="btn btn-primary btn-lg" id="order-dinner">
+						Order Dinner Tonight
+					  </button>
+				  </div>
+				  <div class="col-md-6 col-xs-12">
+					  <div class="countdown"></div>
+				  </div>
+			  </div>
+		  </div>
+		</div>
+		<div class="row">
+		  <div class="col-md-offset-1 col-md-3 col-xs-12">      
+			<div class="input-notes">
+			  <input type="text" class="form-control special-note-input" id="special-notes" placeholder="Any special requests?">
+			</div>     
+		  </div>        
+		</div>    
+		<div class="row">
+		  <div class="people">
+			<div class="col-md-offset-1 col-md-10 col-xs-12">
+			  <img class="cat-image" src="http://thecatapi.com/api/images/get?format=src&type=gif" />
+			  <h4>People ordering dinner tonight:</h4>
+			  <div class="dinner-orders">
+				<table id="dinner-request-list" class="table table-striped">
+				  <thead>
+					<tr>
+					  <th>Name</th>
+					  <th>Preferences</th>
+					  <th>Notes</th>                  
+					</tr>
+				  </thead>
+				  <tbody>
+				  </tbody>
+				</table>            
+			  </div>
+			</div>
+		  </div>       
+		</div>
+	</div>
     <footer class="footer">
       <div class="container">
         <p class="text-muted">

@@ -5,6 +5,7 @@
         <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
         <link rel="stylesheet" type="text/css" href="css/styles.css">        
+		<meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
     <body>
     <nav class="navbar navbar-default" role="navigation">
@@ -33,68 +34,67 @@
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->
     </nav>
-    <div class="alerts">
-      <div class="alert alert-danger kicked-alert" role="alert"><span class='kicked-count'></span> reported the keg is kicked</div>
-    </div>
-    <div class="row">
-      <div class="col-xs-1"></div>
-      <div class="col-xs-5">
-        <h1>Currently on tap:</h1>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-xs-1"></div>
-      <div class="col-xs-9 on-tap img-rounded">
-          <img src="/images/ajax-loader.gif" class="loading"></img>
-          <div id="beer-on-tap"></div>
-      </div>
-    </div>
-    <div class="row kicked-keg">
-      <div class="col-xs-1"></div>
-      <div class="col-xs-9">
-        <button type="button" class="btn btn-danger" id="kicked-keg">
-          Report Keg Kicked
-        </button>
-        <input type="text" class="form-control admin beer-text-input" id="update-keg" placeholder="Update Keg">
-        <button type="button" class="btn btn-default admin" id="add-new-keg">
-          Update Keg
-        </button>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-xs-1"></div>
-      <div class="col-xs-5">
-        <h1>Beer Requests:</h1>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-xs-1"></div>      
-      <div class="col-xs-9">
-        <table id="beer-request-list" class="table table-striped">
-          <thead>
-            <tr>
-              <th class="col-md-5">Beer Type</th>
-              <th class="col-md-2">Votes</th>
-              <th class="col-md-4 admin" style="display:none;">Admin Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-          </tbody>
-        </table>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-xs-1"></div>
-      <div class="col-xs-9">
-          <input type="text" class="form-control beer-text-input" id="beer-type" placeholder="Request Another Beer">
-          <button type="button" class="btn btn-default" id="request-beer">
-            Request
-          </button>
-        </form>
-      </div>
+    <div class="container-fluid">
+		<div class="alerts">
+		  <div class="alert alert-danger kicked-alert" role="alert"><span class='kicked-count'></span> reported the keg is kicked</div>
+		</div>
+		<div class="row">
+		  <div class="col-md-offset-1 col-md-5 col-xs-12">
+			<h1>Currently on tap:</h1>
+		  </div>
+		</div>
+		<div class="row">
+		  <div class="col-md-1"></div>
+		  <div class="col-md-9 col-xs-12 on-tap img-rounded">
+			  <img src="/images/ajax-loader.gif" class="loading"></img>
+			  <div id="beer-on-tap"></div>
+		  </div>
+		</div>
+		<div class="row kicked-keg">
+		  <div class="col-md-offset-1 col-md-3 col-xs-12">
+			<button type="button" class="btn btn-danger" id="kicked-keg">
+			  Report Keg Kicked
+			</button>
+		  </div>
+		  <div class="col-md-6 col-xs-12">
+			<input type="text" class="form-control admin beer-text-input" id="update-keg" placeholder="Update Keg">
+			<button type="button" class="btn btn-default admin" id="add-new-keg">
+			  Update Keg
+			</button>
+		  </div>
+		</div>
+		<div class="row">
+		  <div class="col-md-offset-1 col-md-5 col-xs-12">
+			<h1>Beer Requests:</h1>
+		  </div>
+		</div>
+		<div class="row">
+		  <div class="col-md-offset-1 col-md-9 col-xs-12">
+			<table id="beer-request-list" class="table table-striped">
+			  <thead>
+				<tr>
+				  <th>Beer Type</th>
+				  <th>Votes</th>
+				  <th class="admin" style="display:none;">Admin Actions</th>
+				</tr>
+			  </thead>
+			  <tbody>
+			  </tbody>
+			</table>
+		  </div>
+		</div>
+		<div class="row">
+		  <div class="col-md-offset-1 col-md-9 col-xs-12">
+			  <input type="text" class="form-control beer-text-input" id="beer-type" placeholder="Request Another Beer">
+			  <button type="button" class="btn btn-default" id="request-beer">
+				Request
+			  </button>
+			</form>
+		  </div>
+		</div>
     </div>
     <footer class="footer">
-      <div class="container">
+      <div class="container-fluid">
         <p class="text-muted">
         <a href="mailto:hearsaymeals-dev@hearsaycorp.com?Subject=Feedback" target="_top">
 Send Feedback</a> |

@@ -139,4 +139,9 @@ function onSignInCallback(response) {
 
 $(document).ready(function () {
     showAdmin();
+    
+    var agent = $('#UserAgent').val(navigator.userAgent);
+//     if (agent.match(/(iPad|iPhone|iPod)/g)) {
+//     	
+//     }
 });

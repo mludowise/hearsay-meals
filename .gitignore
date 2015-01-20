@@ -6,3 +6,5 @@ api/config/local.json
 
 .DS_Store
 
+
+api/public/scripts/keys.js
