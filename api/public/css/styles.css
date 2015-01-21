@@ -75,7 +75,6 @@ html {
   /* Set the fixed height of the footer here */
   height: 60px;
   background-color: #f5f5f5;
-  text
 }
 
 .footer > .container {
@@ -147,17 +146,6 @@ li.user img {
 	vertical-align: middle !important;
 }
 
-.on-tap {
-	background-color: #f9f9f9;
-	margin: 0px 15px;
-	padding-bottom: 15px;
-	border: 1px solid #ddd;
-}
-
-.row.kicked-keg {
-	margin: 10px 0px;
-}
-
 .beer-text-input {
 	width: 200px;
 	vertical-align: middle;
@@ -183,6 +171,10 @@ form.requestBeer {
 
 div.kicked span {
 	font-weight: normal;
+}
+
+.request-form {
+	margin-bottom: 20px;
 }
 
 /* preferences.html
