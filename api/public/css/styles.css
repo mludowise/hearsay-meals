@@ -21,21 +21,6 @@ body {
 	margin-top: 15px;
 }
 
-.countdown {
-	display: inline;
-	float: right;
-	margin-top: 5px;
-}
-
-.countdown span.time {
-	font-size: 30px;
-}
-
-.countdown span.dinner-label {
-	margin-right: 10px;
-	color: #767676;
-}
-
 /* Mobile styles
 -------------------------------------------------- */
 .mobile-banner .alert {
@@ -134,6 +119,21 @@ li.user img {
 
 #special-notes {
 	margin-bottom: 20px;
+}
+
+.countdown {
+	display: inline;
+	float: right;
+	margin-top: 5px;
+}
+
+.countdown span.time {
+	font-size: 30px;
+}
+
+.countdown span.dinner-label {
+	margin-right: 10px;
+	color: #767676;
 }
 
 /* beer.html styles
