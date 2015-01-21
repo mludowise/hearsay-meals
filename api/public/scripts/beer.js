@@ -171,9 +171,8 @@ function displayBeerRequests(){
 }
 
 function displayBeerOnTap(keg){
-    var $beerOnTap = $('#beer-on-tap');
-    $beerOnTap.empty();
-    var $kegName = $('<h1>').text(keg.beerName);
+	console.log(keg);
+    var $kegName = $('#ontap-beer').text(keg.beerName);
     var kegFillDate = new Date(keg.createdAt);
     var today = new Date();
     var differenceInDays = Math.floor((today - kegFillDate)/(1000*60*60*24));
@@ -187,9 +186,9 @@ function displayBeerOnTap(keg){
     else {
         filledText += ' ' + differenceInDays.toString() + ' days ago.';
     }
-    var $fillDate = $('<div>').text(filledText);
+    var $fillDate = $('#ontap-filldate').text(filledText);
     $('.loading').hide();
-    $beerOnTap.append($kegName).append($fillDate).show();
+    $('#beer-on-tap').show();
 }
 
 function displayKegKickedAlert(numberOfReports){
