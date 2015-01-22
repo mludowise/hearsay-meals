@@ -184,12 +184,15 @@ class DietaryPreferencesViewController: UITableViewController {
     }
 }
 
+private let kSwitchColor = UIColor(red: 227 / 255.0, green: 26 / 255.0, blue: 28 / 255.0, alpha: 1)
+
 class SwitchTableCell : UITableViewCell {
     var switchView = UISwitch()
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
+        switchView.onTintColor = kSwitchColor
         switchView.addTarget(self, action: "didSwitchChange:", forControlEvents: UIControlEvents.ValueChanged)
         self.accessoryView = switchView
     }
