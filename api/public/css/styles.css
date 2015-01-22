@@ -21,6 +21,24 @@ body {
 	margin-top: 15px;
 }
 
+.xs-pull-right {
+	float: right !important;
+}
+
+.xs-pull-left {
+	float: left !important;
+}
+
+@media (min-width: 992px) {
+	.md-pull-right {
+		float: right !important;
+	}
+
+	.md-pull-left {
+		float: left !important;
+	}
+}
+
 /* Mobile styles
 -------------------------------------------------- */
 .mobile-banner .alert {
@@ -118,21 +136,6 @@ li.user img {
 
 #special-notes {
 	margin-bottom: 20px;
-}
-
-.countdown {
-	display: inline;
-	float: right;
-	margin-top: 5px;
-}
-
-.countdown span.time {
-	font-size: 30px;
-}
-
-.countdown span.dinner-label {
-	margin-right: 10px;
-	color: #767676;
 }
 
 /* beer.html styles
