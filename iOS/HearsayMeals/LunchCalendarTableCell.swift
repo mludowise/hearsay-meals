@@ -25,7 +25,7 @@ class LunchCalendarTableCell : UITableViewCell {
         var matches = [String]()
         for line in lines {
             if (line != "" && !(line =~ "^Allergen Key.*")) {
-                var contents = line.componentsSeparatedByCharactersInSet(NSCharacterSet(charactersInString: "*("))
+                var contents = line.componentsSeparatedByCharactersInSet(NSCharacterSet(charactersInString: "*(["))
                 var text = contents[0].stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
                 if (text != "") {
                     matches.append(text)
@@ -34,7 +34,7 @@ class LunchCalendarTableCell : UITableViewCell {
         }
         descriptionLabel1.text = matches.count > 0 ? matches[0] : description
         descriptionLabel2.text = matches.count > 1 ? matches[1] : ""
-        descriptionLabel3.text = matches.count > 2 ? matches[2] : ""
+        descriptionLabel3.text = matches.count > 2 ? matches[2] + (matches.count > 3 ? "..." : "") : ""
         
         dateFormatter.dateFormat = kDateFormat
         dateLabel.text = dateFormatter.stringFromDate(date.date)
