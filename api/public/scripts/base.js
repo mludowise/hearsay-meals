@@ -141,7 +141,7 @@ $(document).ready(function () {
     showAdmin();
     
 	var iOS = /(iPhone|iPod)/g.test( navigator.userAgent );
-//   	if (iOS) {
+   	if (iOS) {
         var dinnerRequest = apiRequest('/1/classes/Dinner', {where: whereClause}, 'GET');
 		var whereClause = {
 			'applicationType': 'iOS',
@@ -160,5 +160,5 @@ $(document).ready(function () {
 			$alert.append($description)
 			$alert.append('<a class="mobile-banner-download" href="' + appProperties.downloadUrl + '" target="_blank">INSTALL</a>');
      	}
-//      }
+      }
 });
