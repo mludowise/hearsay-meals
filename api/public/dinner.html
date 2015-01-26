@@ -5,11 +5,12 @@
         <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
         <link rel="stylesheet" type="text/css" href="css/styles.css">
-
+		<meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
     <body>
-    <nav class="navbar navbar-default" role="navigation">
-      <div class="container-fluid">
+    <div id="banner" class="mobile-banner"></div>
+    <nav class="navbar navbar-default unrounded" role="navigation">
+      <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -27,54 +28,60 @@
             <li class="active"><a href="dinner.html">Dinner</a></li>
             <li><a href="beer.html">Beer</a></li>
             <li><a href="preferences.html">Dietary Preferences</a></li>
-
           </ul>
           <ul class="nav navbar-nav navbar-right">
-              <li class="user"><p class="navbar-text">Log in</p></li>
+              <li class="user hidden-xs"><p class="navbar-text"></p></li>
           </ul>
         </div><!-- /.navbar-collapse -->
-      </div><!-- /.container-fluid -->
+      </div><!-- /.container -->
     </nav>
-    <div class="row">
-  		<div class="col-xs-1"></div>    	
-  		<div class="dinner col-xs-10">
-  	      <button type="button" class="btn btn-primary btn-lg" id="order-dinner">
-  	        Order Dinner Tonight
-  	      </button>
-          <div class="countdown"></div>
-  	  </div>
-    </div>
-    <div class="row">
-      <div class="col-xs-1"></div>
-      <div class="col-xs-3">      
-        <div class="input-notes">
-          <input type="text" class="form-control special-note-input" id="special-notes" placeholder="Any special requests?">
-        </div>     
-      </div>        
-    </div>    
-    <div class="row">
-      <div class="people">
-        <div class="col-md-1"></div>                
-        <div class="col-md-10">
-          <img class="cat-image" src="http://thecatapi.com/api/images/get?format=src&type=gif" />
-          <h4>People ordering dinner tonight:</h4>
-          <div class="dinner-orders">
-            <table id="dinner-request-list" class="table table-striped">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Preferences</th>
-                  <th>Notes</th>                  
-                </tr>
-              </thead>
-              <tbody>
-              </tbody>
-            </table>            
-          </div>
-        </div>
-      </div>       
-    </div>
-
+	<div class="container">
+		<div class="row">
+			<img class="cat-image col-md-offset-3 col-md-6 col-xs-12" src="http://thecatapi.com/api/images/get?format=src&type=gif" />
+		</div>
+		<div class="row dinner">
+			<div class="col-md-6 col-xs-12">
+				<div class="row">
+					<div class="col-md-12 col-xs-12">
+						<button type="button" class="btn btn-primary btn-lg" id="order-dinner">
+							Order Dinner Tonight
+						</button>
+					</div>
+				</div>
+				<div class="row">
+					<div class="input-notes col-md-12 col-xs-12">
+						<input type="text" class="form-control special-note-input" id="special-notes" placeholder="Any special requests?">
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6 col-xs-12">
+				<h3 class="countdown md-pull-right xs-pull-left">
+					<small class="dinner-label">Time left to order dinner:</small>
+					<span class="time"></span>
+				</h3>
+			</div>
+		</div>
+		<div class="row">
+		  <div class="people">
+			<div class="col-md-12 col-xs-12">
+			  <h1>People Ordering</h1>
+			  <div class="dinner-orders">
+				<table id="dinner-request-list" class="table table-striped">
+				  <thead>
+					<tr>
+					  <th>Name</th>
+					  <th>Preferences</th>
+					  <th>Notes</th>                  
+					</tr>
+				  </thead>
+				  <tbody>
+				  </tbody>
+				</table>            
+			  </div>
+			</div>
+		  </div>       
+		</div>
+	</div>
     <footer class="footer">
       <div class="container">
         <p class="text-muted">

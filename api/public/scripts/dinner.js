@@ -142,7 +142,5 @@ function countdown() {
     //format 0 prefixes
     if(minutesLeft<10) minutesLeft = "0"+minutesLeft;
     if(secondsLeft<10) secondsLeft = "0"+secondsLeft;
-    var label = "<span class='dinner-label'>Time left to order dinner:</span>";
-    $('.countdown').html(label +
-        "<span class='time'>" + prefix + hoursLeft+":"+minutesLeft+":"+secondsLeft + "</span>");
+    $('.countdown .time').html(prefix + hoursLeft+":"+minutesLeft+":"+secondsLeft);
 }

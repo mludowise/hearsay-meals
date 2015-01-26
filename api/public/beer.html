@@ -5,10 +5,12 @@
         <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
         <link rel="stylesheet" type="text/css" href="css/styles.css">        
+		<meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
     <body>
-    <nav class="navbar navbar-default" role="navigation">
-      <div class="container-fluid">
+    <div id="banner" class="mobile-banner"></div>
+    <nav class="navbar navbar-default unrounded" role="navigation">
+      <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -25,73 +27,77 @@
           <ul class="nav navbar-nav">
             <li><a href="dinner.html">Dinner</a></li>
             <li class="active"><a href="beer.html">Beer</a></li>
-               <li><a href="preferences.html">Dietary Preferences</a></li>
-            </ul>
+            <li><a href="preferences.html">Dietary Preferences</a></li>
+          </ul>
           <ul class="nav navbar-nav navbar-right">
- <li class="user"><p class="navbar-text">Log in</p></li>
-            </ul>
+			 <li class="user hidden-xs"><p class="navbar-text"></p></li>
+          </ul>
         </div><!-- /.navbar-collapse -->
-      </div><!-- /.container-fluid -->
+      </div><!-- /.container -->
     </nav>
-    <div class="alerts">
-      <div class="alert alert-danger kicked-alert" role="alert"><span class='kicked-count'></span> reported the keg is kicked</div>
-    </div>
-    <div class="row">
-      <div class="col-xs-1"></div>
-      <div class="col-xs-5">
-        <h1>Currently on tap:</h1>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-xs-1"></div>
-      <div class="col-xs-9 on-tap img-rounded">
-          <img src="/images/ajax-loader.gif" class="loading"></img>
-          <div id="beer-on-tap"></div>
-      </div>
-    </div>
-    <div class="row kicked-keg">
-      <div class="col-xs-1"></div>
-      <div class="col-xs-9">
-        <button type="button" class="btn btn-danger" id="kicked-keg">
-          Report Keg Kicked
-        </button>
-        <input type="text" class="form-control admin beer-text-input" id="update-keg" placeholder="Update Keg">
-        <button type="button" class="btn btn-default admin" id="add-new-keg">
-          Update Keg
-        </button>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-xs-1"></div>
-      <div class="col-xs-5">
-        <h1>Beer Requests:</h1>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-xs-1"></div>      
-      <div class="col-xs-9">
-        <table id="beer-request-list" class="table table-striped">
-          <thead>
-            <tr>
-              <th class="col-md-5">Beer Type</th>
-              <th class="col-md-2">Votes</th>
-              <th class="col-md-4 admin" style="display:none;">Admin Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-          </tbody>
-        </table>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-xs-1"></div>
-      <div class="col-xs-9">
-          <input type="text" class="form-control beer-text-input" id="beer-type" placeholder="Request Another Beer">
-          <button type="button" class="btn btn-default" id="request-beer">
-            Request
-          </button>
-        </form>
-      </div>
+    <div class="container">
+		<div class="row">
+			<div class="col-md-12 col-xs-12">
+				<div class="alert alert-danger fade in kicked-alert" role="alert">
+					<span class='kicked-count'></span> reported the keg is kicked
+				</div>
+			</div>
+		</div>
+		<div class="row">
+		  <div class="col-md-12 col-xs-12">
+			  <div class="jumbotron">
+			  	<h2>Currently on Tap</h2>
+			  	<img src="/images/ajax-loader.gif" class="loading"></img>
+			  	<div id="beer-on-tap">
+					<h1 id="ontap-beer"></h1>
+					<div class="row">
+						<div class="col-md-6 col-xs-12">
+							<p id="ontap-filldate"></p>
+						</div>
+						<div class="col-md-6 col-xs-12">
+							<button type="button" class="btn btn-danger pull-right" id="kicked-keg">
+							  Report Keg Kicked
+							</button>
+						</div>
+					</div>
+			  	</div>
+			  </div>
+		  </div>
+		</div>
+		<div class="row">
+		  <div class="col-md-12 col-xs-12">
+		  	<div class="pull-right admin">
+				<input type="text" class="form-control beer-text-input" id="update-keg" placeholder="Update Keg">
+				<button type="button" class="btn btn-default" id="add-new-keg">
+				  Update Keg
+				</button>
+			</div>
+		  </div>
+		</div>
+		<div class="row">
+			<div class="col-md-12 col-xs-12">
+				<h1>Beer Requests:</h1>
+				<table id="beer-request-list" class="table table-striped">
+					<thead>
+						<tr>
+							<th>Beer Type</th>
+							<th>Votes</th>
+							<th class="admin">Admin Actions</th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+		  </div>
+		</div>
+		<div class="row">
+			<div class="col-md-12 col-xs-12 request-form">
+				<input type="text" class="form-control beer-text-input" id="beer-type" placeholder="Request Another Beer">
+				<button type="button" class="btn btn-default" id="request-beer">
+					Request
+				</button>
+			</div>
+		</div>
     </div>
     <footer class="footer">
       <div class="container">

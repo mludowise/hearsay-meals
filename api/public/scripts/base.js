@@ -139,4 +139,26 @@ function onSignInCallback(response) {
 
 $(document).ready(function () {
     showAdmin();
+    
+	var iOS = /(iPhone|iPod)/g.test( navigator.userAgent );
+   	if (iOS) {
+        var dinnerRequest = apiRequest('/1/classes/Dinner', {where: whereClause}, 'GET');
+		var whereClause = {
+			'applicationType': 'iOS',
+			'applicationId': 'com.hearsaysocial.HearsayMeals'
+		};
+		var results = apiRequest('/1/classes/ApplicationProperties', {where: whereClause, order: 'latestVersion'}, 'GET');
+		console.log(results);
+		if (results != null && results.results != null && results.results.length > 0) {
+			var appProperties = results.results[results.results.length - 1]
+			$banner = $("#banner");
+			$alert = $('<div class="alert alert-dismissible fade in" role="alert">');
+			$alert.append('<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>');
+			$alert.append('<img class="ios_app_icon" src="images/app_icon.png"/>');
+			$banner.append($alert);
+			$description = $('<span class="mobile-banner-description">Order dinner on the go!</span>'); 
+			$alert.append($description)
+			$alert.append('<a class="mobile-banner-download" href="' + appProperties.downloadUrl + '" target="_blank">INSTALL</a>');
+     	}
+      }
 });

@@ -6,11 +6,12 @@
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
     <link rel="stylesheet" type="text/css" href="css/styles.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
-
 <body>
-    <nav class="navbar navbar-default" role="navigation">
-        <div class="container-fluid">
+    <div id="banner" class="mobile-banner"></div>
+    <nav class="navbar navbar-default unrounded" role="navigation">
+        <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -34,57 +35,61 @@
 
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li class="user">
-                        <p class="navbar-text">Log in</p>
+                    <li class="user hidden-xs">
+                        <p class="navbar-text"></p>
                     </li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
         </div>
-        <!-- /.container-fluid -->
+        <!-- /.container -->
     </nav>
-    <div>
-        <div class="col-md-1"></div>
-        <div class="col-md-5">
-            <h1>Dietary Preferences</h1> 
-            <form role="form">
-
-                <div class="well form-group">
-                    <h4>Diet</h4> 
-                    <div class="radio">
-                        <label>
-                            <input type="radio" name="preferences" id="0" value="0" checked>
-                            <i class="icon-omnivore icon-small" alt="Omnivore"></i> Omnivore
-                        </label>
-                    </div>
-                    <div class="radio">
-                        <label>
-                            <input type="radio" name="preferences" id="1" value="1" checked>
-                            <i class="icon-vegetarian icon-small" alt="Vegetarian"></i> Vegetarian</label>
-                    </div>
-                    <div class="radio">
-                        <label>
-                            <input type="radio" name="preferences" id="2" value="2" checked>
-                            <i class="icon-vegan icon-small" alt="Vegan"></i> Vegan</label>
-                    </div>
-                    <hr/>
-                    <h4>Restrictions</h4> 
-                    <div class="checkbox">
-                        <label>
-                            <input id="3" type="checkbox" name="restrictions" value="3"><i class="icon-gluten icon-small" alt="No Gluten"></i> No gluten
-                        </label>
-                    </div>
-                    <hr/>
-                    <h4>Custom note</h4> 
-                    <textarea id="customPrefs" class="form-control" rows="4" placeholder="Ex: I don't eat garlic but I like onion."></textarea>
-                </div>
-                <div class="form-group">
-                    <button id="savePrefs" type="submit" class="btn btn-primary btn-lg">Save preferences</button>
-                </div>
-            </form>
-            <!-- Temp br to space the two from blocks -->
-            <br/>
-        </div>
+    <div class="container">
+		<div class="row">
+			<div class="col-md-12 col-xs-12">
+				<h1>Dietary Preferences</h1> 
+				<form role="form">
+					<div class="well form-group">
+						<div class="row">
+							<div class="col-md-6 col-xs-12">
+								<h4>Diet</h4> 
+								<div class="radio">
+									<label>
+										<input type="radio" name="preferences" id="0" value="0" checked>
+										<i class="icon-omnivore icon-small" alt="Omnivore"></i> Omnivore
+									</label>
+								</div>
+								<div class="radio">
+									<label>
+										<input type="radio" name="preferences" id="1" value="1" checked>
+										<i class="icon-vegetarian icon-small" alt="Vegetarian"></i> Vegetarian</label>
+								</div>
+								<div class="radio">
+									<label>
+										<input type="radio" name="preferences" id="2" value="2" checked>
+										<i class="icon-vegan icon-small" alt="Vegan"></i> Vegan</label>
+								</div>
+							</div>
+							<div class="col-md-6 col-xs-12">
+								<h4>Restrictions</h4> 
+								<div class="checkbox">
+									<label>
+										<input id="3" type="checkbox" name="restrictions" value="3"><i class="icon-gluten icon-small" alt="No Gluten"></i> No gluten
+									</label>
+								</div>
+							</div>
+						</div>
+						<h4>Custom note</h4> 
+						<textarea id="customPrefs" class="form-control" rows="4" placeholder="Ex: I don't eat garlic but I like onion."></textarea>
+					</div>
+					<div class="form-group">
+						<button id="savePrefs" type="submit" class="btn btn-primary btn-lg">Save preferences</button>
+					</div>
+				</form>
+				<!-- Temp br to space the two from blocks -->
+				<br/>
+			</div>
+		</div>
     </div>
     <footer class="footer">
         <div class="container">
