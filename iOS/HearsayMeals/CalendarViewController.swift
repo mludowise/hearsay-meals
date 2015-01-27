@@ -10,9 +10,6 @@ import UIKit
 
 private let kCellReuseIdentifier = "LunchCalendarTableCell"
 
-private let kTeamCalendarId = "hearsaycorp.com_b8edk8m1lmv57al9uiferecurk@group.calendar.google.com"
-//private let kTeamCalendarId = "hearsaycorp.com_0ofjbo5gdaod56rm0u19phdmq4@group.calendar.google.com"
-
 class CalendarViewController: UITableViewController {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var emptyView: UIView!
