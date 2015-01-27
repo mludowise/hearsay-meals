@@ -94,7 +94,7 @@ class CalendarViewController: UITableViewController {
                 self.calendarEventsServiceTicket = nil
                 
                 if (error != nil) {
-                    NSLog("No Calendar Found. Error: %@", error)
+                    NSLog("No Calendar Found. Error: \(error)")
                 } else {
                     self.teamCalendarEvents = events as? GTLCalendarEvents
                     var oldEvents = self.lunchCalendarEvents
@@ -102,7 +102,7 @@ class CalendarViewController: UITableViewController {
                     var events = self.teamCalendarEvents!.items() as [GTLCalendarEvent]
                     self.lunchCalendarEvents = LunchCalendarEvents(events: events, filter: self.showLunchEvent)
                     
-                    NSLog("Retreived %d lunch items.", self.lunchCalendarEvents!.numberOfEvents())
+                    NSLog("Retreived \(self.lunchCalendarEvents!.numberOfEvents()) lunch items.")
                     completion?()
                     self.tableView?.reloadData()
                 }

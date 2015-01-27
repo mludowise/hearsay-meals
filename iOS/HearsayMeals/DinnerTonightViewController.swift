@@ -53,7 +53,7 @@ class DinnerTonightViewController: UITableViewController {
         query.orderByAscending(kCreatedAtKey)
         query.findObjectsInBackgroundWithBlock { (results: [AnyObject]!, error: NSError!) -> Void in
             if (error != nil) {
-                NSLog("%@", error)
+                NSLog("\(error)")
             } else {
                 self.dinnerOrdersTonight = results as [PFObject]
                 self.userOrderIndex = self.findUserOrder(self.dinnerOrdersTonight)
@@ -86,7 +86,7 @@ class DinnerTonightViewController: UITableViewController {
         query.whereKey(kObjectId, equalTo: userId)
         query.getFirstObjectInBackgroundWithBlock { (object: PFObject!, error: NSError!) -> Void in
             if (error != nil) {
-                NSLog("%@", error)
+                NSLog("\(error)")
             } else {
                 var user = object as PFUser
                 cell.nameLabel.text = user[kUserNameKey] as? String
@@ -117,7 +117,7 @@ class DinnerTonightViewController: UITableViewController {
         // Save remotely
         userDinnerOrder.saveInBackgroundWithBlock({ (Bool, error: NSError!) -> Void in
             if (error != nil) {
-                NSLog("%@", error)
+                NSLog("\(error)")
             }
             
             // Update ordered view
@@ -146,7 +146,7 @@ class DinnerTonightViewController: UITableViewController {
             // Delete remotely
             userDinnerOrder.deleteInBackgroundWithBlock({ (Bool, error: NSError!) -> Void in
                 if (error != nil) {
-                    NSLog("%@", error)
+                    NSLog("\(error)")
                 }
                 
                 // Update ordered view
