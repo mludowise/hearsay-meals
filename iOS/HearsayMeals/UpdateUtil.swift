@@ -18,8 +18,8 @@ func checkForUpdates(finished: ((Bool) -> Void)?) {
     var appVersion = (NSBundle.mainBundle().objectForInfoDictionaryKey("CFBundleShortVersionString") as NSString).floatValue
     var bundleID = NSBundle.mainBundle().objectForInfoDictionaryKey(kCFBundleIdentifierKey) as String
     
-    println("App Version: \(appVersion)")
-    println("Bundle ID: \(bundleID)")
+    NSLog("App Version: \(appVersion)")
+    NSLog("Bundle ID: \(bundleID)")
     
     var query = PFQuery(className: kApplicationPropertiesTableKey)
     query.whereKey(kApplicationPropertiesTypeKey, equalTo: "iOS")
@@ -30,7 +30,7 @@ func checkForUpdates(finished: ((Bool) -> Void)?) {
             return
         }
         var latestVersion = applicationProperties[kApplicationPropertiesLatestVersionKey] as Float
-        println("Latest Version: \(latestVersion)")
+        NSLog("Latest Version: \(latestVersion)")
         
         if (latestVersion <= appVersion) {
             finished?(false)

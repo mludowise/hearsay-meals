@@ -8,16 +8,14 @@
 
 import UIKit
 
-private let kParseApplicationId = "myq9zbMzdkBqqEyudRcwIR5yxnmwihlslqUvYh34"
-private let kParseClientKey = "sSDcYzwEBOuOGKYjuY28Skvalo2sImKNwXRt7v4q"
-
-internal let kThemeColor = UIColor(red: 31/255.0, green: 120/255.0, blue: 179/255.0, alpha: 1)
+internal let kThemeColor = kTesting
+    ? UIColor.magentaColor()                                                    // Make Tint Red when testing
+    : UIColor(red: 31/255.0, green: 120/255.0, blue: 179/255.0, alpha: 1)
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UIAlertViewDelegate {
 
     var window: UIWindow?
-//    var applicationUrl: String?
     
     func application(application: UIApplication,
         openURL url: NSURL,

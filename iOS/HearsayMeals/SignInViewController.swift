@@ -8,10 +8,11 @@
 
 import UIKit
 
-private let kClientId = "966122623899-snf8rtjucf08hup8a2jjmihcina16a0j.apps.googleusercontent.com"
 private let kDomain = "hearsaycorp.com"
 
 private var kDomainErrorText = "Only Hearsay Social employees can use Hearsay Meals. Please log in with your \(kDomain) account."
+
+private var kTabViewControllerId = "tabViewController"
 
 class SignInViewController: UIViewController, GPPSignInDelegate {
     @IBOutlet weak var errorTextView: UITextView!
@@ -21,82 +22,80 @@ class SignInViewController: UIViewController, GPPSignInDelegate {
         
         var signIn = GPPSignIn.sharedInstance()
         signIn.shouldFetchGooglePlusUser = true
-        signIn.clientID = kClientId
+        signIn.clientID = kGoogleClientId
         signIn.scopes = [ kGTLAuthScopePlusUserinfoEmail, kGTLAuthScopeCalendarReadonly ]
         signIn.delegate = self
 
         let success = signIn.trySilentAuthentication()
-        NSLog("Silent Auth %s", success ? "successfull" : "failed")
-        
-//        // Test Parse
-//        var testObject = PFObject(className: "TestObject")
-////            objectWithClassName: "TestObject")
-//        testObject["foo"] = "bar"
-//        testObject.saveInBackground()
-////        presentTabView() // TODO Comment this out
+        let successString = success ? "Successfull" : "Failed"
+        NSLog("Silent Auth \(successString)")
     }
     
-    func finishedWithAuth (auth: GTMOAuth2Authentication,
-        error: NSError?) {
-            if (error != nil) {
-                NSLog("Received error %@ and auth object %@", error!, auth)
-                errorTextView.text = error?.localizedDescription
-                errorTextView.hidden = false
-            } else {
-                var sharedInstance = GPPSignIn.sharedInstance()
-                var googlePlusUser = sharedInstance.googlePlusUser
+    // Callback when Google+ finishes authorizing
+    func finishedWithAuth (auth: GTMOAuth2Authentication, error: NSError?) {
+        if (error != nil) {
+            NSLog("Received error \(error) and auth object \(auth)")
+            showError(error!.localizedDescription)
+        } else {
+            var sharedInstance = GPPSignIn.sharedInstance()
+            var googlePlusUser = sharedInstance.googlePlusUser
+            
+            if (googlePlusUser.domain != kDomain) {
+                NSLog("Wrong domain: \(googlePlusUser.domain)")
+                GPPSignIn.sharedInstance().signOut()
+                GPPSignIn.sharedInstance().disconnect()
+                showError(kDomainErrorText)
+                return
+            }
+            
+            logInWithParse(googlePlusUser)
+        }
+    }
+    
+    // Logic to log into Hearsay Meals using Parse (or create new account)
+    func logInWithParse(googlePlusUser: GTLPlusPerson) {
+        var userEmail = (googlePlusUser.emails[0] as GTLPlusPersonEmailsItem).value
+        
+        PFUser.logInWithUsernameInBackground(userEmail, password: kUserPassword, block: { (parseUser: PFUser!, error: NSError!) -> Void in
+            if (parseUser == nil || error != nil) {
+                NSLog("\(userEmail) does not exist in Parse")
+                var user = PFUser()
+                user.email = userEmail
+                user.username = userEmail
+                user.password = kUserPassword
+                user[kUserNameKey] = googlePlusUser.displayName
+                user[kUserPictureKey] = googlePlusUser.image.url
                 
-                if (googlePlusUser.domain != kDomain) {
-                    NSLog("Wrong domain: %@", googlePlusUser.domain == nil ? "nil" : googlePlusUser.domain)
-                    GPPSignIn.sharedInstance().signOut()
-                    GPPSignIn.sharedInstance().disconnect()
-                    errorTextView.text = kDomainErrorText
-                    errorTextView.hidden = false
-                    return
-                }
-                
-                var userEmail = (googlePlusUser.emails[0] as GTLPlusPersonEmailsItem).value
-                
-                PFUser.logInWithUsernameInBackground(userEmail, password: kUserPassword, block: { (parseUser: PFUser!, error: NSError!) -> Void in
+                user.signUpInBackgroundWithBlock({ (succeeded: Bool, error: NSError!) -> Void in
                     if (error != nil) {
-                        NSLog("%@ does not exist in Parse", userEmail)
-                        var name = googlePlusUser.nickname
-                        if (name == nil) {
-                            name = googlePlusUser.name.formatted
-                        }
-                        
-                        var parseUser = PFUser()
-                        parseUser.email = userEmail
-                        parseUser.username = userEmail
-                        parseUser[kUserNameKey] = name
-                        parseUser[kUserPictureKey] = googlePlusUser.image.url
-                        
-                        parseUser.signUpInBackgroundWithBlock({ (succeeded: Bool, error: NSError!) -> Void in
-                            if (error == nil) {
-                                NSLog("Received error %@ creating user", error)
-                                self.errorTextView.text = error?.localizedDescription
-                                self.errorTextView.hidden = false
-                            } else {
-                                self.presentTabView()
-                            }
-                        })
+                        NSLog("Received error \(error) creating user")
+                        self.showError(error!.localizedDescription)
                     } else {
-                        NSLog("%@ logged in to Parse successfully", userEmail)
+                        NSLog("Successfully created user \(userEmail)")
                         self.presentTabView()
                     }
                 })
+            } else {
+                NSLog("\(userEmail) logged in to Parse successfully")
+                self.presentTabView()
             }
+        })
+    }
+    
+    func showError(error: String) {
+        errorTextView.text = error
+        errorTextView.hidden = false
     }
     
     func presentTabView() {
         // Hide the error if there was one earlier
         errorTextView.hidden = true
         
-        let tabViewController = storyboard?.instantiateViewControllerWithIdentifier("tabViewController") as UIViewController?
+        let tabViewController = storyboard?.instantiateViewControllerWithIdentifier(kTabViewControllerId) as UIViewController?
         if (tabViewController != nil) {
             presentViewController(tabViewController!, animated: true, completion: nil)
         } else {
-            NSLog("Can't find modal")
+            NSLog("Can't find \(kTabViewControllerId)")
         }
     }
     

@@ -89,7 +89,7 @@ class BeerViewController: UITableViewController {
         query.orderByDescending(kCreatedAtKey)
         query.getFirstObjectInBackgroundWithBlock { (keg: PFObject!, error: NSError!) -> Void in
             if (error != nil) {
-                NSLog("%@", error)
+                NSLog("\(error)")
             } else {
                 self.keg = keg
                 
@@ -176,7 +176,7 @@ class BeerViewController: UITableViewController {
         beerRequestQuery.orderByAscending(kBeerRequestNameKey)
         beerRequestQuery.findObjectsInBackgroundWithBlock { (objects: [AnyObject]!, error: NSError!) -> Void in
             if (error != nil) {
-                NSLog("%@", error)
+                NSLog("\(error)")
             } else {
                 self.beerRequests = objects as [PFObject]!
                 self.tableView.reloadData()
@@ -195,7 +195,7 @@ class BeerViewController: UITableViewController {
             beerRequest.addUniqueObject(PFUser.currentUser().objectId, forKey: kBeerRequestVotesKey)
             beerRequest.saveInBackgroundWithBlock({ (b: Bool, error: NSError!) -> Void in
                 if (error != nil) {
-                    NSLog("%@", error)
+                    NSLog("\(error)")
                 } else {
                     // Update table
                     self.beerRequests.append(beerRequest)
