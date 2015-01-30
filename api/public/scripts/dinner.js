@@ -1,11 +1,11 @@
 $(document).ready(function() {
-    var user = getCurrentUser();
-    updateLoginInfo(user);
+    var user = Parse.User.current()
+	updateLoginInfo(user);
 
     var now = new Date();
     if (user) {
         var whereClause = {
-            'user_id' : user.objectId,
+            'user_id' : user.id,
             'order_date': {
                 '__type': 'Date',
                 'iso': getOrderDateISO()
@@ -88,7 +88,7 @@ function getOrderedDinners() {
 
 function toggleDinner(user) {
     var whereClause = {
-        'user_id' : user.objectId,
+        'user_id' : user.id,
         'order_date': {
             '__type': 'Date',
             'iso': getOrderDateISO()
@@ -104,9 +104,9 @@ function toggleDinner(user) {
         var specialRequest = $('#special-notes').val();
         $('#special-notes').val('');
         var data = {
-            'picture': user.picture,
-            'name': user.name,
-            'user_id' : user.objectId,
+            'picture': user.getPicture(),
+            'name': user.getName(),
+            'user_id' : user.id,
             'special_request' : specialRequest,
             'order_date': {
                 '__type': 'Date',

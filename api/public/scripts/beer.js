@@ -1,6 +1,6 @@
 $(document).ready(function() {
     $('.loading').show();
-    var user = getCurrentUser();
+    var user = Parse.User.current();
     updateLoginInfo(user);
     displayBeerRequests();
 
@@ -12,9 +12,9 @@ $(document).ready(function() {
     displayKegKickedAlert(keg.kickedReports.length);
 
     $('#kicked-keg').on('click', function() {
-        var index = keg.kickedReports.indexOf(user.objectId);
+        var index = keg.kickedReports.indexOf(user.id);
         if (index < 0) {
-            keg.kickedReports.push(user.objectId);
+            keg.kickedReports.push(user.id);
             $(this).text('Unreport Keg Kicked');
         }
         else {
@@ -31,8 +31,8 @@ $(document).ready(function() {
         $('#beer-type').val('');
         var beerRequest = {
             name: beerType,
-            user_id: user.objectId,
-            votes: [user.objectId]
+            user_id: user.id,
+            votes: [user.id]
         };
         beerRequestResult = saveBeerRequest(beerRequest);
         displayBeerRequests();
@@ -56,7 +56,7 @@ $(document).ready(function() {
             voteCount = voteCount + 1;
         }
         $(this).text('+' + voteCount.toString()).toggleClass('btn-primary').toggleClass('btn-default');
-        toggleBeerRequestVoteForUser(beerRequestId, user.objectId);
+        toggleBeerRequestVoteForUser(beerRequestId, user.id);
     });
 
     $('#beer-request-list').on('click', '.update-keg', function(event){
@@ -143,14 +143,14 @@ function deleteBeerRequest(beerRequestId){
 }
 
 function displayBeerRequests(){
-    var user = getCurrentUser();
+    var user = Parse.User.current()
     var beerRequests = getBeerRequests();
     var $tbody = $("#beer-request-list tbody");
     $tbody.empty();
     for (var i = 0; i < beerRequests.length; i++){
         var request = beerRequests[i];
         var voteBtnClass = 'btn-default';
-        if (request.votes.indexOf(user.objectId) >= 0){
+        if (request.votes.indexOf(user.id) >= 0){
             voteBtnClass = 'btn-primary';
         }
         var $row = $('<tr>');
@@ -171,7 +171,6 @@ function displayBeerRequests(){
 }
 
 function displayBeerOnTap(keg){
-	console.log(keg);
     var $kegName = $('#ontap-beer').text(keg.beerName);
     var kegFillDate = new Date(keg.createdAt);
     var today = new Date();
