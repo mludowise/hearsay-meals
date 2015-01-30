@@ -6,13 +6,15 @@ function getParseKeys() {
 		case "hearsaymeals.parseapp.com":			// Production
 		case "staging-hearsaymeals.parseapp.com":	// Staging
 			return {
-	    	    'X-Parse-Application-Id': 'myq9zbMzdkBqqEyudRcwIR5yxnmwihlslqUvYh34',
-    	    	'X-Parse-REST-API-Key': '8Zwn2jGVUZEimJ9YYJUorF305QCAg9qZaWsUVVPZ'
+	    	    applicationId: 'myq9zbMzdkBqqEyudRcwIR5yxnmwihlslqUvYh34',
+    	    	restKey: '8Zwn2jGVUZEimJ9YYJUorF305QCAg9qZaWsUVVPZ',
+    	    	javascriptKey: 'hqoM0biwivLE3bMwaMDnTRJ9WBY4B8pwmS22zeWx'
 			};
 		case "mel-hearsaymeals.parseapp.com":
 			return {
-	    	    'X-Parse-Application-Id': 'F23K1fxL2OJpfZphfH0lR0Nryz7QCuI1dwIFT6kU',
-    	    	'X-Parse-REST-API-Key': 'i9cpzriov9mLY3oNKXvBZt5xq0lAct8qDBKFuYc1'
+	    	    applicationId: 'F23K1fxL2OJpfZphfH0lR0Nryz7QCuI1dwIFT6kU',
+    	    	restKey: 'i9cpzriov9mLY3oNKXvBZt5xq0lAct8qDBKFuYc1',
+    	    	javascriptKey: 'crs0WAmboCZTJLrbL5c9V5ZiIVdrnahWTQEL3Pif'
 			};
 	}
 	return null;

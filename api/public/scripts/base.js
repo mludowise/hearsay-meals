@@ -1,14 +1,15 @@
 var parseApiUrl = "https://api.parse.com";
 
 function updateLoginInfo(user) {
-    if (!user) {
+    if (user == null) {
         window.location.href = "index.html";
         return;
     }
-    if (user.picture) {
-        $('li.user').prepend("<img src='" + user.picture + "' width='30px'>");
+    if (user.getPicture()) {
+        $('li.user').prepend("<img src='" + user.getPicture() + "' width='30px'>");
     }
-    $('li.user p').text(user.name);
+    $('li.user p').text(user.getName());
+    showAdmin();
 }
 
 function apiRequest(url, data, method) {
@@ -27,8 +28,11 @@ function apiRequest(url, data, method) {
     }
 
     var results = null;
-
- 	var headers = getParseKeys();
+	var parseKeys = getParseKeys();
+ 	var headers = {
+		'X-Parse-Application-Id': parseKeys.applicationId,
+    	'X-Parse-REST-API-Key': parseKeys.restKey
+ 	};
 
     var sessionToken = localStorage.getItem('sessionToken');
 
@@ -52,20 +56,9 @@ function apiRequest(url, data, method) {
     return results;
 }
 
-function getCurrentUser() {
-    results = apiRequest('/1/users/me');
-    return results;
-}
-
 function currentUserIsAdmin() {
-    var user = getCurrentUser();
-    var isAdmin = false;
-    // Rather than return user.admin
-    // we only change the value in case this is not a valid value
-    if (user && user.admin === true) {
-        isAdmin = user.admin;
-    }
-    return isAdmin;
+	var user = Parse.User.current();
+	return user != null && user.isAdmin();
 }
 
 function showAdmin() {
@@ -81,65 +74,112 @@ function findUser(id) {
     return results;
 }
 
-function userLogin(email) {
-    var data = {
-        username: email,
-        password: 'password'
-    };
-    results = apiRequest('/1/login/', data);
-    return results;
-}
-
-function userSignedIn() {
-    var sessionToken = localStorage.getItem('sessionToken');
-    return sessionToken !== null;
-}
-
 function onSignInCallback(response) {
-    key = googleKey;
-    if (response.status.signed_in) {
-        $('#gConnect').hide();
-        if (!userSignedIn()) {
-            gapi.client.load('oauth2', 'v2', function () {
-                gapi.client.oauth2.userinfo.get().execute(function (resp) {
-                    if (resp.hd !== 'hearsaycorp.com') {
-                        alert('You must have a Hearsay email to use this app');
-                        return;
-                    }
-                    var storedEmail = localStorage.getItem('email');
-                    var user = null;
-                    if (storedEmail !== null) {
-                        user = userLogin(storedEmail);
-                    } else {
-                        user = userLogin(resp.email);
-                        if (user === null) {
-                            var data = {
-                                email: resp.email,
-                                password: 'password',
-                                username: resp.email,
-                                name: resp.name,
-                                picture: resp.picture,
-                                admin: false,
-                                preferences: [0]
-                            };
-                            user = apiRequest('/1/users', data, 'POST');
-                        }
-                    }
-                    localStorage.setItem('email', resp.email);
-                    localStorage.setItem('name', resp.name);
-                    localStorage.setItem('sessionToken', user.sessionToken);
-                    window.location.href = "dinner.html";
-                });
-            });
-        } else {
+//     key = googleKey;
+//     if (response.status.signed_in) {
+//         $('#gConnect').hide();
+//         if (Parse.User.current() == null) {
+//             gapi.client.load('oauth2', 'v2', function () {
+//                 gapi.client.oauth2.userinfo.get().execute(function (resp) {
+//                     if (resp.hd !== 'hearsaycorp.com') {
+//                         alert('You must have a Hearsay email to use this app');
+//                         return;
+//                     }
+//                     var storedEmail = localStorage.getItem('email');
+//                     var user = null;
+//                     if (storedEmail !== null) {
+//                         user = userLogin(storedEmail);
+//                     } else {
+//                         user = userLogin(resp.email);
+//                         if (user === null) {
+//                             var data = {
+//                                 email: resp.email,
+//                                 password: 'password',
+//                                 username: resp.email,
+//                                 name: resp.name,
+//                                 picture: resp.picture,
+//                                 admin: false,
+//                                 preferences: [0]
+//                             };
+//                             user = apiRequest('/1/users', data, 'POST');
+//                         }
+//                     }
+//                     localStorage.setItem('email', resp.email);
+//                     localStorage.setItem('name', resp.name);
+//                     localStorage.setItem('sessionToken', user.sessionToken);
+//                     window.location.href = "dinner.html";
+//                 });
+//             });
+//         } else {
+//             window.location.href = "dinner.html";
+//         }
+//     }
+	key = googleKey;
+	if (response.status && response.status.signed_in) {
+		$('#gConnect').hide();
+		var pUser = Parse.User.current();
+		if (!pUser) {
+			gapi.client.load('oauth2', 'v2', function () {
+				gapi.client.oauth2.userinfo.get().execute(function (resp) {
+					if (resp.hd !== 'hearsaycorp.com') {
+						alert('You must have a Hearsay email to use this app');
+						return;
+					}
+					Parse.User.logIn(resp.email, "password").then(function(user) {
+						window.location.href = "dinner.html";
+					},
+					function(error) {
+						Parse.User.signUp(resp.email, "password", {
+								email: resp.email,
+								name: resp.name,
+								picture: resp.picture,
+								admin: false,
+								preferences: [0]
+						}).then(function(user) {
+							window.location.href = "dinner.html";
+						});
+					});
+				});
+			});
+		} else {
             window.location.href = "dinner.html";
-        }
-    }
+		}
+	}
 }
+
+$(function () {	
+	var parseKeys = getParseKeys();
+	Parse.initialize(parseKeys["applicationId"], parseKeys["javascriptKey"]);
+	
+	var User = Parse.User.extend({
+		getEmail: function() {
+			return this.get("email");
+		},
+		getPicture: function() {
+			return this.get("picture");
+		},
+		getName: function() {
+			return this.get("name");
+		},
+		isAdmin: function() {
+			return this.get("admin");
+		},
+		getPreferences: function() {
+			return this.get("preferences");
+		},
+		setPreferences: function(preferences) {
+			this.set("preferences", preferences);
+		},
+		getPreferenceNote: function() {
+			return this.get("preference_note");
+		},
+		setPreferenceNote: function(preferenceNote) {
+			this.set("preference_note", preferenceNote);
+		}
+	});
+});
 
 $(document).ready(function () {
-    showAdmin();
-    
 	var iOS = /(iPhone|iPod)/g.test( navigator.userAgent );
    	if (iOS) {
         var dinnerRequest = apiRequest('/1/classes/Dinner', {where: whereClause}, 'GET');
@@ -148,7 +188,6 @@ $(document).ready(function () {
 			'applicationId': 'com.hearsaysocial.HearsayMeals'
 		};
 		var results = apiRequest('/1/classes/ApplicationProperties', {where: whereClause, order: 'latestVersion'}, 'GET');
-		console.log(results);
 		if (results != null && results.results != null && results.results.length > 0) {
 			var appProperties = results.results[results.results.length - 1]
 			$banner = $("#banner");
