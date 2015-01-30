@@ -1,36 +1,42 @@
-$(document).ready(function () {
-    var user = getCurrentUser();
-    updateLoginInfo(user);
-    if (user.preferences) {
-        $('#' + user.preferences[0]).prop('checked', 'yes');
-        if (user.preferences[1]) {
-            $('#' + user.preferences[1]).prop('checked', 'yes');
-        }
-    }
-
-    if (user.preference_note) {
-        $('#customPrefs').val(user.preference_note);
-    }
-
-    // console.log(user);
-});
-
-$('#savePrefs').on('click', savePreferences);
-
 function savePreferences() {
-    var user = getCurrentUser();
+	console.log("save prefs");
+    var user = Parse.User.current();
     var customPref = $('#customPrefs').val();
     var preferences = [parseInt($("input:radio[name ='preferences']:checked").attr('id'))];
     var restrictions = parseInt($("input:checkbox[name ='restrictions']:checked").attr('id'));
-
+	console.log(user);
     if (restrictions) {
         preferences.push(restrictions);
     }
-
-    var dinnerRequest = apiRequest('/1/users/' + user.objectId, {
-        'preferences': preferences,
-        'preference_note': customPref
-    }, 'PUT');
-    $('#savePrefs').addClass('btn-danger');
-    $('#savePrefs').text('Preferences saved!');
+	
+	user.setPreferences(preferences);
+	user.setPreferenceNote(customPref);
+	user.save(null, {
+		success: function(user) {
+			$('#savePrefs').addClass('btn-danger');
+			$('#savePrefs').text('Preferences saved!');
+		},
+		error: function(user, error) {
+			console.log(error.message);
+		}
+	});
 }
+
+$(document).ready(function () {
+    var user = Parse.User.current();
+    updateLoginInfo(user);
+    
+    var preferences = user.getPreferences();
+    if (preferences) {
+        $('#' + preferences).prop('checked', 'yes');
+        if (preferences) {
+            $('#' + preferences).prop('checked', 'yes');
+        }
+    }
+
+    if (user.getPreferenceNote()) {
+        $('#customPrefs').val(user.getPreferenceNote());
+    }
+    
+    $('#savePrefs').on('click', savePreferences);
+});
