@@ -1,13 +1,22 @@
+var orderDeadline = null;
+
 $(document).ready(function() {
     $('#order-dinner').on('click', function() {
         toggleDinner();
     });
 
     updateDinnerTable();
-
-    countdown();
-    setInterval(countdown, 1000);
+	getDinnerConfig();
 });
+
+function getDinnerConfig() {
+	Parse.Cloud.run("dinnerGetConfigs").then(function(configs) {
+		console.log(configs);
+		orderDeadline = configs.orderDeadline;
+		countdown();
+		setInterval(countdown, 1000);
+	});
+}
 
 function updateOrderButton(ordered) {
 	$('#order-dinner').attr("ordered", ordered);
@@ -94,27 +103,36 @@ function toggleDinner() {
 }
 
 function countdown() {
-    var now = new Date();
-    var hoursLeft = 15-now.getHours();
-    var secondsLeft;
-    var minutesLeft;
+    var now = moment().tz(
+    	orderDeadline.timeZone
+    );
+    
+    var deadlineMinutes = orderDeadline.time.hours * 60 + orderDeadline.time.minutes;
+    var totalMinutesLeft = deadlineMinutes - now.hours() * 60 - now.minutes();
+    
+    var hoursLeft = Math.floor(totalMinutesLeft / 60);
+    var minutesLeft, secondsLeft;
     var prefix = "";
-    if (hoursLeft < 0) {
-        hoursLeft = 16-now.getHours();
-        minutesLeft = now.getMinutes();
-        secondsLeft = now.getSeconds();
-        if (hoursLeft === 0) {
-            prefix = "-";
-        }
-    }
-    else {
-        minutesLeft = 59-now.getMinutes();
-        secondsLeft = 59-now.getSeconds();
-        prefix = "";        
+    if (totalMinutesLeft < 0) {
+    	hoursLeft += 1;
+	    minutesLeft = (60 - totalMinutesLeft) % 60;
+    	secondsLeft = now.seconds();
+    	if (hoursLeft == 0) {
+    		prefix = "-";
+    	}
+    } else {
+    	minutesLeft = totalMinutesLeft % 60 - 1;
+    	secondsLeft = 59 - now.seconds();
     }
     
     //format 0 prefixes
     if(minutesLeft<10) minutesLeft = "0"+minutesLeft;
     if(secondsLeft<10) secondsLeft = "0"+secondsLeft;
     $('.countdown .time').html(prefix + hoursLeft+":"+minutesLeft+":"+secondsLeft);
+    
+    if (totalMinutesLeft <= 15) {
+    	$('.countdown .time').addClass('text-danger');
+    } else {
+    	$('.countdown .time').removeClass('text-danger');
+    }
 }

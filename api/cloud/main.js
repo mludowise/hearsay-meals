@@ -1,4 +1,4 @@
-require("cloud/moment.js");
+require("cloud/moment.min.js");
 var moment = require("cloud/moment-timezone-with-data-2010-2020.min.js");
 
 var find = function(objects, param, value) {
@@ -24,8 +24,8 @@ var basicUserInfo = function(user) {
 /* Dinner
 -------------------------------------------------- */
 
-var ORDER_TIMEZONE = "US/Pacific";
-var DINNER_DEADLINE_OFFSET = {
+var DINNER_ORDER_TIMEZONE = "US/Pacific";
+var DINNER_ORDER_DEADLINE = {
 	hours: 16,
 	minutes: 0
 };
@@ -40,9 +40,9 @@ var dinnerOrderDate = function(dateParams) {
 		m = moment();
 	}
 	var formattedDate = m.format("YYYY-MM-DD") 
-		+ " " + DINNER_DEADLINE_OFFSET.hours + ":" + DINNER_DEADLINE_OFFSET.minutes
+		+ " " +  DINNER_ORDER_DEADLINE.hours + ":" +  DINNER_ORDER_DEADLINE.minutes
 	
-	return moment.tz(formattedDate, ORDER_TIMEZONE).toDate();
+	return moment.tz(formattedDate, DINNER_ORDER_TIMEZONE).toDate();
 }
 
 Parse.Cloud.define("date", function(request, response) {
@@ -59,7 +59,7 @@ Parse.Cloud.define("date", function(request, response) {
  *	minPeople (Integer): The minimum number of people required to order dinner.
  *	orderDeadline: a JSON object representing the deadline for ordering dinner, consisting of:
  *		timeZone (String): The name of the timezone for which the deadline is in (eg. "US/Pacific").
- *		offset (JSON): The time of day for the order deadline.
+ *		time (JSON): The time of day for the order deadline.
  *			hours (Integer)
  *			minutes (Integer)
  *
@@ -69,8 +69,8 @@ Parse.Cloud.define("dinnerGetConfigs", function(request, response) {
 	response.success({ 
 		minPeople: 4,
 		orderDeadline: {
-			timeZone: ORDER_TIMEZONE,
-			offset: DINNER_DEADLINE_OFFSET
+			timeZone: DINNER_ORDER_TIMEZONE,
+			time:  DINNER_ORDER_DEADLINE
 		}
 	});
 });
