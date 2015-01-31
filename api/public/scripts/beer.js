@@ -44,20 +44,7 @@ $(document).ready(function() {
         updateBeerOnTap(beerType);
     });
 
-    $('.beer-vote').click(function(event){
-        event.preventDefault();
-        var beerRequestId = $(this).attr('beer-request');
-        var voteCount = parseInt($(this).text().split('+')[1], 10);
-        if ($(this).hasClass('btn-primary')){
-            voteCount = voteCount - 1;
-        }
-        else
-        {
-            voteCount = voteCount + 1;
-        }
-        $(this).text('+' + voteCount.toString()).toggleClass('btn-primary').toggleClass('btn-default');
-        toggleBeerRequestVoteForUser(beerRequestId, user.id);
-    });
+    $('.beer-vote').click(voteForBeer);
 
     $('#beer-request-list').on('click', '.update-keg', function(event){
         event.preventDefault();
@@ -78,6 +65,19 @@ $(document).ready(function() {
         displayBeerRequests();
     });
 });
+
+function voteForBeer(event){
+	event.preventDefault();
+	var beerRequestId = $(this).attr('beer-request');
+	var voteCount = parseInt($(this).text().split('+')[1], 10);
+	if ($(this).hasClass('btn-primary')){
+		voteCount = voteCount - 1;
+	} else {
+		voteCount = voteCount + 1;
+	}
+	$(this).text('+' + voteCount.toString()).toggleClass('btn-primary').toggleClass('btn-default');
+	toggleBeerRequestVote(beerRequestId);
+}
 
 function getBeerOnTap() {
     var where = {
@@ -111,19 +111,8 @@ function saveBeerRequest(beerRequest){
     return requestResults;
 }
 
-function getBeerRequests(){
-    var where = {
-        order: 'name'
-    };
-    var results = apiRequest('/1/classes/BeerRequest', where);
-    for (var i = 0; i < results.results.length; i++){
-        var request = results.results[i];
-        results.results[i] = request;
-    }
-    return results.results;
-}
-
-function toggleBeerRequestVoteForUser(beerRequestId, userId){
+function toggleBeerRequestVote(beerRequestId){
+	var userId = Parse.User.current().id
     var request = apiRequest('/1/classes/BeerRequest/'+ beerRequestId);
     var index = request.votes.indexOf(userId);
     if (index < 0){
@@ -142,32 +131,46 @@ function deleteBeerRequest(beerRequestId){
     }
 }
 
+function containsCurrentUser(jsonUsers) {
+	for (var i in jsonUsers) {
+		var jsonUser = jsonUsers[i];
+		if (jsonUser.id == Parse.User.current().id) {
+			return true;
+		}
+	}
+	return false;
+}
+
 function displayBeerRequests(){
     var user = Parse.User.current()
-    var beerRequests = getBeerRequests();
-    var $tbody = $("#beer-request-list tbody");
-    $tbody.empty();
-    for (var i = 0; i < beerRequests.length; i++){
-        var request = beerRequests[i];
-        var voteBtnClass = 'btn-default';
-        if (request.votes.indexOf(user.id) >= 0){
-            voteBtnClass = 'btn-primary';
-        }
-        var $row = $('<tr>');
-        var $beerType = $('<td class="beer-request-name">').text(request.name);
-        var $voteCount = $('<a beer-request="' + request.objectId + '" href="#" class="btn ' + voteBtnClass + ' beer-vote">').text('+' + request.votes.length.toString());
-        $voteCount = $('<td>').append($voteCount);
-        $row.append($beerType).append($voteCount);
-        if (currentUserIsAdmin()){
-            var $admin = $('<td>');
-            var $updateKeg = $('<a beer-request="' + request.objectId + '" href="#" class="btn btn-default admin update-keg">').text('Fill Keg');
-            var $dismissRequest = $('<a beer-request="' + request.objectId + '" href="#" class="btn btn-danger admin dismiss-request">').text('Delete');
-            $admin.append($updateKeg).append($dismissRequest);
-            $row.append($admin);
-        }
-        $tbody.append($row);
-    }
-    showAdmin();
+    Parse.Cloud.run("beerGetRequests").then(function(beerRequests) {
+		var $tbody = $("#beer-request-list tbody");
+		$tbody.empty();
+		for (var i in beerRequests){
+			var request = beerRequests[i];
+			var voteBtnClass = 'btn-default';
+			var votes = request.votes
+			if (containsCurrentUser(votes)){
+				voteBtnClass = 'btn-primary';
+			}
+			var $row = $('<tr>');
+			var $beerType = $('<td class="beer-request-name">').text(request.name);
+			var $voteButton = $('<button beer-request="' + request.id + '" class="btn ' + voteBtnClass + ' beer-vote">').text('+' + request.votes.length.toString());
+			$voteButton.click(voteForBeer);
+			var $voteCount = $('<td>').append($voteButton);
+			$row.append($beerType).append($voteCount);
+			console.log(currentUserIsAdmin())
+			if (currentUserIsAdmin()){
+				var $admin = $('<td>');
+				var $updateKeg = $('<a beer-request="' + request.id + '" href="#" class="btn btn-default admin update-keg">').text('Fill Keg');
+				var $dismissRequest = $('<a beer-request="' + request.id + '" href="#" class="btn btn-danger admin dismiss-request">').text('Delete');
+				$admin.append($updateKeg).append($dismissRequest);
+				$row.append($admin);
+			}
+			$tbody.append($row);
+		}
+		showAdmin();
+    });
 }
 
 function displayBeerOnTap(keg){
