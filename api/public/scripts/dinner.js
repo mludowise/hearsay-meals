@@ -9,12 +9,6 @@ $(document).ready(function() {
     setInterval(countdown, 1000);
 });
 
-function getOrderDateISO(){
-    var orderDate = new Date();
-    orderDate.setHours(16, 0, 0, 0);
-    return orderDate.toISOString();
-}
-
 function updateOrderButton(ordered) {
 	$('#order-dinner').attr("ordered", ordered);
 	
