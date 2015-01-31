@@ -75,45 +75,6 @@ function findUser(id) {
 }
 
 function onSignInCallback(response) {
-//     key = googleKey;
-//     if (response.status.signed_in) {
-//         $('#gConnect').hide();
-//         if (Parse.User.current() == null) {
-//             gapi.client.load('oauth2', 'v2', function () {
-//                 gapi.client.oauth2.userinfo.get().execute(function (resp) {
-//                     if (resp.hd !== 'hearsaycorp.com') {
-//                         alert('You must have a Hearsay email to use this app');
-//                         return;
-//                     }
-//                     var storedEmail = localStorage.getItem('email');
-//                     var user = null;
-//                     if (storedEmail !== null) {
-//                         user = userLogin(storedEmail);
-//                     } else {
-//                         user = userLogin(resp.email);
-//                         if (user === null) {
-//                             var data = {
-//                                 email: resp.email,
-//                                 password: 'password',
-//                                 username: resp.email,
-//                                 name: resp.name,
-//                                 picture: resp.picture,
-//                                 admin: false,
-//                                 preferences: [0]
-//                             };
-//                             user = apiRequest('/1/users', data, 'POST');
-//                         }
-//                     }
-//                     localStorage.setItem('email', resp.email);
-//                     localStorage.setItem('name', resp.name);
-//                     localStorage.setItem('sessionToken', user.sessionToken);
-//                     window.location.href = "dinner.html";
-//                 });
-//             });
-//         } else {
-//             window.location.href = "dinner.html";
-//         }
-//     }
 	key = googleKey;
 	if (response.status && response.status.signed_in) {
 		$('#gConnect').hide();
