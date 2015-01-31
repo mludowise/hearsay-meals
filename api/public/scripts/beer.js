@@ -1,29 +1,19 @@
 $(document).ready(function() {
-    $('.loading').show();
     var user = Parse.User.current();
     updateLoginInfo(user);
-    displayBeerRequests();
-
-    var keg = getBeerOnTap();
-    displayBeerOnTap(keg);
-    if (keg.kickedReports.indexOf(user.objectId) >= 0) {
+    
+	displayKegLoading();
+	var keg = getBeerOnTap(); 
+    displayKegInfo(keg.beerName, new Date(keg.createdAt));
+    if (keg.kickedReports.indexOf(Parse.User.current().id) >= 0) {
         $('#kicked-keg').removeClass('btn-danger').addClass('btn-primary').text('Unreport Keg Kicked');
     }
     displayKegKickedAlert(keg.kickedReports.length);
 
+    displayBeerRequests();
+    
     $('#kicked-keg').on('click', function() {
-        var index = keg.kickedReports.indexOf(user.id);
-        if (index < 0) {
-            keg.kickedReports.push(user.id);
-            $(this).text('Unreport Keg Kicked');
-        }
-        else {
-            keg.kickedReports.splice(index, 1);
-            $(this).text('Report Keg Kicked');
-        }
-        $(this).toggleClass('btn-danger').toggleClass('btn-primary');
-        updateKickedKegReports(keg);
-        displayKegKickedAlert(keg.kickedReports.length);
+    	toggleReportKegKicked(keg);
     });
 
     $('#request-beer').click(function(){
@@ -92,16 +82,31 @@ function updateKickedKegReports(keg){
     apiRequest('/1/classes/Keg/'+ keg.objectId, {'kickedReports': keg.kickedReports}, 'PUT');
 }
 
+function toggleReportKegKicked(keg) {
+	var userId = Parse.User.current().id;
+	var index = keg.kickedReports.indexOf(userId);
+	if (index < 0) {
+		keg.kickedReports.push(userId);
+		$('#kicked-keg').text('Unreport Keg Kicked');
+	}
+	else {
+		keg.kickedReports.splice(index, 1);
+		$('#kicked-keg').text('Report Keg Kicked');
+	}
+	$('#kicked-keg').toggleClass('btn-danger').toggleClass('btn-primary');
+	updateKickedKegReports(keg);
+	displayKegKickedAlert(keg.kickedReports.length);
+}
+
 function updateBeerOnTap(beerName){
-    $('#beer-on-tap').hide();
-    $('.loading').show();
+	displayKegLoading();
     var newKeg = {
         beerName: beerName,
         kickedReports: []
     };
     results = apiRequest('/1/classes/Keg', newKeg, 'POST');
     $.extend(newKeg, results);
-    displayBeerOnTap(newKeg);
+    displayKeg(newKeg);
     $('#kicked-keg').addClass('btn-danger').removeClass('btn-primary').text('Report Keg Kicked');
     displayKegKickedAlert(0);
 }
@@ -141,7 +146,7 @@ function containsCurrentUser(jsonUsers) {
 	return false;
 }
 
-function displayBeerRequests(){
+function displayBeerRequests() {
     var user = Parse.User.current()
     Parse.Cloud.run("beerGetRequests").then(function(beerRequests) {
 		var $tbody = $("#beer-request-list tbody");
@@ -159,7 +164,6 @@ function displayBeerRequests(){
 			$voteButton.click(voteForBeer);
 			var $voteCount = $('<td>').append($voteButton);
 			$row.append($beerType).append($voteCount);
-			console.log(currentUserIsAdmin())
 			if (currentUserIsAdmin()){
 				var $admin = $('<td>');
 				var $updateKeg = $('<a beer-request="' + request.id + '" href="#" class="btn btn-default admin update-keg">').text('Fill Keg');
@@ -169,15 +173,22 @@ function displayBeerRequests(){
 			}
 			$tbody.append($row);
 		}
-		showAdmin();
     });
 }
 
-function displayBeerOnTap(keg){
-    var $kegName = $('#ontap-beer').text(keg.beerName);
-    var kegFillDate = new Date(keg.createdAt);
+function displayKegLoading() {
+    $('#beer-on-tap').hide();
+    $('.loading').show();
+}
+
+function displayKegInfo(beerName, kegFillDate) {
+	if (!kegFillDate) {
+		kegFillDate = new Date();
+	}
+    var $kegName = $('#ontap-beer').text(beerName);
     var today = new Date();
     var differenceInDays = Math.floor((today - kegFillDate)/(1000*60*60*24));
+    
     var filledText = 'Filled';
     if (differenceInDays === 0){
         filledText += ' today.';
