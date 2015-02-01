@@ -24,7 +24,8 @@ Parse.Cloud.define("beerOnTap", function(request, response) {
 
 /* Marks that the current user reported the keg was kicked.
  *
- * Params: none
+ * Params:
+ *	id (String): The id of the keg that is kicked.
  *
  * Success: Returns a JSON array of users who reported the keg was kicked.
  *		id (String) - id of the user
@@ -33,9 +34,42 @@ Parse.Cloud.define("beerOnTap", function(request, response) {
  *
  * Possible Errors:
  *	There is no user currently logged in.
+ *	There is no keg.
+ *	The current keg does not match the given id.
  */
 Parse.Cloud.define("beerReportKicked", function(request, response) {
-	response.success();
+	if (!request.user) {
+		response.error("A dinner order can only be cancelled when a user is logged in.");
+		return;
+	}
+	
+	var query = new Parse.Query(Keg);
+	query.descending("createdAt");
+	query.first().then(function(keg) {
+		if (!keg) {
+			response.error("There is no keg.");
+			return null;
+		}
+		console.log(keg.id);
+		if (keg.id != request.params.id) {
+			response.error("The current keg does not match the id " + request.params.id + ".");
+			return null;
+		}
+		
+		keg.addUnique("kickedReports", request.user.id);
+		keg.save().then(function(keg) {
+			var kickedReports = keg.get("kickedReports");
+			util.findUsers(kickedReports).then(function(users) {
+				response.success(util.infoForUsers(users));
+			}, function(users, error) {
+				response.error(error);
+			});
+		}, function(keg, error) {
+			response.error("Could not update keg " + keg.id + ".");
+		});
+	}, function(keg, error) {
+		response.error(error);
+	});
 });
 
 /* Removes this user's report that the keg is kicked.
@@ -49,9 +83,42 @@ Parse.Cloud.define("beerReportKicked", function(request, response) {
  *
  * Possible Errors:
  *	There is no user currently logged in.
+ *	There is no keg.
+ *	The current keg does not match the given id.
  */
 Parse.Cloud.define("beerUnreportKicked", function(request, response) {
-	response.success();
+	if (!request.user) {
+		response.error("A dinner order can only be cancelled when a user is logged in.");
+		return;
+	}
+	
+	var query = new Parse.Query(Keg);
+	query.descending("createdAt");
+	query.first().then(function(keg) {
+		if (!keg) {
+			response.error("There is no keg.");
+			return null;
+		}
+		console.log(keg.id);
+		if (keg.id != request.params.id) {
+			response.error("The current keg does not match the id " + request.params.id + ".");
+			return null;
+		}
+		
+		keg.remove("kickedReports", request.user.id);
+		keg.save().then(function(keg) {
+			var kickedReports = keg.get("kickedReports");
+			util.findUsers(kickedReports).then(function(users) {
+				response.success(util.infoForUsers(users));
+			}, function(users, error) {
+				response.error(error);
+			});
+		}, function(keg, error) {
+			response.error("Could not update keg " + keg.id + ".");
+		});
+	}, function(keg, error) {
+		response.error(error);
+	});
 });
 
 /* Marks the keg as filled with a specific beer.
@@ -123,10 +190,7 @@ Parse.Cloud.define("beerGetRequests", function(request, response) {
 		}
 		
 		var userMap = {};
-		var userQuery = new Parse.Query(Parse.User);
-		userQuery.ascending("name");
-		userQuery.containedIn("objectId", userIds);
-		userQuery.find().then(function(users) {
+		util.findUsers(userIds).then(function(users) {
 			// Find all the users who voted
 			for (var u in users) {
 				var user = users[u];

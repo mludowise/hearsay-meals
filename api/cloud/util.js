@@ -20,3 +20,19 @@ exports.userInfo = function(user, includePrefs) {
 	}
 	return user;
 }
+
+exports.findUsers = function(userIds) {
+	var userQuery = new Parse.Query(Parse.User);
+	userQuery.ascending("name");
+	userQuery.containedIn("objectId", userIds);
+	return userQuery.find();
+}
+
+exports.infoForUsers = function(users, includePrefs) {
+	var results = []
+	for (var i in users) {
+		var user = users[i];
+		results.push(exports.userInfo(user));
+	}
+	return results;
+};
