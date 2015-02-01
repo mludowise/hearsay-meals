@@ -1,3 +1,15 @@
+var restrictedAcl = new Parse.ACL();
+restrictedAcl.setPublicReadAccess(false);
+restrictedAcl.setPublicWriteAccess(false);
+
+exports.isUserAdmin = function(user) {
+	return user.get("admin") == true;
+}
+
+exports.restrictedACL = function() {
+	return restrictedAcl;
+}
+
 exports.find = function(objects, param, value) {
 	for (var i in objects) {
 		var object = objects[i];

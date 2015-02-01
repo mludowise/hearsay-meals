@@ -85,7 +85,7 @@ Parse.Cloud.define("beerReportKicked", function(request, response) {
 		}
 		
 		keg.addUnique("kickedReports", request.user.id);
-		keg.save().then(function(keg) {
+		keg.save(null, { useMasterKey: true }).then(function(keg) {
 			var kickedReports = keg.get("kickedReports");
 			util.findUsers(kickedReports).then(function(users) {
 				response.success(util.infoForUsers(users));
@@ -133,7 +133,7 @@ Parse.Cloud.define("beerUnreportKicked", function(request, response) {
 		}
 		
 		keg.remove("kickedReports", request.user.id);
-		keg.save().then(function(keg) {
+		keg.save(null, { useMasterKey: true }).then(function(keg) {
 			var kickedReports = keg.get("kickedReports");
 			util.findUsers(kickedReports).then(function(users) {
 				response.success(util.infoForUsers(users));
@@ -156,10 +156,32 @@ Parse.Cloud.define("beerUnreportKicked", function(request, response) {
  * Success: none
  *
  * Possible Errors:
+ *	No name is specified
  *	The current user does not have permission to fill the keg.
  */
 Parse.Cloud.define("beerFillKeg", function(request, response) {
-	response.success();
+	var beerName = request.params.name;
+	if (!beerName) {
+		response.error("No beer was specified.");
+		return;
+	}
+	if (!util.isUserAdmin(request.user)) {
+		response.error("User does not have permission to update the keg.");
+		return;
+	}
+	
+	var keg = new Keg();
+	// TODO: User restricted ACL when adding Keg.
+// 	keg.setACL(util.restrictedACL());
+	keg.set("beerName", beerName)
+	keg.set("kickedReports", []);
+	keg.save().then(function(keg) {
+		console.log("Keg updated to " + beerName + ".");
+		response.success();
+	},
+	function(keg, error) {
+		response.error(error);
+	});
 });
 
 /* Marks the keg as filled by a specific beer requested.
