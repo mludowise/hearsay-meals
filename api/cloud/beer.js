@@ -9,17 +9,46 @@ var Keg = Parse.Object.extend("Keg");
  * Params: none
  *
  * Success: Returns JSON object of the most recent beer on tap or null if there isn't one.
- *	name (String): Name of the beer on tap
+ *	id (String): ID of the current keg
+ *	beer (JSON): The beer on tap
+ *		name (String): Name of the beer
  *	filled (Date): Date that the keg was filled
- *	kickedReport (JSON Array): A list of users who reported the keg was kicked.
+ *	kickedReports (JSON Array): A list of users who reported the keg was kicked.
  *		id (String) - id of the user
  * 		name (String) - name of the user
  * 		picture (String) - URL of the user's avatar
  *
- * Possible Errors: none
+ * Possible Errors:
+ *	There is no keg.
  */
 Parse.Cloud.define("beerOnTap", function(request, response) {
-	response.success();
+	var query = new Parse.Query(Keg);
+	query.descending("createdAt");
+	query.first().then(function(keg) {
+		if (!keg) {
+			response.error("There is no keg.");
+			return null;
+		}
+		var result = {
+			id: keg.id,
+			beer: {
+				name: keg.get("beerName")
+			},
+			filled: keg.createdAt
+		};
+		
+		var kickedReports = keg.get("kickedReports");
+		util.findUsers(kickedReports).then(function(users) {
+			result.kickedReports = util.infoForUsers(users);
+			response.success(result);
+		}, function(users, error) {
+			console.log(error);
+			response.success(result);
+		});
+	},
+	function(keg, error) {
+		response.error(error);
+	});
 });
 
 /* Marks that the current user reported the keg was kicked.
@@ -50,7 +79,6 @@ Parse.Cloud.define("beerReportKicked", function(request, response) {
 			response.error("There is no keg.");
 			return null;
 		}
-		console.log(keg.id);
 		if (keg.id != request.params.id) {
 			response.error("The current keg does not match the id " + request.params.id + ".");
 			return null;
@@ -99,7 +127,6 @@ Parse.Cloud.define("beerUnreportKicked", function(request, response) {
 			response.error("There is no keg.");
 			return null;
 		}
-		console.log(keg.id);
 		if (keg.id != request.params.id) {
 			response.error("The current keg does not match the id " + request.params.id + ".");
 			return null;
