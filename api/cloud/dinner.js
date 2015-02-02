@@ -71,7 +71,7 @@ Parse.Cloud.define("dinnerGetConfigs", function(request, response) {
  */
 Parse.Cloud.define("dinnerMakeOrder", function(request, response) {
 	if (!request.user) {
-		response.error("A dinner order can only be made when a user is logged in.");
+		response.error("No user is logged in.");
 		return;
 	}
 	
@@ -119,7 +119,7 @@ Parse.Cloud.define("dinnerMakeOrder", function(request, response) {
  */
 Parse.Cloud.define("dinnerCancelOrder", function(request, response) {
 	if (!request.user) {
-		response.error("A dinner order can only be cancelled when a user is logged in.");
+		response.error("No user is logged in.");
 		return;
 	}
 	
