@@ -21,16 +21,16 @@ exports.find = function(objects, param, value) {
 }
 
 exports.userInfo = function(user, includePrefs) {
-	var user = {
+	var result = {
 		id: user.id,
 		name: user.get("name"),
 		picture: user.get("picture"),
 	};
 	if (includePrefs) {
-		user.preferences = user.get("preferences");
-		user.preferenceNote = user.get("preference_note");
+		result.preferences = user.get("preferences");
+		result.preferenceNote = user.get("preference_note");
 	}
-	return user;
+	return result;
 }
 
 exports.findUsers = function(userIds) {
