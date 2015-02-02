@@ -34,38 +34,26 @@ $(document).ready(function() {
     $('#beer-request-list').on('click', '.beer-vote', function(event){
 		event.preventDefault();
 		var beerRequestId = $(this).attr('beer-request');
-		console.log(beerRequestId);
 		toggleBeerRequestVote(beerRequestId);
 	});
 });
 
 function toggleBeerRequestVote(beerRequestId){
 	var $voteButton = $('#beerRequestRow_' + beerRequestId + ' .beer-vote');
-	console.log($voteButton);
 	var voted = $voteButton.hasClass('voted');
-	console.log(voted);
 	var promise;
 	if (!voted) {
-		console.log("vote");
 		promise = Parse.Cloud.run('beerVoteForRequest', {id: beerRequestId});
 	} else {
-		console.log("unvote");
 		promise = Parse.Cloud.run('beerUnvoteForRequest', {id: beerRequestId});
 	}
 	var voteCount = 0;
 	promise.then(function(votes) {
 		voteCount = votes.length;
 		$voteButton.text('+' + voteCount.toString()).toggleClass('btn-primary').toggleClass('btn-default').toggleClass('voted');
+	}, function(error) {
+		console.error(error);
 	});
-}
-
-function getBeerOnTap() {
-    var where = {
-        order: '-createdAt',
-        limit: 1
-    };
-    var results = apiRequest('/1/classes/Keg', where);
-    return results.results[0];
 }
 
 function toggleReportKegKicked() {
@@ -79,19 +67,9 @@ function toggleReportKegKicked() {
 	promise.then(function(kickedReports) {
 		currentKeg.kickedReports = kickedReports;
 		displayKegKickedAlert(kickedReports);
+	}, function(error) {
+		console.error(error);
 	});
-}
-
-function updateBeerOnTap(beerName) {
-	displayKegLoading();
-    var newKeg = {
-        beerName: beerName,
-        kickedReports: []
-    };
-    results = apiRequest('/1/classes/Keg', newKeg, 'POST');
-    $.extend(newKeg, results);
-    displayKeg(newKeg);
-    displayKegKickedAlert(null);
 }
 
 function addNewKeg() {
@@ -102,6 +80,8 @@ function addNewKeg() {
 	Parse.Cloud.run("beerFillKeg", {name: beerType}).then(function() {
 		displayKegInfo(beerType, new Date());
 		displayKegKickedAlert([]);
+	}, function(error) {
+		console.error(error);
 	});
 }
 
@@ -113,12 +93,9 @@ function addNewKegFromRequest(beerRequestId) {
 		displayKegKickedAlert([]);
 		$('#beerRequestRow_' + beerRequestId).detach();
 		displayBeerRequests();
+	}, function(error) {
+		console.error(error);
 	});
-}
-
-function saveBeerRequest(beerRequest){
-    var requestResults = apiRequest('/1/classes/BeerRequest', beerRequest, 'POST');
-    return requestResults;
 }
 
 function addBeerRequest(beerRequest) {
@@ -129,23 +106,10 @@ function addBeerRequest(beerRequest) {
 		displayBeerRequests();
 	},
 	function(error) {
+		console.log(error);
 		alert(error.message);
 	});
 }
-
-// function toggleBeerRequestVote(beerRequestId){ 
-// 	var userId = Parse.User.current().id;
-//     var request = apiRequest('/1/classes/BeerRequest/'+ beerRequestId);
-//     var index = request.votes.indexOf(userId);
-//     if (index < 0){
-//         request.votes.push(userId);
-//     } 
-//     else
-//     {
-//         request.votes.splice(index, 1);
-//     }
-//     apiRequest('/1/classes/BeerRequest/'+ beerRequestId, {'votes': request.votes}, 'PUT');
-// }
 
 function deleteBeerRequest(beerRequestId){
 	Parse.Cloud.run("beerRemoveRequest", {id: beerRequestId}).then(function() {
@@ -154,11 +118,6 @@ function deleteBeerRequest(beerRequestId){
 	function(error) {
         displayBeerRequests();
 	});
-// 	
-//     if (currentUserIsAdmin()){
-//         apiRequest('/1/classes/BeerRequest/'+ beerRequestId, null, 'DELETE');
-//         displayBeerRequests();
-//     }
 }
 
 function containsCurrentUser(jsonUsers) {
@@ -202,13 +161,8 @@ function displayBeerRequests() {
 			}
 			$tbody.append($row);
 		}
-		
-// 		$('.beer-vote').click(function(event) {
-// 			event.preventDefault();
-// 			var beerRequestId = $(this).attr('beer-request');
-// 			console.log(beerRequestId);
-// 			toggleBeerRequestVote(beerRequestId);
-// 		});
+    }, function(error) {
+    	console.error(error);
     });
 }
 
@@ -256,7 +210,9 @@ function displayKeg() {
 		currentKeg = keg;
 		displayKegInfo(keg.beer.name, keg.filled);
 		displayKegKickedAlert(keg.kickedReports);
-	})
+	}, function(error) {
+		console.error(error);
+	});
 }
 
 function displayKegKickedAlert(kickedReports){
