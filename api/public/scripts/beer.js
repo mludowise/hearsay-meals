@@ -4,7 +4,7 @@ $(document).ready(function() {
     var user = Parse.User.current();
     updateLoginInfo(user);
 	    
-	var keg = displayKeg();
+	displayKeg();
     displayBeerRequests();
     
     $('#kicked-keg').on('click', function() {
@@ -24,23 +24,15 @@ $(document).ready(function() {
     });
 
     $('#add-new-keg').click(function(event){
-        var beerType = $('#update-keg').val();
-        $('#update-keg').val('');
-        updateBeerOnTap(beerType);
+    	addNewKeg();
     });
 
     $('.beer-vote').click(voteForBeer);
 
     $('#beer-request-list').on('click', '.update-keg', function(event){
         event.preventDefault();
-        if (!currentUserIsAdmin()){
-            return;
-        }
-        var beerRequestId = $(this).attr('beer-request');
-        var request = apiRequest('/1/classes/BeerRequest/' + beerRequestId);
-        updateBeerOnTap(request.name);
-        deleteBeerRequest(beerRequestId);
-        displayBeerRequests();
+		var beerRequestId = $(this).attr('beer-request');
+    	addNewKegFromRequest(beerRequestId);
     });
 
     $('#beer-request-list').on('click', '.dismiss-request', function(event){
@@ -87,7 +79,7 @@ function toggleReportKegKicked() {
 	});
 }
 
-function updateBeerOnTap(beerName){
+function updateBeerOnTap(beerName) {
 	displayKegLoading();
     var newKeg = {
         beerName: beerName,
@@ -96,8 +88,28 @@ function updateBeerOnTap(beerName){
     results = apiRequest('/1/classes/Keg', newKeg, 'POST');
     $.extend(newKeg, results);
     displayKeg(newKeg);
-    $('#kicked-keg').addClass('btn-danger').removeClass('btn-primary').text('Report Keg Kicked');
     displayKegKickedAlert(null);
+}
+
+function addNewKeg() {
+	displayKegLoading();
+	
+	var beerType = $('#update-keg').val();
+	$('#update-keg').val('');
+	Parse.Cloud.run("beerFillKeg", {name: beerType}).then(function() {
+		displayKegInfo(beerType, new Date());
+		displayKegKickedAlert([]);
+	});
+}
+
+function addNewKegFromRequest(beerRequestId) {
+	displayKegLoading();
+	
+	Parse.Cloud.run("beerFillKegFromRequest", {id: beerRequestId}).then(function(response) {
+		displayKegInfo(response.name, new Date());
+		displayKegKickedAlert([]);
+		$('#beerRequestRow_' + beerRequestId).detach();
+	});
 }
 
 function saveBeerRequest(beerRequest){
@@ -147,7 +159,7 @@ function displayBeerRequests() {
 			if (containsCurrentUser(votes)){
 				voteBtnClass = 'btn-primary';
 			}
-			var $row = $('<tr>');
+			var $row = $('<tr id="beerRequestRow_' + request.id + '">');
 			var $beerType = $('<td class="beer-request-name">').text(request.name);
 			var $voteButton = $('<button beer-request="' + request.id + '" class="btn ' + voteBtnClass + ' beer-vote">').text('+' + request.votes.length.toString());
 			$voteButton.click(voteForBeer);
@@ -166,31 +178,41 @@ function displayBeerRequests() {
 }
 
 function displayKegLoading() {
-    $('#beer-on-tap').hide();
+	$('#ontap-beer').html('&nbsp;');
+	$('#ontap-filldate').html('&nbsp;');
     $('.loading').show();
 }
 
-function displayKegInfo(beerName, kegFillDate) {
-	if (!kegFillDate) {
-		kegFillDate = new Date();
-	}
-    var $kegName = $('#ontap-beer').text(beerName);
-    var today = new Date();
-    var differenceInDays = Math.floor((today - kegFillDate)/(1000*60*60*24));
+function displayKegInfo(beerName, date) {
+    var filledText;
     
-    var filledText = 'Filled';
-    if (differenceInDays === 0){
-        filledText += ' today.';
-    }
-    else if (differenceInDays == 1){
-        filledText += ' yesterday.';
-    }
-    else {
-        filledText += ' ' + differenceInDays.toString() + ' days ago.';
-    }
-    var $fillDate = $('#ontap-filldate').text(filledText);
+	if (!date) {
+		filledText += 'Filled today.';
+	} else {
+		var kegFillDate = new Date(date);
+		var today = new Date();
+		
+		// Set time of day to midnight
+		kegFillDate.setHours(0, 0, 0, 0);
+		today.setHours(0, 0, 0, 0);
+	
+		var differenceInDays = Math.floor((today - kegFillDate)/(1000*60*60*24));
+	
+		if (differenceInDays === 0){
+			filledText = 'Filled today.';
+		}
+		else if (differenceInDays == 1){
+			filledText = 'Filled yesterday.';
+		}
+		else {
+			filledText = 'Filled ' + differenceInDays + ' days ago.';
+		}
+	}
+	
+    // Show keg info and and stop loading
+	$('#ontap-beer').text(beerName);
+    $('#ontap-filldate').text(filledText);
     $('.loading').hide();
-    $('#beer-on-tap').show();
 }
 
 function displayKeg() {
@@ -203,16 +225,17 @@ function displayKeg() {
 }
 
 function displayKegKickedAlert(kickedReports){
-	if (containsCurrentUser(kickedReports)) {
-		$('#kicked-keg').removeClass('btn-danger').addClass('btn-primary').text('Unreport Keg Kicked');
-	} else {
-		$('#kicked-keg').addClass('btn-danger').removeClass('btn-primary').text('Report Keg Kicked');
-	}
-		
 	var numberOfReports = 0;
 	if (kickedReports) {
 		numberOfReports = kickedReports.length;
+		
+		if (containsCurrentUser(kickedReports)) {
+			$('#kicked-keg').removeClass('btn-danger').addClass('btn-primary').text('Unreport Keg Kicked');
+		} else {
+			$('#kicked-keg').addClass('btn-danger').removeClass('btn-primary').text('Report Keg Kicked');
+		}
 	}
+			
     var text;
     if (numberOfReports > 0){
         if (numberOfReports == 1){
