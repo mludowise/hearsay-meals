@@ -68,7 +68,7 @@ Parse.Cloud.define("beerOnTap", function(request, response) {
  */
 Parse.Cloud.define("beerReportKicked", function(request, response) {
 	if (!request.user) {
-		response.error("A dinner order can only be cancelled when a user is logged in.");
+		response.error("No user is logged in.");
 		return;
 	}
 	
@@ -116,7 +116,7 @@ Parse.Cloud.define("beerReportKicked", function(request, response) {
  */
 Parse.Cloud.define("beerUnreportKicked", function(request, response) {
 	if (!request.user) {
-		response.error("A dinner order can only be cancelled when a user is logged in.");
+		response.error("No user is logged in.");
 		return;
 	}
 	
@@ -211,6 +211,10 @@ Parse.Cloud.define("beerFillKegFromRequest", function(request, response) {
 		response.error("No beer request was specified.");
 		return;
 	}
+	if (!request.user) {
+		response.error("No user is logged in.");
+		return;
+	}
 	if (!util.isUserAdmin(request.user)) {
 		response.error("User does not have permission to update the keg.");
 		return;
@@ -297,20 +301,54 @@ Parse.Cloud.define("beerGetRequests", function(request, response) {
 	});
 });
 
-/* Request a beer.
+/* Request a beer and vote for it.
  *
  * Params:
  *	name (String): Name of the beer to request.
  *
- * Success: none
+ * Success:
+ *	id (String): ID of the new beer request
  *
  * Possible Errors:
+ *	No name specified
  *	There is no user currently logged in.
  *	The specified beer has already been requested.
  * 
  */
 Parse.Cloud.define("beerAddRequest", function(request, response) {
-	response.success();
+	if (!request.user) {
+		response.error("No user is logged in.");
+		return;
+	}
+	
+	var beerName = request.params.name;
+	if (!beerName) {
+		response.error("No beer was specified.");
+		return;
+	}
+	
+	var query = new Parse.Query(BeerRequest);
+	query.equalTo("name", beerName);
+	query.first().then(function(beerRequest) {
+		if (beerRequest) {
+			response.error("A beer with the name \"" + beerName + "\" has already been requested.");
+			return;
+		}
+		
+		beerRequest = new BeerRequest();
+		beerRequest.set("name", beerName);
+		beerRequest.set("user_id", request.user.id);
+		beerRequest.set("votes", [request.user.id]);
+		beerRequest.save().then(function(beerRequest) {
+			response.success({id: beerRequest.id});
+		},
+		function(beerRequest, error) {
+			response.error(error);
+		});
+	},
+	function(beerRequest, error) {
+		response.error(error);
+	});
 });
 
 /* Clear a beer request.
@@ -326,15 +364,90 @@ Parse.Cloud.define("beerAddRequest", function(request, response) {
  *	There is no request with the specified id.
  */
 Parse.Cloud.define("beerRemoveRequest", function(request, response) {
-	response.success();
+	if (!request.user) {
+		response.error("No user is logged in.");
+		return;
+	}
+	if (!util.isUserAdmin(request.user)) {
+		response.error("User does not have permission to delete a beer request.");
+		return;
+	}
+	
+	var requestId = request.params.id;
+	if (!requestId) {
+		response.error("No id was specified.");
+		return;
+	}
+	
+	var query = new Parse.Query(BeerRequest);
+	query.equalTo("objectId", requestId);
+	query.first().then(function(beerRequest) {
+		if (!beerRequest) {
+			response.error("No request exits with the id " + requestId + ".");
+			return;
+		}
+		
+		beerRequest.destroy().then(function(beerRequest) {
+			console.log("Beer request " + requestId + " successfully deleted.");
+			response.success();
+		},
+		function(beerRequest, error) {
+			response.error(error);
+		});
+	},
+	function(beerRequest, error) {
+		response.error(error);
+	});
 });
+
+var toggleVote = function(requestId, user, vote, response) {
+	if (!user) {
+		response.error("No user is logged in.");
+		return;
+	}
+	
+	if (!requestId) {
+		response.error("No id was specified.");
+		return;
+	}
+	
+	var query = new Parse.Query(BeerRequest);
+	query.equalTo("objectId", requestId);
+	query.first().then(function(beerRequest) {
+		if (!beerRequest) {
+			response.error("No request exits with the id " + requestId + ".");
+			return;
+		}
+		
+		if (vote) {
+			beerRequest.addUnique("votes", user.id);
+		} else { // unvote
+			beerRequest.remove("votes", user.id);
+		}
+		
+		beerRequest.save().then(function(beerRequest) {
+			var votes = beerRequest.get("votes");
+			util.findUsers(votes).then(function(users) {
+				response.success(util.infoForUsers(users));
+			}, function(users, error) {
+				response.error(error);
+			});
+		},
+		function(beerRequest, error) {
+			response.error(error);
+		});
+	},
+	function(beerRequest, error) {
+		response.error(error);
+	});	
+}
 
 /* Vote for a beer.
  *
  * Params:
  *	id (String): ID of the beer request
  *
- * Success: Returns a JSON Array  with a list of users who reported the keg was kicked.
+ * Success: Returns a JSON Array with a list of users who voted for the beer.
  *	id (String) - id of the user
  * 	name (String) - name of the user
  * 	picture (String) - URL of the user's avatar
@@ -345,5 +458,24 @@ Parse.Cloud.define("beerRemoveRequest", function(request, response) {
  * 
  */
 Parse.Cloud.define("beerVoteForRequest", function(request, response) {
-	response.success();
+	toggleVote(request.params.id, request.user, true, response);
+});
+
+/* Unvote for a beer.
+ *
+ * Params:
+ *	id (String): ID of the beer request
+ *
+ * Success: Returns a JSON Array with a list of users who voted for the beer.
+ *	id (String) - id of the user
+ * 	name (String) - name of the user
+ * 	picture (String) - URL of the user's avatar
+ *
+ * Possible Errors:
+ *	There is no user currently logged in.
+ *	There is no request with the specified id.
+ * 
+ */
+Parse.Cloud.define("beerUnvoteForRequest", function(request, response) {
+	toggleVote(request.params.id, request.user, false, response);
 });
