@@ -69,11 +69,6 @@ function showAdmin() {
     }
 }
 
-function findUser(id) {
-    results = apiRequest('/1/users/' + id);
-    return results;
-}
-
 function onSignInCallback(response) {
 	key = googleKey;
 	if (response.status && response.status.signed_in) {
@@ -141,16 +136,9 @@ $(function () {
 });
 
 $(document).ready(function () {
-	var iOS = /(iPhone|iPod)/g.test( navigator.userAgent );
+	var iOS = /(iPhone|iPod)/g.test(navigator.userAgent);
    	if (iOS) {
-        var dinnerRequest = apiRequest('/1/classes/Dinner', {where: whereClause}, 'GET');
-		var whereClause = {
-			'applicationType': 'iOS',
-			'applicationId': 'com.hearsaysocial.HearsayMeals'
-		};
-		var results = apiRequest('/1/classes/ApplicationProperties', {where: whereClause, order: 'latestVersion'}, 'GET');
-		if (results != null && results.results != null && results.results.length > 0) {
-			var appProperties = results.results[results.results.length - 1]
+		Parse.Cloud.run("applicationsGetLatest", {platform: "iOS"}).then(function(response) {
 			$banner = $("#banner");
 			$alert = $('<div class="alert alert-dismissible fade in" role="alert">');
 			$alert.append('<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>');
@@ -158,7 +146,9 @@ $(document).ready(function () {
 			$banner.append($alert);
 			$description = $('<span class="mobile-banner-description">Order dinner on the go!</span>'); 
 			$alert.append($description)
-			$alert.append('<a class="mobile-banner-download" href="' + appProperties.downloadUrl + '" target="_blank">INSTALL</a>');
-     	}
-      }
+			$alert.append('<a class="mobile-banner-download" href="' + response.url + '" target="_blank">INSTALL</a>');
+		}, function(error) {
+			console.error(error);
+		});
+	}
 });
