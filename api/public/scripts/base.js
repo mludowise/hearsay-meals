@@ -1,7 +1,8 @@
 var parseApiUrl = "https://api.parse.com";
 
-function updateLoginInfo(user) {
-    if (user == null) {
+function updateLoginInfo() {
+	var user = Parse.User.current();
+    if (user == null && window.location.pathname != "/index.html") {
         window.location.href = "index.html";
         return;
     }
@@ -9,51 +10,6 @@ function updateLoginInfo(user) {
         $('li.user').prepend("<img src='" + user.getPicture() + "' width='30px'>");
     }
     $('li.user p').text(user.getName());
-    showAdmin();
-}
-
-function apiRequest(url, data, method) {
-    if (typeof method === "undefined") {
-        method = "GET";
-    }
-    if (typeof data === "undefined") {
-        data = {};
-    }
-
-    if ($.inArray(method, ['POST', 'PUT']) >= 0) {
-        data = JSON.stringify(data);
-        contentType = 'application/json';
-    } else {
-        contentType = 'application/x-www-form-urlencoded; charset=UTF-8';
-    }
-
-    var results = null;
-	var parseKeys = getParseKeys();
- 	var headers = {
-		'X-Parse-Application-Id': parseKeys.applicationId,
-    	'X-Parse-REST-API-Key': parseKeys.restKey
- 	};
-
-    var sessionToken = localStorage.getItem('sessionToken');
-
-    if (sessionToken !== null) {
-        headers['X-Parse-Session-Token'] = sessionToken;
-    }
-
-    $.ajax({
-        url: parseApiUrl + url,
-        type: method,
-        data: data,
-        headers: headers,
-        contentType: contentType,
-        dataType: 'json',
-        async: false,
-        success: function (data, status, jqXHR) {
-            results = data;
-        }
-    });
-
-    return results;
 }
 
 function currentUserIsAdmin() {
@@ -103,6 +59,24 @@ function onSignInCallback(response) {
 	}
 }
 
+function checkForMobile() {
+	var iOS = /(iPhone|iPod)/g.test(navigator.userAgent);
+   	if (iOS) {
+		Parse.Cloud.run("applicationsGetLatest", {platform: "iOS"}).then(function(response) {
+			$banner = $("#banner");
+			$alert = $('<div class="alert alert-dismissible fade in" role="alert">');
+			$alert.append('<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>');
+			$alert.append('<img class="ios_app_icon" src="images/app_icon.png"/>');
+			$banner.append($alert);
+			$description = $('<span class="mobile-banner-description">Order dinner on the go!</span>'); 
+			$alert.append($description)
+			$alert.append('<a class="mobile-banner-download" href="' + response.url + '" target="_blank">INSTALL</a>');
+		}, function(error) {
+			console.error(error);
+		});
+	}
+}
+
 $(function () {	
 	var parseKeys = getParseKeys();
 	Parse.initialize(parseKeys["applicationId"], parseKeys["javascriptKey"]);
@@ -136,19 +110,7 @@ $(function () {
 });
 
 $(document).ready(function () {
-	var iOS = /(iPhone|iPod)/g.test(navigator.userAgent);
-   	if (iOS) {
-		Parse.Cloud.run("applicationsGetLatest", {platform: "iOS"}).then(function(response) {
-			$banner = $("#banner");
-			$alert = $('<div class="alert alert-dismissible fade in" role="alert">');
-			$alert.append('<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>');
-			$alert.append('<img class="ios_app_icon" src="images/app_icon.png"/>');
-			$banner.append($alert);
-			$description = $('<span class="mobile-banner-description">Order dinner on the go!</span>'); 
-			$alert.append($description)
-			$alert.append('<a class="mobile-banner-download" href="' + response.url + '" target="_blank">INSTALL</a>');
-		}, function(error) {
-			console.error(error);
-		});
-	}
+	updateLoginInfo();
+    showAdmin();
+	checkForMobile();	
 });
