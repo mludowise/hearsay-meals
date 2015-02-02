@@ -73,9 +73,15 @@ function toggleReportKegKicked() {
 }
 
 function addNewKeg() {
+	var beerType = $('#update-keg').val();
+	var confirmation = confirm('Sweet! We got a new keg!\n\n' +
+		'Ready to start pouring ' + beerType + '?');
+	if (!confirmation) {
+		return;
+	}
+	
 	displayKegLoading();
 	
-	var beerType = $('#update-keg').val();
 	$('#update-keg').val('');
 	Parse.Cloud.run("beerFillKeg", {name: beerType}).then(function() {
 		displayKegInfo(beerType, new Date());
@@ -86,6 +92,13 @@ function addNewKeg() {
 }
 
 function addNewKegFromRequest(beerRequestId) {
+	var beerType = $('#beerRequestRow_' + beerRequestId + ' .beer-request-name').text();
+	var confirmation = confirm('Sweet! We got a new keg!\n\n' +
+		'Ready to start pouring ' + beerType + '?');
+	if (!confirmation) {
+		return;
+	}
+	
 	displayKegLoading();
 	
 	Parse.Cloud.run("beerFillKegFromRequest", {id: beerRequestId}).then(function(response) {
