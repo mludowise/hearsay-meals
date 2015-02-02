@@ -24,8 +24,6 @@ function savePreferences() {
 
 $(document).ready(function () {
     var user = Parse.User.current();
-    updateLoginInfo(user);
-    
     var preferences = user.getPreferences();
     if (preferences) {
         $('#' + preferences).prop('checked', 'yes');
