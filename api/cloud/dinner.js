@@ -4,9 +4,6 @@ var util = require("cloud/util.js");
 require("cloud/moment.min.js");
 var moment = require("cloud/moment-timezone-with-data-2010-2020.min.js");
 
-/* Dinner
--------------------------------------------------- */
-
 // Constants we'll be using to calculate when to order dinner
 var DINNER_ORDER_TIMEZONE = "US/Pacific";
 var DINNER_ORDER_DEADLINE = {
