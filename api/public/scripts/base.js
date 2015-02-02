@@ -2,8 +2,10 @@ var parseApiUrl = "https://api.parse.com";
 
 function updateLoginInfo() {
 	var user = Parse.User.current();
-    if (user == null && window.location.pathname != "/index.html") {
-        window.location.href = "index.html";
+    if (user == null) {
+    	if (window.location.pathname != "/index.html") {
+        	window.location.href = "index.html";
+        }
         return;
     }
     if (user.getPicture()) {
