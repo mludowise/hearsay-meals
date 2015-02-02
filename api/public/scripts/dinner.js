@@ -11,10 +11,11 @@ $(document).ready(function() {
 
 function getDinnerConfig() {
 	Parse.Cloud.run("dinnerGetConfigs").then(function(configs) {
-		console.log(configs);
 		orderDeadline = configs.orderDeadline;
 		countdown();
 		setInterval(countdown, 1000);
+	}, function(error) {
+		console.error(error);
 	});
 }
 
@@ -73,6 +74,8 @@ function updateDinnerTable() {
 			$tbody.append($row);
 			$('[data-toggle="tooltip"]').tooltip();
 		}
+	}, function(error) {
+		console.error(error);
 	});
 }
 
@@ -92,12 +95,16 @@ function toggleDinner() {
 			updateOrderButton(true);
 			$(".cat-image").show();
 			updateDinnerTable();
+		}, function(error) {
+			console.error(error);
 		});
 	} else {
 		Parse.Cloud.run("dinnerCancelOrder").then(function(order) {
 			updateOrderButton(false);
 			$(".cat-image").hide();
 			updateDinnerTable();
+		}, function(error) {
+			console.error(error);
 		});
 	}
 }

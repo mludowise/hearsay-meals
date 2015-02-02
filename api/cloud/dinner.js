@@ -60,14 +60,13 @@ Parse.Cloud.define("dinnerGetConfigs", function(request, response) {
 /* Order dinner for the current user
  * 
  * Params:
- *	specialRequest (String)
+ *	specialRequest (String, Optional)
  *	date (Date, Optional): Date for which to order dinner. If null, dinner will be ordered for today.
  *
  * Success: none
  *
  * Possible Errors:
  * 	Invalid user
- * 	User has already ordered dinner for the specified date.
  */
 Parse.Cloud.define("dinnerMakeOrder", function(request, response) {
 	if (!request.user) {
@@ -83,23 +82,26 @@ Parse.Cloud.define("dinnerMakeOrder", function(request, response) {
 	query.equalTo("user_id", request.user.id);
 	query.first().then(function(order) {
 		if (order) {
-			response.error("User " + request.user.getEmail() + " has already ordered dinner for " + orderDate + ".");
+			console.log("User " + request.user.getEmail() + " has already ordered dinner for " + orderDate + ".");
+			response.success();
+			return;
+			order.set("special_request", request.params.specialRequest);
 		} else {
 			var acl = new Parse.ACL(request.user);
 			acl.setRoleWriteAccess("Administrator", true);
 		
-			var order = new DinnerOrder();
+			order = new DinnerOrder();
 			order.set("user_id", request.user.id);
 			order.set("order_date", orderDate);
 			order.set("special_request", request.params.specialRequest);
 			order.setACL(acl);
-			return order.save().then(function(order) {
-				console.log("Order " + order.id + " created.");
-				response.success();
-			}, function(order, error) {
-				response.error(error);
-			});
 		}
+		order.save().then(function(order) {
+			console.log("Order " + order.id + " created.");
+			response.success();
+		}, function(order, error) {
+			response.error(error);
+		});
 	},
 	function(order, error) {
 		response.error(error);
@@ -115,7 +117,6 @@ Parse.Cloud.define("dinnerMakeOrder", function(request, response) {
  *
  * Possible Errors:
  * 	Invalid user
- * 	User has not ordered dinner for the specified date.
  */
 Parse.Cloud.define("dinnerCancelOrder", function(request, response) {
 	if (!request.user) {
@@ -131,7 +132,8 @@ Parse.Cloud.define("dinnerCancelOrder", function(request, response) {
 	query.equalTo("user_id", request.user.id);
 	query.first().then(function(order) {
 		if (!order) {
-			response.error("User " + request.user.getEmail() + " has not ordered dinner for " + orderDate + ".");
+			console.log("User " + request.user.getEmail() + " has not ordered dinner for " + orderDate + ".");
+			response.success();
 		} else {
 			return order.destroy().then(function(order) {
 				console.log("Order " + order.id + " deleted.");
