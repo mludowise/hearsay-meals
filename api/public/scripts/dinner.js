@@ -20,13 +20,13 @@ function getDinnerConfig() {
 }
 
 function updateOrderButton(ordered) {
-	$('#order-dinner').attr("ordered", ordered);
-	
 	if (ordered) {
+		$('#order-dinner').addClass('ordered');
 		$('#order-dinner').addClass('btn-danger');
 		$('#order-dinner').text('Cancel Dinner Order');
 		$('#special-notes').hide();
 	} else {
+		$('#order-dinner').removeClass('ordered');
 		$('#order-dinner').removeClass('btn-danger');
 		$('#order-dinner').text('Order Dinner Tonight');
 		$('#special-notes').show();
@@ -80,7 +80,7 @@ function updateDinnerTable() {
 }
 
 function toggleDinner() {
-	var ordered = $('#order-dinner').attr("ordered");
+	var ordered = $('#order-dinner').hasClass('ordered');
 	if (!ordered) {
         var params = null;
         var specialRequest = $('#special-notes').val();
