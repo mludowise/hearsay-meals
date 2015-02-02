@@ -29,8 +29,14 @@ $(document).ready(function() {
         event.preventDefault();
         var beerRequestId = $(this).attr('beer-request');
         deleteBeerRequest(beerRequestId);
-        displayBeerRequests();
     });
+    
+    $('#beer-request-list').on('click', '.beer-vote', function(event){
+		event.preventDefault();
+		var beerRequestId = $(this).attr('beer-request');
+		console.log(beerRequestId);
+		toggleBeerRequestVote(beerRequestId);
+	});
 });
 
 function toggleBeerRequestVote(beerRequestId){
@@ -133,7 +139,7 @@ function addBeerRequest(beerRequest) {
 //     var index = request.votes.indexOf(userId);
 //     if (index < 0){
 //         request.votes.push(userId);
-//     }
+//     } 
 //     else
 //     {
 //         request.votes.splice(index, 1);
@@ -142,9 +148,17 @@ function addBeerRequest(beerRequest) {
 // }
 
 function deleteBeerRequest(beerRequestId){
-    if (currentUserIsAdmin()){
-        apiRequest('/1/classes/BeerRequest/'+ beerRequestId, null, 'DELETE');
-    }
+	Parse.Cloud.run("beerRemoveRequest", {id: beerRequestId}).then(function() {
+        displayBeerRequests();
+	},
+	function(error) {
+        displayBeerRequests();
+	});
+// 	
+//     if (currentUserIsAdmin()){
+//         apiRequest('/1/classes/BeerRequest/'+ beerRequestId, null, 'DELETE');
+//         displayBeerRequests();
+//     }
 }
 
 function containsCurrentUser(jsonUsers) {
@@ -189,12 +203,12 @@ function displayBeerRequests() {
 			$tbody.append($row);
 		}
 		
-		$('.beer-vote').click(function(event) {
-			event.preventDefault();
-			var beerRequestId = $(this).attr('beer-request');
-			console.log(beerRequestId);
-			toggleBeerRequestVote(beerRequestId);
-		});
+// 		$('.beer-vote').click(function(event) {
+// 			event.preventDefault();
+// 			var beerRequestId = $(this).attr('beer-request');
+// 			console.log(beerRequestId);
+// 			toggleBeerRequestVote(beerRequestId);
+// 		});
     });
 }
 
