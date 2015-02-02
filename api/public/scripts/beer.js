@@ -12,22 +12,12 @@ $(document).ready(function() {
     });
 
     $('#request-beer').click(function(){
-        var beerType = $('#beer-type').val();
-        $('#beer-type').val('');
-        var beerRequest = {
-            name: beerType,
-            user_id: user.id,
-            votes: [user.id]
-        };
-        beerRequestResult = saveBeerRequest(beerRequest);
-        displayBeerRequests();
+    	addBeerRequest();
     });
 
     $('#add-new-keg').click(function(event){
     	addNewKeg();
     });
-
-    $('.beer-vote').click(voteForBeer);
 
     $('#beer-request-list').on('click', '.update-keg', function(event){
         event.preventDefault();
@@ -43,17 +33,24 @@ $(document).ready(function() {
     });
 });
 
-function voteForBeer(event){
-	event.preventDefault();
-	var beerRequestId = $(this).attr('beer-request');
-	var voteCount = parseInt($(this).text().split('+')[1], 10);
-	if ($(this).hasClass('btn-primary')){
-		voteCount = voteCount - 1;
+function toggleBeerRequestVote(beerRequestId){
+	var $voteButton = $('#beerRequestRow_' + beerRequestId + ' .beer-vote');
+	console.log($voteButton);
+	var voted = $voteButton.hasClass('voted');
+	console.log(voted);
+	var promise;
+	if (!voted) {
+		console.log("vote");
+		promise = Parse.Cloud.run('beerVoteForRequest', {id: beerRequestId});
 	} else {
-		voteCount = voteCount + 1;
+		console.log("unvote");
+		promise = Parse.Cloud.run('beerUnvoteForRequest', {id: beerRequestId});
 	}
-	$(this).text('+' + voteCount.toString()).toggleClass('btn-primary').toggleClass('btn-default');
-	toggleBeerRequestVote(beerRequestId);
+	var voteCount = 0;
+	promise.then(function(votes) {
+		voteCount = votes.length;
+		$voteButton.text('+' + voteCount.toString()).toggleClass('btn-primary').toggleClass('btn-default').toggleClass('voted');
+	});
 }
 
 function getBeerOnTap() {
@@ -109,6 +106,7 @@ function addNewKegFromRequest(beerRequestId) {
 		displayKegInfo(response.name, new Date());
 		displayKegKickedAlert([]);
 		$('#beerRequestRow_' + beerRequestId).detach();
+		displayBeerRequests();
 	});
 }
 
@@ -117,19 +115,31 @@ function saveBeerRequest(beerRequest){
     return requestResults;
 }
 
-function toggleBeerRequestVote(beerRequestId){
-	var userId = Parse.User.current().id
-    var request = apiRequest('/1/classes/BeerRequest/'+ beerRequestId);
-    var index = request.votes.indexOf(userId);
-    if (index < 0){
-        request.votes.push(userId);
-    }
-    else
-    {
-        request.votes.splice(index, 1);
-    }
-    apiRequest('/1/classes/BeerRequest/'+ beerRequestId, {'votes': request.votes}, 'PUT');
+function addBeerRequest(beerRequest) {
+	var beerType = $('#beer-type').val();
+	$('#beer-type').val('');
+	
+	Parse.Cloud.run("beerAddRequest", {name: beerType}).then(function(response) {
+		displayBeerRequests();
+	},
+	function(error) {
+		alert(error.message);
+	});
 }
+
+// function toggleBeerRequestVote(beerRequestId){ 
+// 	var userId = Parse.User.current().id;
+//     var request = apiRequest('/1/classes/BeerRequest/'+ beerRequestId);
+//     var index = request.votes.indexOf(userId);
+//     if (index < 0){
+//         request.votes.push(userId);
+//     }
+//     else
+//     {
+//         request.votes.splice(index, 1);
+//     }
+//     apiRequest('/1/classes/BeerRequest/'+ beerRequestId, {'votes': request.votes}, 'PUT');
+// }
 
 function deleteBeerRequest(beerRequestId){
     if (currentUserIsAdmin()){
@@ -154,15 +164,19 @@ function displayBeerRequests() {
 		$tbody.empty();
 		for (var i in beerRequests){
 			var request = beerRequests[i];
-			var voteBtnClass = 'btn-default';
-			var votes = request.votes
-			if (containsCurrentUser(votes)){
-				voteBtnClass = 'btn-primary';
-			}
 			var $row = $('<tr id="beerRequestRow_' + request.id + '">');
 			var $beerType = $('<td class="beer-request-name">').text(request.name);
-			var $voteButton = $('<button beer-request="' + request.id + '" class="btn ' + voteBtnClass + ' beer-vote">').text('+' + request.votes.length.toString());
-			$voteButton.click(voteForBeer);
+			var $voteButton = $('<button beer-request="' + request.id + '" class="btn beer-vote">').text('+' + request.votes.length.toString());
+//			$voteButton.click(toggleBeerRequestVote);
+			
+			var votes = request.votes
+			if (containsCurrentUser(votes)){
+				$voteButton.addClass('btn-primary')
+				$voteButton.addClass('voted');
+			} else {
+				$voteButton.addClass('btn-default')
+			}
+			
 			var $voteCount = $('<td>').append($voteButton);
 			$row.append($beerType).append($voteCount);
 			if (currentUserIsAdmin()){
@@ -174,6 +188,13 @@ function displayBeerRequests() {
 			}
 			$tbody.append($row);
 		}
+		
+		$('.beer-vote').click(function(event) {
+			event.preventDefault();
+			var beerRequestId = $(this).attr('beer-request');
+			console.log(beerRequestId);
+			toggleBeerRequestVote(beerRequestId);
+		});
     });
 }
 
