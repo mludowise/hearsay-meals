@@ -1,9 +1,6 @@
 var currentKeg = null;
 
 $(document).ready(function() {
-    var user = Parse.User.current();
-    updateLoginInfo(user);
-	    
 	displayKeg();
     displayBeerRequests();
     
