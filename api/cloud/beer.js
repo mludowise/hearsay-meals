@@ -1,7 +1,7 @@
 var util = require("cloud/util.js");
 
 // Convenience classes
-var BeerReequest = Parse.Object.extend("BeerRequest");
+var BeerRequest = Parse.Object.extend("BeerRequest");
 var Keg = Parse.Object.extend("Keg");
 
 /* Returns the beer that's on tap
@@ -148,12 +148,31 @@ Parse.Cloud.define("beerUnreportKicked", function(request, response) {
 	});
 });
 
+
+var fillKeg = function(beerName, response) {
+	var keg = new Keg();
+	// TODO: User restricted ACL when adding Keg.
+// 	keg.setACL(util.restrictedACL());
+	keg.set("beerName", beerName)
+	keg.set("kickedReports", []);
+	keg.save().then(function(keg) {
+		console.log("Keg updated to " + beerName + ".");
+		response.success({
+			name: beerName
+		});
+	},
+	function(keg, error) {
+		response.error(error);
+	});
+}
+
 /* Marks the keg as filled with a specific beer.
  *
  * Params:
  *	name (String): Name of the beer
  *
- * Success: none
+ * Success:
+ *	name: The name of the beer in the keg
  *
  * Possible Errors:
  *	No name is specified
@@ -169,28 +188,17 @@ Parse.Cloud.define("beerFillKeg", function(request, response) {
 		response.error("User does not have permission to update the keg.");
 		return;
 	}
-	
-	var keg = new Keg();
-	// TODO: User restricted ACL when adding Keg.
-// 	keg.setACL(util.restrictedACL());
-	keg.set("beerName", beerName)
-	keg.set("kickedReports", []);
-	keg.save().then(function(keg) {
-		console.log("Keg updated to " + beerName + ".");
-		response.success();
-	},
-	function(keg, error) {
-		response.error(error);
-	});
+	fillKeg(beerName, response);
 });
 
 /* Marks the keg as filled by a specific beer requested.
  * The beer request will be removed.
  *
  * Params:
- *	requestId (String): The id of the beer request 
+ *	id (String): The id of the beer request 
  *
- * Success: none
+ * Success:
+ *	name: The name of the beer in the keg
  *
  * Possible Errors:
  *	There is no user currently logged in.
@@ -198,16 +206,34 @@ Parse.Cloud.define("beerFillKeg", function(request, response) {
  *	There is no request with the specified id.
  */
 Parse.Cloud.define("beerFillKegFromRequest", function(request, response) {
-	response.success();
-});
-
-var possiblySucceed = function(response, results, result, numItems) {
-	results.push(result);
-	if (results.length == numItems) {
-		response.success(results);
+	var requestId = request.params.id;
+	if (!requestId) {
+		response.error("No beer request was specified.");
+		return;
 	}
-}
-
+	if (!util.isUserAdmin(request.user)) {
+		response.error("User does not have permission to update the keg.");
+		return;
+	}
+	
+	var query = new Parse.Query(BeerRequest);
+	query.equalTo("objectId", requestId);
+	query.first().then(function(beerRequest) {
+		if (!beerRequest) {
+			response.error("No request exits with the id " + requestId + ".");
+		} else {
+			beerRequest.destroy().then(function(beerRequest) {
+				console.log("Successfully deleted beer request " + requestId + ".");
+			},
+			function(beerRequest, error) {
+				console.error(error);
+			});
+			fillKeg(beerRequest.get("name"), response);
+		}
+	}, function(beerRequest, error) {
+		response.error(error);
+	});
+});
 
 /* Get beer requests.
  *
@@ -225,7 +251,7 @@ var possiblySucceed = function(response, results, result, numItems) {
  * 
  */
 Parse.Cloud.define("beerGetRequests", function(request, response) {
-	var query = new Parse.Query(BeerReequest);
+	var query = new Parse.Query(BeerRequest);
 	query.ascending("name");
 	query.find().then(function(beerRequests) {
 		// First get a combined list of all the users who voted
@@ -300,5 +326,24 @@ Parse.Cloud.define("beerAddRequest", function(request, response) {
  *	There is no request with the specified id.
  */
 Parse.Cloud.define("beerRemoveRequest", function(request, response) {
+	response.success();
+});
+
+/* Vote for a beer.
+ *
+ * Params:
+ *	id (String): ID of the beer request
+ *
+ * Success: Returns a JSON Array  with a list of users who reported the keg was kicked.
+ *	id (String) - id of the user
+ * 	name (String) - name of the user
+ * 	picture (String) - URL of the user's avatar
+ *
+ * Possible Errors:
+ *	There is no user currently logged in.
+ *	There is no request with the specified id.
+ * 
+ */
+Parse.Cloud.define("beerVoteForRequest", function(request, response) {
 	response.success();
 });
