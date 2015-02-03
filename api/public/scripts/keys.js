@@ -27,7 +27,7 @@ function getGoogleClientId() {
 		case "staging-hearsaymeals.parseapp.com":	// Staging
 			return '966122623899-07cog3u9lpipk8q4qo9bvmn51v7h01m5.apps.googleusercontent.com';
 		case "mel-hearsaymeals.parseapp.com":
-			return '966122623899-a09be0hictilu42qa7v1gtu7ue5kvnc2.apps.googleusercontent.com';
+			return '966122623899-49lnd75l3cl4ligdmhgc21nv420ao1l5.apps.googleusercontent.com';
 	}
 	return null;
 }
