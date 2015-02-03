@@ -116,7 +116,7 @@ function addBeerRequest(beerRequest) {
 		displayBeerRequests();
 	},
 	function(error) {
-		console.log(error);
+		console.error(error);
 		alert(error.message);
 	});
 }
@@ -150,9 +150,8 @@ function displayBeerRequests() {
 			var $row = $('<tr id="beerRequestRow_' + request.id + '">');
 			var $beerType = $('<td class="beer-request-name">').text(request.name);
 			var $voteButton = $('<button beer-request="' + request.id + '" class="btn beer-vote">').text('+' + request.votes.length.toString());
-//			$voteButton.click(toggleBeerRequestVote);
 			
-			var votes = request.votes
+			var votes = request.votes;
 			if (containsCurrentUser(votes)){
 				$voteButton.addClass('btn-primary')
 				$voteButton.addClass('voted');

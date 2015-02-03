@@ -284,7 +284,10 @@ Parse.Cloud.define("beerGetRequests", function(request, response) {
 				var usersVoted = [];
 				for (var u in votes) {
 					var userId = votes[u];
-					usersVoted.push(userMap[userId]);
+					var user = userMap[userId];
+					if (user) {
+						usersVoted.push(user);
+					}
 				}
 				results.push({
 					id: beerRequest.id,
