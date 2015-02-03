@@ -16,6 +16,12 @@ function getParseKeys() {
     	    	restKey: 'i9cpzriov9mLY3oNKXvBZt5xq0lAct8qDBKFuYc1',
     	    	javascriptKey: 'crs0WAmboCZTJLrbL5c9V5ZiIVdrnahWTQEL3Pif'
 			};
+		case "mel-pr-hearsaymeals.parseapp.com":
+			return {
+	    	    applicationId: 't0pxcqBGyVGfUaaRSppxtXfo9UF78faTVUoS8qhc',
+    	    	restKey: 'dnkYz5T9WABNsJ8hNQg3E3BLtIg0sM8g5rYHckcj',
+    	    	javascriptKey: 'FMYw34sztI9vHQPKdQQH4XUphTxz6wAhFwYjDLaD'
+			};
 	}
 	return null;
 }
@@ -28,6 +34,8 @@ function getGoogleClientId() {
 			return '966122623899-07cog3u9lpipk8q4qo9bvmn51v7h01m5.apps.googleusercontent.com';
 		case "mel-hearsaymeals.parseapp.com":
 			return '966122623899-49lnd75l3cl4ligdmhgc21nv420ao1l5.apps.googleusercontent.com';
+		case "mel-pr-hearsaymeals.parseapp.com":
+			return '966122623899-f9vsgs5vsgdbhkie71gfahhu32lptjio.apps.googleusercontent.com';
 	}
 	return null;
 }
