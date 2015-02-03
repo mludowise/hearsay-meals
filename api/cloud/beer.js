@@ -256,7 +256,6 @@ Parse.Cloud.define("beerFillKegFromRequest", function(request, response) {
  */
 Parse.Cloud.define("beerGetRequests", function(request, response) {
 	var query = new Parse.Query(BeerRequest);
-	query.ascending("name");
 	query.find().then(function(beerRequests) {
 		// First get a combined list of all the users who voted
 		var userIds = [];
@@ -295,6 +294,12 @@ Parse.Cloud.define("beerGetRequests", function(request, response) {
 					votes: usersVoted
 				});
 			}
+			
+			// Sort results by descending number of votes
+			results.sort(function(a, b) {
+				return b.votes.length - a.votes.length;
+			});
+			
 			response.success(results);
 		}, function(users, error) {
 			response.error(error);
