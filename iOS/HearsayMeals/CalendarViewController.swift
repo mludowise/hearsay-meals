@@ -98,8 +98,8 @@ class CalendarViewController: UITableViewController {
                 } else {
                     self.teamCalendarEvents = events as? GTLCalendarEvents
                     var oldEvents = self.lunchCalendarEvents
-
-                    var events = self.teamCalendarEvents!.items() as [GTLCalendarEvent]
+                    
+                    var events = self.teamCalendarEvents!.items() as? [GTLCalendarEvent]
                     self.lunchCalendarEvents = LunchCalendarEvents(events: events, filter: self.showLunchEvent)
                     
                     NSLog("Retreived \(self.lunchCalendarEvents!.numberOfEvents()) lunch items.")
