@@ -115,9 +115,11 @@ class CalendarViewController: UITableViewController {
     
     private func showLunchEvent(event: GTLCalendarEvent) -> Bool {
         return event.summary? == "Lunch Menu (see below)"
+            && event.recurringEventId != nil
             && event.descriptionProperty? != "TBA"
             && !(event.descriptionProperty =~ "^Allergen Key:.*(\r|\n)*TBA$")
             && !(event.descriptionProperty =~ "^TBA(\r|\n)*Allergen Key:.*$")
+            && !(event.descriptionProperty =~ "^Key\\:(\r|\n)(\\w .+?(\r|\n){0,1})*$")
     }
     
     @IBAction func onRefresh(sender: UIRefreshControl) {
