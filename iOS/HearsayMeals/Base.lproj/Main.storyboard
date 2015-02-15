@@ -180,11 +180,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="1000"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                        <switch key="tableFooterView" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" offImage="beef" id="e5y-Uj-8oj">
-                            <rect key="frame" x="0.0" y="889.5" width="320" height="31"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <color key="onTintColor" red="0.32156863808631897" green="0.83137261867523193" blue="0.40784317255020142" alpha="1" colorSpace="deviceRGB"/>
-                        </switch>
                         <sections>
                             <tableViewSection headerTitle="Diet" id="qyH-3W-u4x">
                                 <cells>
