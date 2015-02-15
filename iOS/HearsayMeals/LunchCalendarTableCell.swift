@@ -20,11 +20,15 @@ class LunchCalendarTableCell : UITableViewCell {
     @IBOutlet var descriptionLabel3: UILabel!
     
     func loadItem(#description: String, date: GTLDateTime) {
+        let newDescription = description.replace("Key\\:(\r|\n)(\\w .+?(\r|\n))*(\\w .+?){0,1}$", template: "")
+        
         // Breakup description onto 3 lines and filter out dietary restrictions
-        var lines = description.componentsSeparatedByCharactersInSet(NSCharacterSet.newlineCharacterSet())
+        var lines = newDescription.componentsSeparatedByCharactersInSet(NSCharacterSet.newlineCharacterSet())
         var matches = [String]()
         for line in lines {
-            if (line != "" && !(line =~ "^Allergen Key.*")) {
+            if (line != "" &&
+                !(line =~ "^Allergen Key.*") &&
+                !(line =~ "^Key\\:.*")) {
                 var contents = line.componentsSeparatedByCharactersInSet(NSCharacterSet(charactersInString: "*(["))
                 var text = contents[0].stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
                 if (text != "") {

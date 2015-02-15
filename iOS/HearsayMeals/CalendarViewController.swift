@@ -98,8 +98,8 @@ class CalendarViewController: UITableViewController {
                 } else {
                     self.teamCalendarEvents = events as? GTLCalendarEvents
                     var oldEvents = self.lunchCalendarEvents
-
-                    var events = self.teamCalendarEvents!.items() as [GTLCalendarEvent]
+                    
+                    var events = self.teamCalendarEvents!.items() as? [GTLCalendarEvent]
                     self.lunchCalendarEvents = LunchCalendarEvents(events: events, filter: self.showLunchEvent)
                     
                     NSLog("Retreived \(self.lunchCalendarEvents!.numberOfEvents()) lunch items.")
@@ -115,9 +115,11 @@ class CalendarViewController: UITableViewController {
     
     private func showLunchEvent(event: GTLCalendarEvent) -> Bool {
         return event.summary? == "Lunch Menu (see below)"
+            && event.recurringEventId != nil
             && event.descriptionProperty? != "TBA"
             && !(event.descriptionProperty =~ "^Allergen Key:.*(\r|\n)*TBA$")
             && !(event.descriptionProperty =~ "^TBA(\r|\n)*Allergen Key:.*$")
+            && !(event.descriptionProperty =~ "^Key\\:(\r|\n)(\\w .+?(\r|\n){0,1})*$")
     }
     
     @IBAction func onRefresh(sender: UIRefreshControl) {

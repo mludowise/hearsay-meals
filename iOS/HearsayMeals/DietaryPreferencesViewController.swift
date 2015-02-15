@@ -33,27 +33,27 @@ class DietaryPreferencesViewController: UITableViewController {
     @IBOutlet weak var vegetarianRow: UITableViewCell!
     @IBOutlet weak var veganRow: UITableViewCell!
     
-    @IBOutlet weak var glutenRow: SwitchTableCell!
-    @IBOutlet weak var nutsRow: SwitchTableCell!
-    @IBOutlet weak var soyRow: SwitchTableCell!
+    @IBOutlet weak var glutenRow: DietaryRestrictionTableCell!
+    @IBOutlet weak var nutsRow: DietaryRestrictionTableCell!
+    @IBOutlet weak var soyRow: DietaryRestrictionTableCell!
     
-    @IBOutlet weak var eggsRow: SwitchTableCell!
-    @IBOutlet weak var dairyRow: SwitchTableCell!
+    @IBOutlet weak var eggsRow: DietaryRestrictionTableCell!
+    @IBOutlet weak var dairyRow: DietaryRestrictionTableCell!
     
-    @IBOutlet weak var shellFishRow: SwitchTableCell!
-    @IBOutlet weak var fishRow: SwitchTableCell!
+    @IBOutlet weak var shellFishRow: DietaryRestrictionTableCell!
+    @IBOutlet weak var fishRow: DietaryRestrictionTableCell!
     
-    @IBOutlet weak var porkRow: SwitchTableCell!
-    @IBOutlet weak var beefRow: SwitchTableCell!
-    @IBOutlet weak var lambRow: SwitchTableCell!
-    @IBOutlet weak var poultryRow: SwitchTableCell!
+    @IBOutlet weak var porkRow: DietaryRestrictionTableCell!
+    @IBOutlet weak var beefRow: DietaryRestrictionTableCell!
+    @IBOutlet weak var lambRow: DietaryRestrictionTableCell!
+    @IBOutlet weak var poultryRow: DietaryRestrictionTableCell!
     
     @IBOutlet weak var additionalRestrictionsRow: UITableViewCell!
     
-    var allRestrictions = [SwitchTableCell]()
-    var nonVeggieRestrictions = [SwitchTableCell]()
-    var nonVeganRestrictions = [SwitchTableCell]()
-    var nonPescRestrictions = [SwitchTableCell]()
+    var allRestrictions = [DietaryRestrictionTableCell]()
+    var nonVeggieRestrictions = [DietaryRestrictionTableCell]()
+    var nonVeganRestrictions = [DietaryRestrictionTableCell]()
+    var nonPescRestrictions = [DietaryRestrictionTableCell]()
     var meatRestrictions = [UITableViewCell]()
     
     var selectedMeatRestriction: UITableViewCell!
@@ -87,11 +87,15 @@ class DietaryPreferencesViewController: UITableViewController {
         meatRestrictions.append(vegetarianRow)
         meatRestrictions.append(veganRow)
         
+        for cell in allRestrictions {
+            (cell as DietaryRestrictionTableCell).initialize()
+        }
+        
         var preferences = PFUser.currentUser()[kUserPreferencesKey] as [Int]?
         if (preferences != nil) {
             for option in allRestrictions {
                 if (find(preferences!, option.tag) != nil) {
-                    option.switchView.on = true
+                    option.setSwitch(true)
                 }
             }
             
@@ -134,7 +138,7 @@ class DietaryPreferencesViewController: UITableViewController {
         }
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
-    
+        
     private func selectCell(cell: UITableViewCell) {
         selectedMeatRestriction?.accessoryType = UITableViewCellAccessoryType.None
         selectedMeatRestriction = cell
@@ -154,7 +158,7 @@ class DietaryPreferencesViewController: UITableViewController {
         }
     }
     
-    private func setEnableCells(cells: [SwitchTableCell], enabled: Bool) {
+    private func setEnableCells(cells: [DietaryRestrictionTableCell], enabled: Bool) {
         for cell in cells {
             if (enabled) {
                 cell.hidden = false
@@ -181,28 +185,5 @@ class DietaryPreferencesViewController: UITableViewController {
 //            additionalRestrictionsRow.textLabel.text = note
 //            additionalRestrictionsRow.textLabel.textColor = UIColor.blackColor()
         }
-    }
-}
-
-private let kSwitchColor = UIColor(red: 227 / 255.0, green: 26 / 255.0, blue: 28 / 255.0, alpha: 1)
-
-class SwitchTableCell : UITableViewCell {
-    var switchView = UISwitch()
-    
-    required init(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        
-        switchView.onTintColor = kSwitchColor
-        switchView.addTarget(self, action: "didSwitchChange:", forControlEvents: UIControlEvents.ValueChanged)
-        self.accessoryView = switchView
-    }
-    
-    func didSwitchChange(sender: UISwitch) {
-        if (sender.on) {
-            PFUser.currentUser().addUniqueObject(tag, forKey: kUserPreferencesKey)
-        } else {
-            PFUser.currentUser().removeObject(tag, forKey: kUserPreferencesKey)
-        }
-        PFUser.currentUser().saveInBackground()
     }
 }

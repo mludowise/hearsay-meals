@@ -22,6 +22,16 @@ class Regex {
         let matches = self.internalExpression.matchesInString(input, options: nil, range:NSMakeRange(0, countElements(input)))
         return matches.count > 0
     }
+    
+    func replace(input: String, template: String) -> String {
+        return internalExpression.stringByReplacingMatchesInString(input, options: nil, range:NSMakeRange(0, countElements(input)), withTemplate: template);
+    }
+}
+
+extension String {
+    func replace(pattern: String, template: String) -> String {
+        return Regex(pattern).replace(self, template: template)
+    }
 }
 
 infix operator =~ {}

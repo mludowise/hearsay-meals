@@ -116,7 +116,8 @@ class BeerViewController: UITableViewController {
             UIView.animateWithDuration(0.1, animations: { () -> Void in
                 self.emptyKegReportsLabel.alpha = 0
             }, completion: { (Bool) -> Void in
-                self.emptyKegReportsLabel.text = "Reported by \((self.keg?[kKegKickedReportsKey] as [String]).count) people"
+                let numPeople = (self.keg?[kKegKickedReportsKey] as [String]).count
+                self.emptyKegReportsLabel.text = numPeople == 1 ? "Reported by 1 person" : "Reported by \(numPeople) people"
                 UIView.animateWithDuration(0.4, delay: 0.1, options: nil, animations: { () -> Void in
                     self.emptyKegReportsLabel.alpha = 1
                 }, completion: nil)

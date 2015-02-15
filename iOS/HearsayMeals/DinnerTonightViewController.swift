@@ -79,7 +79,6 @@ class DinnerTonightViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell = tableView.dequeueReusableCellWithIdentifier(kCellIdentifier) as DinnerPeopleTableCell
-        cell.nameLabel.text = ""
         
         var userId = dinnerOrdersTonight[indexPath.row][kDinnerUserIdKey] as String
         var query = PFUser.query()
@@ -88,9 +87,9 @@ class DinnerTonightViewController: UITableViewController {
             if (error != nil) {
                 NSLog("\(error)")
             } else {
+                var specialRequest = self.dinnerOrdersTonight[indexPath.row][kDinnerSpecialRequestKey] as String?
                 var user = object as PFUser
-                cell.nameLabel.text = user[kUserNameKey] as? String
-                cell.profileImage.image = loadImageFromURL(user[kUserPictureKey] as String)
+                cell.update(user, specialRequest: specialRequest)
             }
         }
         return cell
@@ -123,7 +122,9 @@ class DinnerTonightViewController: UITableViewController {
             // Update ordered view
             self.orderButtonActivityIndicator.stopAnimating()
             self.orderButton.enabled = true
+            self.updateSpecialRequest()
             self.displayDinnerOrdered(true)
+            
             
             // Update table
             self.tableView.beginUpdates()
@@ -178,8 +179,9 @@ class DinnerTonightViewController: UITableViewController {
             userDinnerOrder[kDinnerSpecialRequestKey] = text
             userDinnerOrder.saveInBackground()
             
-            self.specialRequestLabel.text = text
-            self.specialRequestEmptyView.hidden = text != ""
+            var cell = self.tableView.cellForRowAtIndexPath(NSIndexPath(forItem: self.userOrderIndex!, inSection: 0)) as DinnerPeopleTableCell
+            cell.updateSpecialRequest(text)
+            self.updateSpecialRequest()
         }
         presentViewController(noteViewController, animated: true, completion: nil)
     }

@@ -12,11 +12,14 @@ class LunchCalendarEvents: NSObject {
     private var eventsByWeek : [(week: Int, events:[GTLCalendarEvent])] = []
     private var sunday = pastSunday(NSDate())
     
-    init(events: [GTLCalendarEvent], filter: (GTLCalendarEvent -> Bool)?) {
+    init(events: [GTLCalendarEvent]?, filter: (GTLCalendarEvent -> Bool)?) {
+        if (events == nil) {
+            return
+        }
         
         // Group by weeks
         var eventsGroupedByWeek = [Int: [GTLCalendarEvent]]()
-        for event in events {
+        for event in events! {
             if (filter == nil || filter!(event)) {
                 var timeSinceSunday = event.start.dateTime.date.timeIntervalSinceDate(sunday)
                 
