@@ -43,6 +43,7 @@
 		E65D5D9919ECF315000B52DB /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E65D5D9819ECF315000B52DB /* Social.framework */; };
 		E65D5D9B19ECF362000B52DB /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E65D5D9A19ECF362000B52DB /* Accounts.framework */; };
 		E66AB0981A13406F004EFAA2 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66AB0971A13406F004EFAA2 /* Config.swift */; };
+		E66EEE331A90296E00B1D1E6 /* DietaryRestrictionTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66EEE321A90296E00B1D1E6 /* DietaryRestrictionTableCell.swift */; };
 		E690BACE1A1592A9007C10A6 /* LunchCalendarTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E690BACD1A1592A9007C10A6 /* LunchCalendarTableCell.swift */; };
 		E696049119EBD31600FD0885 /* LunchEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E696049019EBD31600FD0885 /* LunchEventViewController.swift */; };
 		E69D2E541A1303ED004FAD77 /* DinnerPeopleTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E69D2E531A1303ED004FAD77 /* DinnerPeopleTableCell.swift */; };
@@ -138,6 +139,7 @@
 		E65D5D9819ECF315000B52DB /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		E65D5D9A19ECF362000B52DB /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		E66AB0971A13406F004EFAA2 /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		E66EEE321A90296E00B1D1E6 /* DietaryRestrictionTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DietaryRestrictionTableCell.swift; sourceTree = "<group>"; };
 		E690BACD1A1592A9007C10A6 /* LunchCalendarTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LunchCalendarTableCell.swift; sourceTree = "<group>"; };
 		E696049019EBD31600FD0885 /* LunchEventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LunchEventViewController.swift; sourceTree = "<group>"; };
 		E69D2E531A1303ED004FAD77 /* DinnerPeopleTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DinnerPeopleTableCell.swift; sourceTree = "<group>"; };
@@ -247,6 +249,7 @@
 			isa = PBXGroup;
 			children = (
 				E6D8AAA41A14B71000058A7F /* DietaryPreferencesViewController.swift */,
+				E66EEE321A90296E00B1D1E6 /* DietaryRestrictionTableCell.swift */,
 				E69F8F1719EA69020046DFCD /* SettingsViewController.swift */,
 			);
 			name = Settings;
@@ -551,6 +554,7 @@
 				E69F8F1819EA69020046DFCD /* SettingsViewController.swift in Sources */,
 				E69D2E541A1303ED004FAD77 /* DinnerPeopleTableCell.swift in Sources */,
 				E690BACE1A1592A9007C10A6 /* LunchCalendarTableCell.swift in Sources */,
+				E66EEE331A90296E00B1D1E6 /* DietaryRestrictionTableCell.swift in Sources */,
 				E63D6A5C1A6CC5A300C21370 /* UpdateUtil.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
