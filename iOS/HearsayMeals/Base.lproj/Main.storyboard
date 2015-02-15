@@ -1070,8 +1070,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <textView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" editable="NO" text="Error messages go here" translatesAutoresizingMaskIntoConstraints="NO" id="bk8-nf-yxk">
-                                <rect key="frame" x="16" y="326" width="288" height="222"/>
+                            <textView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Error messages go here" translatesAutoresizingMaskIntoConstraints="NO" id="bk8-nf-yxk">
+                                <rect key="frame" x="15" y="322" width="290" height="231"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="textColor" red="0.8392156959" green="0.29019609089999998" blue="0.16862745579999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -1090,7 +1090,11 @@
                         <constraints>
                             <constraint firstAttribute="centerX" secondItem="2We-ve-yyC" secondAttribute="centerX" id="5sk-mZ-u4y"/>
                             <constraint firstAttribute="centerY" secondItem="2We-ve-yyC" secondAttribute="centerY" id="6WP-gz-QKO"/>
+                            <constraint firstItem="Y6s-Zy-aRE" firstAttribute="top" secondItem="bk8-nf-yxk" secondAttribute="bottom" constant="15" id="Evd-BR-z26"/>
+                            <constraint firstItem="bk8-nf-yxk" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="15" id="K33-Sw-ydh"/>
                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="2We-ve-yyC" secondAttribute="trailing" constant="16" id="Mjg-oX-syZ"/>
+                            <constraint firstItem="bk8-nf-yxk" firstAttribute="top" secondItem="2We-ve-yyC" secondAttribute="bottom" constant="15" id="dxG-oQ-Hpo"/>
+                            <constraint firstAttribute="trailing" secondItem="bk8-nf-yxk" secondAttribute="trailing" constant="15" id="hAI-cF-nhP"/>
                             <constraint firstItem="2We-ve-yyC" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="16" id="kkd-d6-Mpj"/>
                         </constraints>
                     </view>
