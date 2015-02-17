@@ -1,5 +1,110 @@
 var parseApiUrl = "https://api.parse.com";
 
+function getPreferenceDisplay(id) {
+	switch(id) {
+		case 0:
+			return {
+				label: "Omnivore",
+				icon: "icon-omnivore"
+			};
+		case 1:
+			return {
+				label: "Vegetarian",
+				icon: "icon-vegetarian" 
+			};
+		case 2:
+			return {
+				label: "Vegan",
+				icon: "icon-vegan" 
+			};
+		case 3:
+			return {
+				label: "No Gluten",
+				icon: "icon-gluten" 
+			};
+		case 4:
+			return {
+				label: "Pescetarian",
+				icon: "icon-pescetarian" 
+			};
+		case 5:
+			return {
+				label: "No Nuts",
+				icon: "icon-nuts" 
+			};
+		case 6:
+			return {
+				label: "No Soy",
+				icon: "icon-soy" 
+			};
+		case 7:
+			return {
+				label: "No Eggs",
+				icon: "icon-eggs" 
+			};
+		case 8:
+			return {
+				label: "No Dairy",
+				icon: "icon-dairy" 
+			};
+		case 9:
+			return {
+				label: "No Shellfish",
+				icon: "icon-shellfish" 
+			};
+		case 10:
+			return {
+				label: "No Fish",
+				icon: "icon-fish" 
+			};
+		case 11:
+			return {
+				label: "No Pork",
+				icon: "icon-pork" 
+			};
+		case 12:
+			return {
+				label: "No Beef",
+				icon: "icon-beef" 
+			};
+		case 13:
+			return {
+				label: "No Lamb",
+				icon: "icon-lamb" 
+			};
+		case 14:
+			return {
+				label: "No Poultry",
+				icon: "icon-poultry" 
+			};
+		case 15:
+			return {
+				label: "No Garlic",
+				icon: "icon-garlic" 
+			};
+		default:
+			return null;
+	}
+}
+
+function getPreferencesDisplay(ids) {
+	var idsCopy = ids;
+	idsCopy.sort(function(a, b) {
+		var a2 = a == 3 ? 4 : a == 4 ? 3 : a;
+		var b2 = b == 3 ? 4 : b == 4 ? 3 : b;
+		return a2-b2;
+	});
+	var preferenceDisplays = [];
+	for (var i in idsCopy) {
+		var id = ids[i];
+		var display = getPreferenceDisplay(id)
+		if (display) {
+			preferenceDisplays.push(display);
+		}
+	}
+	return preferenceDisplays;
+}
+
 function updateLoginInfo() {
 	var user = Parse.User.current();
     if (user == null) {
