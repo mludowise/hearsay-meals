@@ -68,6 +68,10 @@ function updateDinnerTable() {
 					$p.append('<i class="' + display.icon + '" alt="' + display.label + '" title="' + display.label + '" data-toggle="tooltip" data-placement="bottom"></i>&nbsp;');
 				}
 			}
+			var prefNote = user.preferenceNote;
+			if (prefNote) {
+				$p.append('<small>' + prefNote + '</small>');
+			}
 			if (request.specialRequest) {
 				$notes.append(request.specialRequest);
 			}
