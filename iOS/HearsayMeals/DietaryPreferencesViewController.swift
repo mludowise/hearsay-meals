@@ -58,8 +58,12 @@ class DietaryPreferencesViewController: UITableViewController {
     
     var selectedMeatRestriction: UITableViewCell!
     
+    var settingsViewController : SettingsViewController?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        settingsViewController = navigationController?.viewControllers[0] as? SettingsViewController
         
         // Default to omnivore
         selectCell(omnivoreRow)
@@ -178,12 +182,12 @@ class DietaryPreferencesViewController: UITableViewController {
     private func setPreferenceNote(note: String?) {
         if (note == nil || note == "") {
             additionalRestrictionsRow.detailTextLabel?.text = "None"
-//            additionalRestrictionsRow.textLabel.text = "None"
-//            additionalRestrictionsRow.textLabel.textColor = UIColor.lightGrayColor()
         } else {
             additionalRestrictionsRow.detailTextLabel?.text = note
-//            additionalRestrictionsRow.textLabel.text = note
-//            additionalRestrictionsRow.textLabel.textColor = UIColor.blackColor()
         }
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        settingsViewController?.updatePreferenceIcons()
     }
 }
