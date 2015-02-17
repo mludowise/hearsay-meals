@@ -23,6 +23,7 @@ body {
 	display: none;
 	height: 40px;
 	margin-top: 15px;
+	position: absolute;
 }
 
 .xs-pull-right {

@@ -1,146 +1,145 @@
+var orderDeadline = null;
+
 $(document).ready(function() {
-    var user = getCurrentUser();
-    updateLoginInfo(user);
-
-    var now = new Date();
-    if (user) {
-        var whereClause = {
-            'user_id' : user.objectId,
-            'order_date': {
-                '__type': 'Date',
-                'iso': getOrderDateISO()
-            }
-        };
-        var dinnerRequest = apiRequest('/1/classes/Dinner', {where: whereClause}, 'GET');
-        if (dinnerRequest.results.length > 0){
-            $('#order-dinner').addClass('btn-danger');
-            $('#order-dinner').text('Cancel Dinner Order');
-        }
-    }
-
     $('#order-dinner').on('click', function() {
-        toggleDinner(user);
-        $(".cat-image").show();
-        updateDinnerTable();
+        toggleDinner();
     });
 
     updateDinnerTable();
-
-    countdown();
-    setInterval(countdown, 1000);
+	getDinnerConfig();
 });
 
-function getOrderDateISO(){
-    var orderDate = new Date();
-    orderDate.setHours(16, 0, 0, 0);
-    return orderDate.toISOString();
+function getDinnerConfig() {
+	Parse.Cloud.run("dinnerGetConfigs").then(function(configs) {
+		orderDeadline = configs.orderDeadline;
+		countdown();
+		setInterval(countdown, 1000);
+	}, function(error) {
+		console.error(error);
+	});
+}
+
+function updateOrderButton(ordered) {
+	if (ordered) {
+		$('#order-dinner').addClass('ordered');
+		$('#order-dinner').addClass('btn-danger');
+		$('#order-dinner').text('Cancel Dinner Order');
+		$('#special-notes').hide();
+	} else {
+		$('#order-dinner').removeClass('ordered');
+		$('#order-dinner').removeClass('btn-danger');
+		$('#order-dinner').text('Order Dinner Tonight');
+		$('#special-notes').show();
+	}
 }
 
 function updateDinnerTable() {
-  var dinners = getOrderedDinners();
-  $tbody = $('#dinner-request-list tbody');
-  $tbody.empty();
+	Parse.Cloud.run("dinnerGetOrders").then(function(dinners) {
+		$tbody = $('#dinner-request-list tbody');
+		$tbody.empty();
 
-  for (var i = 0; i < dinners.length; i++) {
-        var request = dinners[i];
-        var currentUser = findUser(request.user_id);
-        var $row = $('<tr>');
-        var $name = $('<td>').html("<img src='" + currentUser.picture + "'> " + currentUser.name);
-        var $notes = $('<td>');
-        var pref = currentUser.preferences;
-        var $p = $('<td>');
-        if (pref) {
-            for (var j = 0; j < pref.length; j++) {
-                if (pref[j] === 0) {
-                    $p.append('<i class="icon-omnivore" alt="Omnivore" title="Omnivore" data-toggle="tooltip" data-placement="bottom"></i>&nbsp;');
-                }
-                else if (pref[j] === 1) {
-                    $p.append('<i class="icon-vegetarian" alt="Vegetarian" title="Vegetarian" data-toggle="tooltip" data-placement="bottom"></i>&nbsp;');
-                }
-                else if (pref[j] === 2) {
-                    $p.append('<i class="icon-vegan" alt="Vegan" title="Vegan" data-toggle="tooltip" data-placement="bottom"></i>&nbsp;');
-                }
+		for (var i = 0; i < dinners.length; i++) {
+			var request = dinners[i];
+			var user = request.user;
+			if (user.id == Parse.User.current().id) { // Current user has ordered
+				updateOrderButton(true);
+			}
+			
+			var $row = $('<tr>');
+			var $name = $('<td>').html("<img src='" + user.picture + "'> " + user.name);
+			var $notes = $('<td>');
+			var pref = user.preferences;
+			var $p = $('<td>');
+			if (pref) {
+				for (var j = 0; j < pref.length; j++) {
+					if (pref[j] === 0) {
+						$p.append('<i class="icon-omnivore" alt="Omnivore" title="Omnivore" data-toggle="tooltip" data-placement="bottom"></i>&nbsp;');
+					}
+					else if (pref[j] === 1) {
+						$p.append('<i class="icon-vegetarian" alt="Vegetarian" title="Vegetarian" data-toggle="tooltip" data-placement="bottom"></i>&nbsp;');
+					}
+					else if (pref[j] === 2) {
+						$p.append('<i class="icon-vegan" alt="Vegan" title="Vegan" data-toggle="tooltip" data-placement="bottom"></i>&nbsp;');
+					}
 
-                if (pref[j] === 3) {
-                    $p.append('<i class="icon-gluten" alt="No Gluten" title="No Gluten" data-toggle="tooltip" data-placement="bottom"></i>&nbsp;');
-                }
-            }
-        }
-        if (request.special_request) {
-            $notes.append(request.special_request);
-        }
-        $row.append($name).append($p).append($notes);
-        $tbody.append($row);
-        $('[data-toggle="tooltip"]').tooltip();
-    }
+					if (pref[j] === 3) {
+						$p.append('<i class="icon-gluten" alt="No Gluten" title="No Gluten" data-toggle="tooltip" data-placement="bottom"></i>&nbsp;');
+					}
+				}
+			}
+			if (request.specialRequest) {
+				$notes.append(request.specialRequest);
+			}
+			$row.append($name).append($p).append($notes);
+			$tbody.append($row);
+			$('[data-toggle="tooltip"]').tooltip();
+		}
+	}, function(error) {
+		console.error(error);
+	});
 }
 
-function getOrderedDinners() {
-    var whereClause = {
-        'order_date': {
-            '__type': 'Date',
-            'iso': getOrderDateISO()
-        }
-    };
-    var dinnerRequest = apiRequest('/1/classes/Dinner', {where: whereClause, order: 'createdAt'}, 'GET');
-    return dinnerRequest.results;
-}
-
-function toggleDinner(user) {
-    var whereClause = {
-        'user_id' : user.objectId,
-        'order_date': {
-            '__type': 'Date',
-            'iso': getOrderDateISO()
-        }
-    };
-    var dinnerRequest = apiRequest('/1/classes/Dinner', {where: whereClause}, 'GET');
-    if (dinnerRequest.results.length > 0) {
-        apiRequest('/1/classes/Dinner/' + dinnerRequest.results[0].objectId , {}, 'DELETE');
-        $('#order-dinner').removeClass('btn-danger');
-        $('#order-dinner').text('Order Dinner Tonight');
-    }
-    else {
+function toggleDinner() {
+	var ordered = $('#order-dinner').hasClass('ordered');
+	if (!ordered) {
+        var params = null;
         var specialRequest = $('#special-notes').val();
-        $('#special-notes').val('');
-        var data = {
-            'picture': user.picture,
-            'name': user.name,
-            'user_id' : user.objectId,
-            'special_request' : specialRequest,
-            'order_date': {
-                '__type': 'Date',
-                'iso': getOrderDateISO()
-            }
-        };
-        apiRequest('/1/classes/Dinner', data ,'POST');
-        $('#order-dinner').addClass('btn-danger');
-        $('#order-dinner').text('Cancel Dinner Order');
-    }
+        if (specialRequest != '') {
+        	params = {
+        		specialRequest: specialRequest
+        	}
+        }
+        
+		Parse.Cloud.run("dinnerMakeOrder", params).then(function(order) {
+			$('#special-notes').val('');
+			updateOrderButton(true);
+			$(".cat-image").show();
+			updateDinnerTable();
+		}, function(error) {
+			console.error(error);
+		});
+	} else {
+		Parse.Cloud.run("dinnerCancelOrder").then(function(order) {
+			updateOrderButton(false);
+			$(".cat-image").hide();
+			updateDinnerTable();
+		}, function(error) {
+			console.error(error);
+		});
+	}
 }
 
 function countdown() {
-    var now = new Date();
-    var hoursLeft = 15-now.getHours();
-    var secondsLeft;
-    var minutesLeft;
+    var now = moment().tz(
+    	orderDeadline.timeZone
+    );
+    
+    var deadlineMinutes = orderDeadline.time.hours * 60 + orderDeadline.time.minutes;
+    var totalMinutesLeft = deadlineMinutes - now.hours() * 60 - now.minutes();
+    
+    var hoursLeft = Math.floor(totalMinutesLeft / 60);
+    var minutesLeft, secondsLeft;
     var prefix = "";
-    if (hoursLeft < 0) {
-        hoursLeft = 16-now.getHours();
-        minutesLeft = now.getMinutes();
-        secondsLeft = now.getSeconds();
-        if (hoursLeft === 0) {
-            prefix = "-";
-        }
-    }
-    else {
-        minutesLeft = 59-now.getMinutes();
-        secondsLeft = 59-now.getSeconds();
-        prefix = "";        
+    if (totalMinutesLeft < 0) {
+    	hoursLeft += 1;
+	    minutesLeft = (60 - totalMinutesLeft) % 60;
+    	secondsLeft = now.seconds();
+    	if (hoursLeft == 0) {
+    		prefix = "-";
+    	}
+    } else {
+    	minutesLeft = totalMinutesLeft % 60 - 1;
+    	secondsLeft = 59 - now.seconds();
     }
     
     //format 0 prefixes
     if(minutesLeft<10) minutesLeft = "0"+minutesLeft;
     if(secondsLeft<10) secondsLeft = "0"+secondsLeft;
     $('.countdown .time').html(prefix + hoursLeft+":"+minutesLeft+":"+secondsLeft);
+    
+    if (totalMinutesLeft <= 15) {
+    	$('.countdown .time').addClass('text-danger');
+    } else {
+    	$('.countdown .time').removeClass('text-danger');
+    }
 }

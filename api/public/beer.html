@@ -6,6 +6,12 @@
         <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
         <link rel="stylesheet" type="text/css" href="css/styles.css">        
 		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+		<script src="http://www.parsecdn.com/js/parse-1.3.4.min.js"></script>
+		<script src="scripts/bootstrap.min.js"></script>
+		<script src="scripts/keys.js"></script>
+		<script src="scripts/base.js"></script>    
+		<script src="scripts/beer.js"></script>
     </head>
     <body>
     <div id="banner" class="mobile-banner"></div>
@@ -47,15 +53,15 @@
 		  <div class="col-md-12 col-xs-12">
 			  <div class="jumbotron">
 			  	<h2>Currently on Tap</h2>
-			  	<img src="/images/ajax-loader.gif" class="loading"></img>
 			  	<div id="beer-on-tap">
+				  	<img src="/images/ajax-loader.gif" class="loading"></img>
 					<h1 id="ontap-beer"></h1>
 					<div class="row">
 						<div class="col-md-6 col-xs-12">
 							<p id="ontap-filldate"></p>
 						</div>
 						<div class="col-md-6 col-xs-12">
-							<button type="button" class="btn btn-danger pull-right" id="kicked-keg">
+							<button type="button" class="btn btn-danger md-pull-right xs-pull-left" id="kicked-keg">
 							  Report Keg Kicked
 							</button>
 						</div>
@@ -66,10 +72,10 @@
 		</div>
 		<div class="row">
 		  <div class="col-md-12 col-xs-12">
-		  	<div class="pull-right admin">
-				<input type="text" class="form-control beer-text-input" id="update-keg" placeholder="Update Keg">
+		  	<div class="md-pull-right xs-pull-left admin">
+				<input type="text" class="form-control beer-text-input" id="update-keg" placeholder="Refill Keg with Beer">
 				<button type="button" class="btn btn-default" id="add-new-keg">
-				  Update Keg
+				  Refill
 				</button>
 			</div>
 		  </div>
@@ -111,10 +117,5 @@ Report a Bug</a> |
       </div>
     </footer>
     </body>
-    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
-    <script type="text/javascript" src="scripts/bootstrap.min.js"></script>
-	<script type="text/javascript" src="scripts/keys.js"></script>
-    <script type="text/javascript" src="scripts/base.js"></script>
-    <script type="text/javascript" src="scripts/beer.js"></script>
   </body>
 </html>

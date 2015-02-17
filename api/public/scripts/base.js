@@ -1,71 +1,22 @@
 var parseApiUrl = "https://api.parse.com";
 
-function updateLoginInfo(user) {
-    if (!user) {
-        window.location.href = "index.html";
+function updateLoginInfo() {
+	var user = Parse.User.current();
+    if (user == null) {
+    	if (window.location.pathname != "/index.html") {
+        	window.location.href = "index.html";
+        }
         return;
     }
-    if (user.picture) {
-        $('li.user').prepend("<img src='" + user.picture + "' width='30px'>");
+    if (user.getPicture()) {
+        $('li.user').prepend("<img src='" + user.getPicture() + "' width='30px'>");
     }
-    $('li.user p').text(user.name);
-}
-
-function apiRequest(url, data, method) {
-    if (typeof method === "undefined") {
-        method = "GET";
-    }
-    if (typeof data === "undefined") {
-        data = {};
-    }
-
-    if ($.inArray(method, ['POST', 'PUT']) >= 0) {
-        data = JSON.stringify(data);
-        contentType = 'application/json';
-    } else {
-        contentType = 'application/x-www-form-urlencoded; charset=UTF-8';
-    }
-
-    var results = null;
-
- 	var headers = getParseKeys();
-
-    var sessionToken = localStorage.getItem('sessionToken');
-
-    if (sessionToken !== null) {
-        headers['X-Parse-Session-Token'] = sessionToken;
-    }
-
-    $.ajax({
-        url: parseApiUrl + url,
-        type: method,
-        data: data,
-        headers: headers,
-        contentType: contentType,
-        dataType: 'json',
-        async: false,
-        success: function (data, status, jqXHR) {
-            results = data;
-        }
-    });
-
-    return results;
-}
-
-function getCurrentUser() {
-    results = apiRequest('/1/users/me');
-    return results;
+    $('li.user p').text(user.getName());
 }
 
 function currentUserIsAdmin() {
-    var user = getCurrentUser();
-    var isAdmin = false;
-    // Rather than return user.admin
-    // we only change the value in case this is not a valid value
-    if (user && user.admin === true) {
-        isAdmin = user.admin;
-    }
-    return isAdmin;
+	var user = Parse.User.current();
+	return user != null && user.isAdmin();
 }
 
 function showAdmin() {
@@ -76,81 +27,44 @@ function showAdmin() {
     }
 }
 
-function findUser(id) {
-    results = apiRequest('/1/users/' + id);
-    return results;
-}
-
-function userLogin(email) {
-    var data = {
-        username: email,
-        password: 'password'
-    };
-    results = apiRequest('/1/login/', data);
-    return results;
-}
-
-function userSignedIn() {
-    var sessionToken = localStorage.getItem('sessionToken');
-    return sessionToken !== null;
-}
-
 function onSignInCallback(response) {
-    key = googleKey;
-    if (response.status.signed_in) {
-        $('#gConnect').hide();
-        if (!userSignedIn()) {
-            gapi.client.load('oauth2', 'v2', function () {
-                gapi.client.oauth2.userinfo.get().execute(function (resp) {
-                    if (resp.hd !== 'hearsaycorp.com') {
-                        alert('You must have a Hearsay email to use this app');
-                        return;
-                    }
-                    var storedEmail = localStorage.getItem('email');
-                    var user = null;
-                    if (storedEmail !== null) {
-                        user = userLogin(storedEmail);
-                    } else {
-                        user = userLogin(resp.email);
-                        if (user === null) {
-                            var data = {
-                                email: resp.email,
-                                password: 'password',
-                                username: resp.email,
-                                name: resp.name,
-                                picture: resp.picture,
-                                admin: false,
-                                preferences: [0]
-                            };
-                            user = apiRequest('/1/users', data, 'POST');
-                        }
-                    }
-                    localStorage.setItem('email', resp.email);
-                    localStorage.setItem('name', resp.name);
-                    localStorage.setItem('sessionToken', user.sessionToken);
-                    window.location.href = "dinner.html";
-                });
-            });
-        } else {
+	key = googleKey;
+	if (response.status && response.status.signed_in) {
+		$('#gConnect').hide();
+		var pUser = Parse.User.current();
+		if (!pUser) {
+			gapi.client.load('oauth2', 'v2', function () {
+				gapi.client.oauth2.userinfo.get().execute(function (resp) {
+					if (resp.hd !== 'hearsaycorp.com') {
+						alert('You must have a Hearsay email to use this app');
+						return;
+					}
+					Parse.User.logIn(resp.email, "password").then(function(user) {
+						window.location.href = "dinner.html";
+					},
+					function(error) {
+						Parse.User.signUp(resp.email, "password", {
+								email: resp.email,
+								name: resp.name,
+								picture: resp.picture,
+								admin: false,
+								preferences: [0]
+						}).then(function(user) {
+							window.location.href = "dinner.html";
+						});
+					});
+				});
+			});
+		} else {
             window.location.href = "dinner.html";
-        }
-    }
+		}
+	}
 }
 
-$(document).ready(function () {
-    showAdmin();
-    
-	var iOS = /(iPhone|iPod)/g.test( navigator.userAgent );
+function checkForMobile() {
+	var iOS = /(iPhone|iPod)/g.test(navigator.userAgent);
    	if (iOS) {
-        var dinnerRequest = apiRequest('/1/classes/Dinner', {where: whereClause}, 'GET');
-		var whereClause = {
-			'applicationType': 'iOS',
-			'applicationId': 'com.hearsaysocial.HearsayMeals'
-		};
-		var results = apiRequest('/1/classes/ApplicationProperties', {where: whereClause, order: 'latestVersion'}, 'GET');
-		console.log(results);
-		if (results != null && results.results != null && results.results.length > 0) {
-			var appProperties = results.results[results.results.length - 1]
+		Parse.Cloud.run("applicationsGetLatest", {platform: "iOS"}).then(function(response) {
 			$banner = $("#banner");
 			$alert = $('<div class="alert alert-dismissible fade in" role="alert">');
 			$alert.append('<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>');
@@ -158,7 +72,47 @@ $(document).ready(function () {
 			$banner.append($alert);
 			$description = $('<span class="mobile-banner-description">Order dinner on the go!</span>'); 
 			$alert.append($description)
-			$alert.append('<a class="mobile-banner-download" href="' + appProperties.downloadUrl + '" target="_blank">INSTALL</a>');
-     	}
-      }
+			$alert.append('<a class="mobile-banner-download" href="' + response.url + '" target="_blank">INSTALL</a>');
+		}, function(error) {
+			console.error(error);
+		});
+	}
+}
+
+$(function () {	
+	var parseKeys = getParseKeys();
+	Parse.initialize(parseKeys["applicationId"], parseKeys["javascriptKey"]);
+	
+	var User = Parse.User.extend({
+		getEmail: function() {
+			return this.get("email");
+		},
+		getPicture: function() {
+			return this.get("picture");
+		},
+		getName: function() {
+			return this.get("name");
+		},
+		isAdmin: function() {
+			return this.get("admin");
+		},
+		getPreferences: function() {
+			return this.get("preferences");
+		},
+		setPreferences: function(preferences) {
+			this.set("preferences", preferences);
+		},
+		getPreferenceNote: function() {
+			return this.get("preference_note");
+		},
+		setPreferenceNote: function(preferenceNote) {
+			this.set("preference_note", preferenceNote);
+		}
+	});
+});
+
+$(document).ready(function () {
+	updateLoginInfo();
+    showAdmin();
+	checkForMobile();	
 });
