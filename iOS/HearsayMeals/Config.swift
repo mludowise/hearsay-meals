@@ -15,7 +15,7 @@ let kTimeToOrderBy = (hour: 16, minute: 0) // 4pm
 let kReportBugAddress = "hearsaymeals-dev@hearsaycorp.com"
 
 
-let kTesting = false
+let kTesting = true
 
 // Production
 let kParseApplicationId = kTesting
