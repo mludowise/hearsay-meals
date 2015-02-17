@@ -24,13 +24,15 @@ function savePreferences() {
 
 $(document).ready(function () {
     var user = Parse.User.current();
-    var preferences = user.getPreferences();
-    if (preferences) {
-        $('#' + preferences).prop('checked', 'yes');
-        if (preferences) {
-            $('#' + preferences).prop('checked', 'yes');
-        }
-    }
+    user.fetch().then(function(user) { // Refresh user in case preferences were edited in a different browser or mobile
+		var preferences = user.getPreferences();
+		if (preferences) {
+			for (var i in preferences) {
+				console.log(preferences[i]);
+				$('#' + preferences[i]).prop('checked', 'yes');
+			}
+		}
+    });
 
     if (user.getPreferenceNote()) {
         $('#customPrefs').val(user.getPreferenceNote());
