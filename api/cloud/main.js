@@ -1,6 +1,7 @@
 require("cloud/beer.js");
 require("cloud/dinner.js");
 require("cloud/applications.js");
+require("cloud/notifications.js");
 
 var Mailgun = require('mailgun');
 Mailgun.initialize('meals.hearsaysocial.com', 'key-354ba03f6a3d1296300537b75985e6e0');
