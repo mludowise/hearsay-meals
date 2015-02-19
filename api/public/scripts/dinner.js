@@ -11,7 +11,7 @@ $(document).ready(function() {
 
 function getDinnerConfig() {
 	Parse.Cloud.run("dinnerGetConfigs").then(function(configs) {
-		orderDeadline = configs.orderDeadline;
+		orderDeadline = configs.deadline;
 		countdown();
 		setInterval(countdown, 1000);
 	}, function(error) {
@@ -34,7 +34,16 @@ function updateOrderButton(ordered) {
 }
 
 function updateDinnerTable() {
-	Parse.Cloud.run("dinnerGetOrders").then(function(dinners) {
+	var today = new Date();
+	var params = {
+		date: {
+			year: today.getFullYear(),
+			month: today.getMonth(),
+			day: today.getDate()
+		}
+	};
+	
+	Parse.Cloud.run("dinnerGetOrders", params).then(function(dinners) {
 		$tbody = $('#dinner-request-list tbody');
 		$tbody.empty();
 
@@ -80,14 +89,20 @@ function updateDinnerTable() {
 }
 
 function toggleDinner() {
+	var today = new Date();
+	var params = {
+		date: {
+			year: today.getFullYear(),
+			month: today.getMonth(),
+			day: today.getDate()
+		}
+	};
+
 	var ordered = $('#order-dinner').hasClass('ordered');
 	if (!ordered) {
-        var params = null;
         var specialRequest = $('#special-notes').val();
         if (specialRequest != '') {
-        	params = {
-        		specialRequest: specialRequest
-        	}
+        	params.specialRequest = specialRequest;
         }
         
 		Parse.Cloud.run("dinnerMakeOrder", params).then(function(order) {
@@ -99,7 +114,7 @@ function toggleDinner() {
 			console.error(error);
 		});
 	} else {
-		Parse.Cloud.run("dinnerCancelOrder").then(function(order) {
+		Parse.Cloud.run("dinnerCancelOrder", params).then(function(order) {
 			updateOrderButton(false);
 			$(".cat-image").hide();
 			updateDinnerTable();
@@ -110,11 +125,9 @@ function toggleDinner() {
 }
 
 function countdown() {
-    var now = moment().tz(
-    	orderDeadline.timeZone
-    );
+    var now = moment();
     
-    var deadlineMinutes = orderDeadline.time.hours * 60 + orderDeadline.time.minutes;
+    var deadlineMinutes = orderDeadline.hours * 60 + orderDeadline.minutes;
     var totalMinutesLeft = deadlineMinutes - now.hours() * 60 - now.minutes();
     
     var hoursLeft = Math.floor(totalMinutesLeft / 60);
