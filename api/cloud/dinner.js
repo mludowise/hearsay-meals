@@ -1,11 +1,7 @@
 var util = require("cloud/util.js");
-
-// moment.js required for timezone manipulation
-require("cloud/moment.min.js");
-var moment = require("cloud/moment-timezone-with-data-2010-2020.min.js");
+var moment = require("moment");
 
 // Constants we'll be using to calculate when to order dinner
-var DINNER_ORDER_TIMEZONE = "US/Pacific";
 var DINNER_ORDER_DEADLINE = {
 	hours: 16,
 	minutes: 0
@@ -15,19 +11,9 @@ var DINNER_ORDER_DEADLINE = {
 var DinnerOrder = Parse.Object.extend("Dinner");
 
 // Utility to generate a Date object for the dinner order given a date.
-// Will set the time of the date to the dinner order deadline.
 // If dateParams are provided, it will set the day/month/year to the appropriate date.
-var dinnerOrderDate = function(dateParams) {
-	var m = null;
-	if (dateParams) {
-		m = moment(new Date(dateParams.year, dateParams.month, dateParams.day));
-	} else {
-		m = moment();
-	}
-	var formattedDate = m.format("YYYY-MM-DD") 
-		+ " " +  DINNER_ORDER_DEADLINE.hours + ":" +  DINNER_ORDER_DEADLINE.minutes
-	
-	return moment.tz(formattedDate, DINNER_ORDER_TIMEZONE).toDate();
+var getDate = function(dateParams) {
+	return new Date(dateParams.year, dateParams.month, dateParams.day);
 }
 
 /* Get dinner configuration
@@ -36,21 +22,16 @@ var dinnerOrderDate = function(dateParams) {
  *
  * Success returns a JSON object consisting of:
  *	minPeople (Integer): The minimum number of people required to order dinner.
- *	orderDeadline: a JSON object representing the deadline for ordering dinner, consisting of:
- *		timeZone (String): The name of the timezone for which the deadline is in (eg. "US/Pacific").
- *		time (JSON): The time of day for the order deadline.
- *			hours (Integer)
- *			minutes (Integer)
+ *	deadline (JSON): The time of day for the order deadline.
+ *		hours (Integer)
+ *		minutes (Integer)
  *
  * Possible Errors: none
  */
 Parse.Cloud.define("dinnerGetConfigs", function(request, response) {
 	response.success({ 
 		minPeople: 4,
-		orderDeadline: {
-			timeZone: DINNER_ORDER_TIMEZONE,
-			time:  DINNER_ORDER_DEADLINE
-		}
+		deadline: DINNER_ORDER_DEADLINE
 	});
 });
 
@@ -58,20 +39,28 @@ Parse.Cloud.define("dinnerGetConfigs", function(request, response) {
  * 
  * Params:
  *	specialRequest (String, Optional)
- *	date (Date, Optional): Date for which to order dinner. If null, dinner will be ordered for today.
+ *	date (JSON): Date for which to order dinner.
+ *		day (Integer): Day of month, ranging 1-31
+ *		month (Integer): Ranging 0-11
+ *		year (Integer)
  *
  * Success: none
  *
  * Possible Errors:
  * 	Invalid user
+ *	No date provided
  */
 Parse.Cloud.define("dinnerMakeOrder", function(request, response) {
 	if (!request.user) {
 		response.error("No user is logged in.");
 		return;
 	}
+	if (!request.params.date) {
+		response.error("No date provided.");
+		return;
+	}
 	
-	var orderDate = dinnerOrderDate(request.params.date);
+	var orderDate = getDate(request.params.date);
 	console.log("Order Date: " + orderDate);
 
 	var query = new Parse.Query(DinnerOrder);
@@ -85,6 +74,7 @@ Parse.Cloud.define("dinnerMakeOrder", function(request, response) {
 			order.set("special_request", request.params.specialRequest);
 		} else {
 			var acl = new Parse.ACL(request.user);
+			acl.setPublicReadAccess(true);
 			acl.setRoleWriteAccess("Administrator", true);
 		
 			order = new DinnerOrder();
@@ -108,20 +98,28 @@ Parse.Cloud.define("dinnerMakeOrder", function(request, response) {
 /* Cancel dinner order for the current user
  *
  * Params:
- *	date (Date, Optional): Date for which to cancel order. If null, dinner will be cancelled for today.
+ *	date (JSON): Date for which to order dinner.
+ *		day (Integer): Day of month, ranging 1-31
+ *		month (Integer): Ranging 0-11
+ *		year (Integer)
  *
  * Success: none
  *
  * Possible Errors:
  * 	Invalid user
+ *	No date provided
  */
 Parse.Cloud.define("dinnerCancelOrder", function(request, response) {
 	if (!request.user) {
 		response.error("No user is logged in.");
 		return;
 	}
+	if (!request.params.date) {
+		response.error("No date provided.");
+		return;
+	}
 	
-	var orderDate = dinnerOrderDate(request.params.date);
+	var orderDate = getDate(request.params.date);
 	console.log("Order Date: " + orderDate);
 
 	var query = new Parse.Query(DinnerOrder);
@@ -148,7 +146,7 @@ Parse.Cloud.define("dinnerCancelOrder", function(request, response) {
 /* Returns a list of users who ordered dinner today
  *
  * Params:
- *	date (JSON, Optional): Date for which to get orders for. If null, return orders for today.
+ *	date (JSON): Date for which to get orders for.
  *		day (Integer): Day of month, ranging 1-31
  *		month (Integer): Ranging 0-11
  *		year (Integer)
@@ -162,10 +160,16 @@ Parse.Cloud.define("dinnerCancelOrder", function(request, response) {
  * 		preferences (Array[Int]) - An array of integers representing the user's dietary preferences
  *	 	preferenceNote (String) - The special dietary restriction note for the user
  *
- * Possible Errors: none
+ * Possible Errors:
+ *	No date provided
  */
 Parse.Cloud.define("dinnerGetOrders", function(request, response) {
-	var orderDate = dinnerOrderDate(request.params.date);
+	if (!request.params.date) {
+		response.error("No date provided.");
+		return;
+	}
+	
+	var orderDate = getDate(request.params.date);
 	console.log("Order Date: " + orderDate);
 
 	var query = new Parse.Query(DinnerOrder);
