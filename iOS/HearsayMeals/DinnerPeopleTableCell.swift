@@ -14,9 +14,9 @@ class DinnerPeopleTableCell: UITableViewCell {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var specialRequestLabel: UILabel!
     
-    internal func update(user: PFUser, specialRequest: String?) {
-        nameLabel.text = user[kUserNameKey] as? String
-        profileImage.image = loadImageFromURL(user[kUserPictureKey] as String)
+    internal func update(name: String, pictureURL: String, specialRequest: String?) {
+        nameLabel.text = name
+        profileImage.image = loadImageFromURL(pictureURL)
         updateSpecialRequest(specialRequest)
     }
     

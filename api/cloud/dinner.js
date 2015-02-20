@@ -35,7 +35,7 @@ Parse.Cloud.define("dinnerGetConfigs", function(request, response) {
 	});
 });
 
-/* Order dinner for the current user
+/* Order dinner for the current user or update special request for order
  * 
  * Params:
  *	specialRequest (String, Optional)
@@ -66,11 +66,10 @@ Parse.Cloud.define("dinnerMakeOrder", function(request, response) {
 	var query = new Parse.Query(DinnerOrder);
 	query.equalTo("order_date", orderDate);
 	query.equalTo("user_id", request.user.id);
+	console.log(request.params.specialRequest);
 	query.first().then(function(order) {
 		if (order) {
 			console.log("User " + request.user.getEmail() + " has already ordered dinner for " + orderDate + ".");
-			response.success();
-			return;
 			order.set("special_request", request.params.specialRequest);
 		} else {
 			var acl = new Parse.ACL(request.user);
@@ -84,7 +83,7 @@ Parse.Cloud.define("dinnerMakeOrder", function(request, response) {
 			order.setACL(acl);
 		}
 		order.save().then(function(order) {
-			console.log("Order " + order.id + " created.");
+			console.log("Order " + order.id + " saved.");
 			response.success();
 		}, function(order, error) {
 			response.error(error);
