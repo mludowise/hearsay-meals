@@ -16,20 +16,17 @@ private var delegate = UpdateAlertViewDelegate()
 func checkForUpdates(finished: ((Bool) -> Void)?) {
     // Check app version
     var appVersion = (NSBundle.mainBundle().objectForInfoDictionaryKey("CFBundleShortVersionString") as NSString).floatValue
-    var bundleID = NSBundle.mainBundle().objectForInfoDictionaryKey(kCFBundleIdentifierKey) as String
     
     NSLog("App Version: \(appVersion)")
-    NSLog("Bundle ID: \(bundleID)")
     
-    var query = PFQuery(className: kApplicationPropertiesTableKey)
-    query.whereKey(kApplicationPropertiesTypeKey, equalTo: "iOS")
-    query.whereKey(kApplicationPropertiesIdKey, equalTo: bundleID)
-    query.getFirstObjectInBackgroundWithBlock { (applicationProperties: PFObject!, error: NSError!) -> Void in
+    PFCloud.callFunctionInBackground("applicationsGetLatest", withParameters: ApplicationPlatform().data) { (result: AnyObject!, error: NSError!) -> Void in
         if (error != nil) {
             NSLog("\(error)")
             return
         }
-        var latestVersion = applicationProperties[kApplicationPropertiesLatestVersionKey] as Float
+        
+        let latest = ApplicationProperty(data: result as NSDictionary)
+        let latestVersion = latest.version
         NSLog("Latest Version: \(latestVersion)")
         
         if (latestVersion <= appVersion) {
@@ -38,7 +35,7 @@ func checkForUpdates(finished: ((Bool) -> Void)?) {
         }
         
         // Present modal asking the user if they'd like to update to the latest version
-        delegate.applicationUrl = applicationProperties[kApplicationPropertiesDownloadUrlKey] as? String
+        delegate.applicationUrl = latest.url
         
         var alertView = UIAlertView(title: "Version \(latestVersion) Available",
             message: "Please update to the latest version.",

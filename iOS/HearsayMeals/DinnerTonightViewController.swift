@@ -30,34 +30,44 @@ class DinnerTonightViewController: UITableViewController {
     @IBOutlet weak var numPeopleOrdered: UILabel!
     @IBOutlet weak var minimumPeopleMetLabel: UILabel!
     
-    var dinnerOrdersTonight = [NSDictionary]()
+    var dinnerConfig : DinnerConfig?
+    
+    var dinnerOrdersTonight = [DinnerOrder]()
     var userOrderIndex : Int?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         getPeopleEatingTonight(true, nil)
-        updateTimer()
-        NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "updateTimer", userInfo: nil, repeats: true)
+        getDinnerConfig()
     }
     
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
+    private func getDinnerConfig() {
+        PFCloud.callFunctionInBackground("dinnerGetConfigs", withParameters: [:]) { (result: AnyObject!, error: NSError!) -> Void in
+            if (error != nil || result == nil) {
+                NSLog("\(error)")
+                self.timeLeftLabel.hidden = true
+                return
+            }
+            
+            NSLog("Dinner Config: \(self.dinnerConfig)")
+            
+            self.dinnerConfig = DinnerConfig(data: result as NSDictionary)
+            self.updateTimer()
+            NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "updateTimer", userInfo: nil, repeats: true)
+        }
     }
     
     private func getPeopleEatingTonight(updateOrderedView: Bool, completion: (() -> Void)?) {
-        var today = NSDate()
-        var params = [
-            "date": getDateParam(today)
-        ]
+        var dinnerRequest = DinnerRequest(date: NSDate())
         
-        PFCloud.callFunctionInBackground("dinnerGetOrders", withParameters: params) { (result: AnyObject!, error: NSError!) -> Void in
+        PFCloud.callFunctionInBackground("dinnerGetOrders", withParameters: dinnerRequest.data) { (result: AnyObject!, error: NSError!) -> Void in
             if (error != nil || result == nil) {
                 NSLog("\(error)")
                 return
             }
             
-            self.dinnerOrdersTonight = result as [NSDictionary]
+            self.dinnerOrdersTonight = DinnerOrder.dinnerOrders(result as [NSDictionary])
             NSLog("Fetched \(self.dinnerOrdersTonight.count) Dinner Orders")
             
             self.userOrderIndex = self.findUserOrder(self.dinnerOrdersTonight)
@@ -84,11 +94,7 @@ class DinnerTonightViewController: UITableViewController {
         var cell = tableView.dequeueReusableCellWithIdentifier(kCellIdentifier) as DinnerPeopleTableCell
         
         let order = dinnerOrdersTonight[indexPath.row]
-        let specialRequest = order["specialRequest"] as String?
-        let user = order["user"] as NSDictionary
-        let name = user["name"] as String
-        let pic = user["picture"] as String
-        cell.update(name, pictureURL: pic, specialRequest: specialRequest)
+        cell.update(order.userInfo.name, pictureURL: order.userInfo.pictureURL, specialRequest: order.specialRequest)
         return cell
     }
     
@@ -102,11 +108,9 @@ class DinnerTonightViewController: UITableViewController {
         orderButton.enabled = false
         orderButtonActivityIndicator.startAnimating()
         
-        var params = [
-            "date": getDateParam(NSDate())
-        ]
+        var dinnerRequest = DinnerRequest(date: NSDate())
         
-        PFCloud.callFunctionInBackground("dinnerMakeOrder", withParameters: params) { (result: AnyObject!, error: NSError!) -> Void in
+        PFCloud.callFunctionInBackground("dinnerMakeOrder", withParameters: dinnerRequest.data) { (result: AnyObject!, error: NSError!) -> Void in
             if (error != nil) {
                 NSLog("\(error)")
                 return
@@ -127,10 +131,9 @@ class DinnerTonightViewController: UITableViewController {
         cancelOrderButton.hidden = true
         cancelOrderActivityIndicator.startAnimating()
 
-        var params = [
-            "date": getDateParam(NSDate())
-        ]
-        PFCloud.callFunctionInBackground("dinnerCancelOrder", withParameters: params) { (result: AnyObject!, error: NSError!) -> Void in
+        var dinnerRequest = DinnerRequest(date: NSDate())
+        
+        PFCloud.callFunctionInBackground("dinnerCancelOrder", withParameters: dinnerRequest.data) { (result: AnyObject!, error: NSError!) -> Void in
             if (error != nil) {
                 NSLog("\(error)")
                 return
@@ -151,17 +154,21 @@ class DinnerTonightViewController: UITableViewController {
             return
         }
         
-        let userDinnerOrder = self.dinnerOrdersTonight[self.userOrderIndex!]
-        let specialRequest = userDinnerOrder["specialRequest"] as String?
+        let userDinnerOrder = dinnerOrdersTonight[userOrderIndex!]
         
-        var params = [
-            "date": getDateParam(NSDate()),
-            ] as [String : AnyObject]
+        println("special request: \(userDinnerOrder.specialRequest)")
         
         var noteViewController = storyboard?.instantiateViewControllerWithIdentifier(kNoteViewControllerID) as NoteViewController
-        noteViewController.initialize(specialRequest, title: "Dinner Request", allowEmpty: true) { (text: String) -> Void in
-            params["specialRequest"] = text
-            PFCloud.callFunctionInBackground("dinnerMakeOrder", withParameters: params, block: { (result: AnyObject!, error: NSError!) -> Void in
+        noteViewController.initialize(userDinnerOrder.specialRequest, title: "Dinner Request", allowEmpty: true) { (text: String) -> Void in
+            
+            println(text)
+            
+            var dinnerRequest = DinnerRequest(date: NSDate(), specialRequest: text)
+            
+            println(dinnerRequest.specialRequest)
+            println(dinnerRequest.data)
+            
+            PFCloud.callFunctionInBackground("dinnerMakeOrder", withParameters: dinnerRequest.data, block: { (result: AnyObject!, error: NSError!) -> Void in
                 if (error != nil) {
                     NSLog("\(error)")
                     return
@@ -179,7 +186,11 @@ class DinnerTonightViewController: UITableViewController {
     }
     
     func updateTimer() {
-        var timeToOrder = timeUntil(kTimeToOrderBy.hour, kTimeToOrderBy.minute, 0, kOfficeTimeZone)
+        if (dinnerConfig == nil) {
+            return
+        }
+        
+        var timeToOrder = timeUntil(dinnerConfig!.deadline.hours, dinnerConfig!.deadline.minutes)
         var countdownLabelText = ""
         
         if (timeToOrder > kCountdownRedTime) {
@@ -214,38 +225,25 @@ class DinnerTonightViewController: UITableViewController {
             numPeopleOrdered.text = "\(numberOrdered) People Ordered".uppercaseString
         }
         
-        minimumPeopleMetLabel.hidden = numberOrdered >= kMinDinnerOrders
+        minimumPeopleMetLabel.hidden = dinnerConfig == nil || numberOrdered >= dinnerConfig?.minPeople
     }
     
     private func updateSpecialRequest() {
         var specialRequestText : String?
         if (userOrderIndex != nil) {
-            let user = dinnerOrdersTonight[userOrderIndex!]
-            specialRequestText = user["specialRequest"] as? String
+            let order = dinnerOrdersTonight[userOrderIndex!]
+            specialRequestText = order.specialRequest
             specialRequestLabel.text = specialRequestText?
         }
         specialRequestEmptyView.hidden = specialRequestText != nil && specialRequestText != ""
     }
     
-    private func findUserOrder(orders: [NSDictionary]) -> Int? {
+    private func findUserOrder(orders: [DinnerOrder]) -> Int? {
         for (i, order) in enumerate(orders) {
-            let user = order["user"] as NSDictionary
-            let userId = user["id"] as String
-            if (userId == PFUser.currentUser().objectId) {
+            if (order.userInfo.id == PFUser.currentUser().objectId) {
                 return i
             }
         }
         return nil
-    }
-    
-    func getDateParam(date: NSDate) -> [String : Int] {
-        let components = NSCalendar.currentCalendar().components(
-            NSCalendarUnit.DayCalendarUnit | NSCalendarUnit.MonthCalendarUnit | NSCalendarUnit.YearCalendarUnit,
-            fromDate: date)
-        return [
-            "day": components.day,
-            "month": components.month - 1,
-            "year": components.year
-        ]
     }
 }

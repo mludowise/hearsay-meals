@@ -54,6 +54,11 @@
 		E6E3ABFA1A0E9B5300B0DCA1 /* DinnerTonightViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E3ABF91A0E9B5300B0DCA1 /* DinnerTonightViewController.swift */; };
 		E6E3ABFC1A0EC1F900B0DCA1 /* UIUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E3ABFB1A0EC1F900B0DCA1 /* UIUtil.swift */; };
 		E6E590421A100E280002473E /* ParseKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E590411A100E280002473E /* ParseKeys.swift */; };
+		E6EC17681A971D1400923A96 /* ApplicationProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6EC17671A971D1400923A96 /* ApplicationProperty.swift */; };
+		E6EC176A1A97203200923A96 /* DinnerOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6EC17691A97203200923A96 /* DinnerOrder.swift */; };
+		E6EC176C1A97BD1800923A96 /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6EC176B1A97BD1800923A96 /* UserInfo.swift */; };
+		E6EC176E1A981B4C00923A96 /* DinnerConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6EC176D1A981B4C00923A96 /* DinnerConfig.swift */; };
+		E6EC17701A981BDA00923A96 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6EC176F1A981BDA00923A96 /* User.swift */; };
 		E6FF58D019EA8A5D008124A5 /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FF58CF19EA8A5D008124A5 /* CalendarViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -150,6 +155,11 @@
 		E6E3ABF91A0E9B5300B0DCA1 /* DinnerTonightViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DinnerTonightViewController.swift; sourceTree = "<group>"; };
 		E6E3ABFB1A0EC1F900B0DCA1 /* UIUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIUtil.swift; sourceTree = "<group>"; };
 		E6E590411A100E280002473E /* ParseKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseKeys.swift; sourceTree = "<group>"; };
+		E6EC17671A971D1400923A96 /* ApplicationProperty.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationProperty.swift; sourceTree = "<group>"; };
+		E6EC17691A97203200923A96 /* DinnerOrder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DinnerOrder.swift; path = ../DinnerOrder.swift; sourceTree = "<group>"; };
+		E6EC176B1A97BD1800923A96 /* UserInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
+		E6EC176D1A981B4C00923A96 /* DinnerConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DinnerConfig.swift; sourceTree = "<group>"; };
+		E6EC176F1A981BDA00923A96 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		E6FF58CF19EA8A5D008124A5 /* CalendarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -196,6 +206,7 @@
 		E61571601A6D173800FBAE31 /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				E63D6A5B1A6CC5A300C21370 /* UpdateUtil.swift */,
 				E6E3ABFB1A0EC1F900B0DCA1 /* UIUtil.swift */,
 				E63D6A5E1A6CC61900C21370 /* TimeUtil.swift */,
 				E61571611A6D174D00FBAE31 /* Regex.swift */,
@@ -220,7 +231,6 @@
 			isa = PBXGroup;
 			children = (
 				E6FF58CF19EA8A5D008124A5 /* CalendarViewController.swift */,
-				E615715E1A6CF7B700FBAE31 /* LunchCalendarEvents.swift */,
 				E696049019EBD31600FD0885 /* LunchEventViewController.swift */,
 				E690BACD1A1592A9007C10A6 /* LunchCalendarTableCell.swift */,
 			);
@@ -230,8 +240,8 @@
 		E63D6A571A6CC53200C21370 /* Dinner */ = {
 			isa = PBXGroup;
 			children = (
-				E69D2E531A1303ED004FAD77 /* DinnerPeopleTableCell.swift */,
 				E6E3ABF91A0E9B5300B0DCA1 /* DinnerTonightViewController.swift */,
+				E69D2E531A1303ED004FAD77 /* DinnerPeopleTableCell.swift */,
 			);
 			name = Dinner;
 			sourceTree = "<group>";
@@ -253,14 +263,6 @@
 				E69F8F1719EA69020046DFCD /* SettingsViewController.swift */,
 			);
 			name = Settings;
-			sourceTree = "<group>";
-		};
-		E63D6A5A1A6CC59200C21370 /* AppUpdate */ = {
-			isa = PBXGroup;
-			children = (
-				E63D6A5B1A6CC5A300C21370 /* UpdateUtil.swift */,
-			);
-			name = AppUpdate;
 			sourceTree = "<group>";
 		};
 		E65D526319EA3A73002BEDDE = {
@@ -294,7 +296,7 @@
 				E66AB0971A13406F004EFAA2 /* Config.swift */,
 				E6E590411A100E280002473E /* ParseKeys.swift */,
 				E6385BDA1A0DD5DE00299C9C /* View Controllers */,
-				E63D6A5A1A6CC59200C21370 /* AppUpdate */,
+				E6EC17661A971C9C00923A96 /* Model */,
 				E61571601A6D173800FBAE31 /* Util */,
 				E65D527519EA3A73002BEDDE /* Main.storyboard */,
 				E65D527A19EA3A73002BEDDE /* LaunchScreen.xib */,
@@ -428,6 +430,19 @@
 			path = "Parse Frameworks";
 			sourceTree = "<group>";
 		};
+		E6EC17661A971C9C00923A96 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				E615715E1A6CF7B700FBAE31 /* LunchCalendarEvents.swift */,
+				E6EC176F1A981BDA00923A96 /* User.swift */,
+				E6EC17691A97203200923A96 /* DinnerOrder.swift */,
+				E6EC176D1A981B4C00923A96 /* DinnerConfig.swift */,
+				E6EC17671A971D1400923A96 /* ApplicationProperty.swift */,
+				E6EC176B1A97BD1800923A96 /* UserInfo.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -535,15 +550,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E6EC17701A981BDA00923A96 /* User.swift in Sources */,
 				E65A6B801A0EE1FE00976FD6 /* BeerViewController.swift in Sources */,
 				E61571621A6D174D00FBAE31 /* Regex.swift in Sources */,
 				E63D6A5F1A6CC61900C21370 /* TimeUtil.swift in Sources */,
 				E65A6B7E1A0ECAB600976FD6 /* NoteViewController.swift in Sources */,
+				E6EC176C1A97BD1800923A96 /* UserInfo.swift in Sources */,
 				E6E3ABFA1A0E9B5300B0DCA1 /* DinnerTonightViewController.swift in Sources */,
+				E6EC176A1A97203200923A96 /* DinnerOrder.swift in Sources */,
 				E696049119EBD31600FD0885 /* LunchEventViewController.swift in Sources */,
+				E6EC176E1A981B4C00923A96 /* DinnerConfig.swift in Sources */,
 				E6D8AAA51A14B71000058A7F /* DietaryPreferencesViewController.swift in Sources */,
 				E6FF58D019EA8A5D008124A5 /* CalendarViewController.swift in Sources */,
 				E66AB0981A13406F004EFAA2 /* Config.swift in Sources */,
+				E6EC17681A971D1400923A96 /* ApplicationProperty.swift in Sources */,
 				E69D925A1A0EECAA00A94B98 /* BeerRequestTableViewCell.swift in Sources */,
 				E6E3ABFC1A0EC1F900B0DCA1 /* UIUtil.swift in Sources */,
 				E65D52ED19EA3D41002BEDDE /* SignInViewController.swift in Sources */,
