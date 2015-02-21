@@ -102,7 +102,8 @@ Parse.Cloud.define("beerReportKicked", function(request, response) {
 
 /* Removes this user's report that the keg is kicked.
  *
- * Params: none
+ * Params:
+ *	id (String): The id of the keg that is kicked.
  *
  * Success: Returns a JSON array of users who reported the keg was kicked.
  *		id (String) - id of the user
@@ -245,7 +246,8 @@ Parse.Cloud.define("beerFillKegFromRequest", function(request, response) {
  *
  * Success: List of JSON objects containing
  *	id (String): ID of the beer request
- *	name (String): Name of the beer
+ *	beer (JSON):
+ *		name (String): Name of the beer
  *	votes (JSON Array): A list of users who reported the keg was kicked.
  *		id (String) - id of the user
  * 		name (String) - name of the user
@@ -290,7 +292,9 @@ Parse.Cloud.define("beerGetRequests", function(request, response) {
 				}
 				results.push({
 					id: beerRequest.id,
-					name: beerRequest.get("name"),
+					beer: {
+						name: beerRequest.get("name")
+					},
 					votes: usersVoted
 				});
 			}
