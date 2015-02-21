@@ -7,8 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E6090D4F1A98533F002813BE /* BeerOnTap.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6090D4E1A98533F002813BE /* BeerOnTap.swift */; };
 		E615715F1A6CF7B700FBAE31 /* LunchCalendarEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = E615715E1A6CF7B700FBAE31 /* LunchCalendarEvents.swift */; };
 		E61571621A6D174D00FBAE31 /* Regex.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61571611A6D174D00FBAE31 /* Regex.swift */; };
+		E629DB941A99374C00CB7DE7 /* DinnerOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E629DB931A99374C00CB7DE7 /* DinnerOrder.swift */; };
 		E63D6A5C1A6CC5A300C21370 /* UpdateUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63D6A5B1A6CC5A300C21370 /* UpdateUtil.swift */; };
 		E63D6A5F1A6CC61900C21370 /* TimeUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63D6A5E1A6CC61900C21370 /* TimeUtil.swift */; };
 		E65A6B7E1A0ECAB600976FD6 /* NoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65A6B7D1A0ECAB600976FD6 /* NoteViewController.swift */; };
@@ -44,6 +46,10 @@
 		E65D5D9B19ECF362000B52DB /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E65D5D9A19ECF362000B52DB /* Accounts.framework */; };
 		E66AB0981A13406F004EFAA2 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66AB0971A13406F004EFAA2 /* Config.swift */; };
 		E66EEE331A90296E00B1D1E6 /* DietaryRestrictionTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66EEE321A90296E00B1D1E6 /* DietaryRestrictionTableCell.swift */; };
+		E67A12371A99329000A1E195 /* BeerRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67A12361A99329000A1E195 /* BeerRequest.swift */; };
+		E67A12391A9932A700A1E195 /* Beer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67A12381A9932A700A1E195 /* Beer.swift */; };
+		E67A123B1A9932C300A1E195 /* DinnerRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67A123A1A9932C300A1E195 /* DinnerRequest.swift */; };
+		E68C1CB61A990CB100E3DC3D /* CloudData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68C1CB51A990CB100E3DC3D /* CloudData.swift */; };
 		E690BACE1A1592A9007C10A6 /* LunchCalendarTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E690BACD1A1592A9007C10A6 /* LunchCalendarTableCell.swift */; };
 		E696049119EBD31600FD0885 /* LunchEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E696049019EBD31600FD0885 /* LunchEventViewController.swift */; };
 		E69D2E541A1303ED004FAD77 /* DinnerPeopleTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E69D2E531A1303ED004FAD77 /* DinnerPeopleTableCell.swift */; };
@@ -55,7 +61,6 @@
 		E6E3ABFC1A0EC1F900B0DCA1 /* UIUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E3ABFB1A0EC1F900B0DCA1 /* UIUtil.swift */; };
 		E6E590421A100E280002473E /* ParseKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E590411A100E280002473E /* ParseKeys.swift */; };
 		E6EC17681A971D1400923A96 /* ApplicationProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6EC17671A971D1400923A96 /* ApplicationProperty.swift */; };
-		E6EC176A1A97203200923A96 /* DinnerOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6EC17691A97203200923A96 /* DinnerOrder.swift */; };
 		E6EC176C1A97BD1800923A96 /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6EC176B1A97BD1800923A96 /* UserInfo.swift */; };
 		E6EC176E1A981B4C00923A96 /* DinnerConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6EC176D1A981B4C00923A96 /* DinnerConfig.swift */; };
 		E6EC17701A981BDA00923A96 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6EC176F1A981BDA00923A96 /* User.swift */; };
@@ -73,8 +78,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E6090D4E1A98533F002813BE /* BeerOnTap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeerOnTap.swift; sourceTree = "<group>"; };
 		E615715E1A6CF7B700FBAE31 /* LunchCalendarEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LunchCalendarEvents.swift; sourceTree = "<group>"; };
 		E61571611A6D174D00FBAE31 /* Regex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Regex.swift; sourceTree = "<group>"; };
+		E629DB931A99374C00CB7DE7 /* DinnerOrder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DinnerOrder.swift; sourceTree = "<group>"; };
 		E63D6A5B1A6CC5A300C21370 /* UpdateUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdateUtil.swift; sourceTree = "<group>"; };
 		E63D6A5E1A6CC61900C21370 /* TimeUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeUtil.swift; sourceTree = "<group>"; };
 		E65A6B7D1A0ECAB600976FD6 /* NoteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteViewController.swift; sourceTree = "<group>"; };
@@ -145,6 +152,10 @@
 		E65D5D9A19ECF362000B52DB /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		E66AB0971A13406F004EFAA2 /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		E66EEE321A90296E00B1D1E6 /* DietaryRestrictionTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DietaryRestrictionTableCell.swift; sourceTree = "<group>"; };
+		E67A12361A99329000A1E195 /* BeerRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeerRequest.swift; sourceTree = "<group>"; };
+		E67A12381A9932A700A1E195 /* Beer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Beer.swift; sourceTree = "<group>"; };
+		E67A123A1A9932C300A1E195 /* DinnerRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DinnerRequest.swift; sourceTree = "<group>"; };
+		E68C1CB51A990CB100E3DC3D /* CloudData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudData.swift; sourceTree = "<group>"; };
 		E690BACD1A1592A9007C10A6 /* LunchCalendarTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LunchCalendarTableCell.swift; sourceTree = "<group>"; };
 		E696049019EBD31600FD0885 /* LunchEventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LunchEventViewController.swift; sourceTree = "<group>"; };
 		E69D2E531A1303ED004FAD77 /* DinnerPeopleTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DinnerPeopleTableCell.swift; sourceTree = "<group>"; };
@@ -156,7 +167,6 @@
 		E6E3ABFB1A0EC1F900B0DCA1 /* UIUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIUtil.swift; sourceTree = "<group>"; };
 		E6E590411A100E280002473E /* ParseKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseKeys.swift; sourceTree = "<group>"; };
 		E6EC17671A971D1400923A96 /* ApplicationProperty.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationProperty.swift; sourceTree = "<group>"; };
-		E6EC17691A97203200923A96 /* DinnerOrder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DinnerOrder.swift; path = ../DinnerOrder.swift; sourceTree = "<group>"; };
 		E6EC176B1A97BD1800923A96 /* UserInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
 		E6EC176D1A981B4C00923A96 /* DinnerConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DinnerConfig.swift; sourceTree = "<group>"; };
 		E6EC176F1A981BDA00923A96 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -433,12 +443,17 @@
 		E6EC17661A971C9C00923A96 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				E629DB931A99374C00CB7DE7 /* DinnerOrder.swift */,
 				E615715E1A6CF7B700FBAE31 /* LunchCalendarEvents.swift */,
 				E6EC176F1A981BDA00923A96 /* User.swift */,
-				E6EC17691A97203200923A96 /* DinnerOrder.swift */,
+				E67A123A1A9932C300A1E195 /* DinnerRequest.swift */,
 				E6EC176D1A981B4C00923A96 /* DinnerConfig.swift */,
 				E6EC17671A971D1400923A96 /* ApplicationProperty.swift */,
 				E6EC176B1A97BD1800923A96 /* UserInfo.swift */,
+				E6090D4E1A98533F002813BE /* BeerOnTap.swift */,
+				E67A12361A99329000A1E195 /* BeerRequest.swift */,
+				E67A12381A9932A700A1E195 /* Beer.swift */,
+				E68C1CB51A990CB100E3DC3D /* CloudData.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -557,17 +572,22 @@
 				E65A6B7E1A0ECAB600976FD6 /* NoteViewController.swift in Sources */,
 				E6EC176C1A97BD1800923A96 /* UserInfo.swift in Sources */,
 				E6E3ABFA1A0E9B5300B0DCA1 /* DinnerTonightViewController.swift in Sources */,
-				E6EC176A1A97203200923A96 /* DinnerOrder.swift in Sources */,
+				E629DB941A99374C00CB7DE7 /* DinnerOrder.swift in Sources */,
+				E67A12391A9932A700A1E195 /* Beer.swift in Sources */,
+				E68C1CB61A990CB100E3DC3D /* CloudData.swift in Sources */,
 				E696049119EBD31600FD0885 /* LunchEventViewController.swift in Sources */,
 				E6EC176E1A981B4C00923A96 /* DinnerConfig.swift in Sources */,
 				E6D8AAA51A14B71000058A7F /* DietaryPreferencesViewController.swift in Sources */,
 				E6FF58D019EA8A5D008124A5 /* CalendarViewController.swift in Sources */,
 				E66AB0981A13406F004EFAA2 /* Config.swift in Sources */,
 				E6EC17681A971D1400923A96 /* ApplicationProperty.swift in Sources */,
+				E6090D4F1A98533F002813BE /* BeerOnTap.swift in Sources */,
 				E69D925A1A0EECAA00A94B98 /* BeerRequestTableViewCell.swift in Sources */,
+				E67A123B1A9932C300A1E195 /* DinnerRequest.swift in Sources */,
 				E6E3ABFC1A0EC1F900B0DCA1 /* UIUtil.swift in Sources */,
 				E65D52ED19EA3D41002BEDDE /* SignInViewController.swift in Sources */,
 				E615715F1A6CF7B700FBAE31 /* LunchCalendarEvents.swift in Sources */,
+				E67A12371A99329000A1E195 /* BeerRequest.swift in Sources */,
 				E6E590421A100E280002473E /* ParseKeys.swift in Sources */,
 				E65D52CB19EA3BA3002BEDDE /* GTLCalendar_Sources.m in Sources */,
 				E65D527219EA3A73002BEDDE /* AppDelegate.swift in Sources */,

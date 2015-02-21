@@ -24,6 +24,7 @@ import UIKit
 12 = Beef
 13 = Lamb
 14 = Poultry
+15 = Garlic
 */
 
 class DietaryPreferencesViewController: UITableViewController {
@@ -95,22 +96,20 @@ class DietaryPreferencesViewController: UITableViewController {
             (cell as DietaryRestrictionTableCell).initialize()
         }
         
-        var preferences = PFUser.currentUser()[kUserPreferencesKey] as [Int]?
-        if (preferences != nil) {
-            for option in allRestrictions {
-                if (find(preferences!, option.tag) != nil) {
-                    option.setSwitch(true)
-                }
-            }
-            
-            for meatRestriction in meatRestrictions {
-                if (find(preferences!, meatRestriction.tag) != nil) {
-                    selectCell(meatRestriction)
-                    break
-                }
+        var preferences = PFUser.currentUser().preferences
+        for option in allRestrictions {
+            if (find(preferences, option.tag) != nil) {
+                option.setSwitch(true)
             }
         }
-        var preferenceNote = PFUser.currentUser()[kUserPreferenceNote] as? String
+        
+        for meatRestriction in meatRestrictions {
+            if (find(preferences, meatRestriction.tag) != nil) {
+                selectCell(meatRestriction)
+                break
+            }
+        }
+        var preferenceNote = PFUser.currentUser().preferenceNote
         setPreferenceNote(preferenceNote)
     }
     
@@ -126,15 +125,12 @@ class DietaryPreferencesViewController: UITableViewController {
                 }
             }
             
-            PFUser.currentUser().addUniqueObject(cell!.tag, forKey: kUserPreferencesKey)
-            PFUser.currentUser().saveInBackgroundWithBlock({ (b: Bool, error: NSError!) -> Void in
-                PFUser.currentUser().removeObjectsInArray(preferencesToRemove, forKey: kUserPreferencesKey)
-                PFUser.currentUser().saveInBackground()
-            })
+            PFUser.currentUser().updatePreferences([cell!.tag], removePreferences: preferencesToRemove)
+            PFUser.currentUser().saveInBackground()
         } else if (cell == additionalRestrictionsRow) {
             var noteViewController = storyboard?.instantiateViewControllerWithIdentifier(kNoteViewControllerID) as NoteViewController
-            noteViewController.initialize(PFUser.currentUser()[kUserPreferenceNote] as? String, title: "Additional Restrictions", allowEmpty: true, onDone: { (text: String) -> Void in
-                PFUser.currentUser()[kUserPreferenceNote] = text
+            noteViewController.initialize(PFUser.currentUser().preferenceNote, title: "Additional Restrictions", allowEmpty: true, onDone: { (text: String) -> Void in
+                PFUser.currentUser().preferenceNote = text
                 PFUser.currentUser().saveInBackground()
                 self.setPreferenceNote(text)
             })

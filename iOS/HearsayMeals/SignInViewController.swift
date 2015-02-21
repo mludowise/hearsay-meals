@@ -56,15 +56,15 @@ class SignInViewController: UIViewController, GPPSignInDelegate {
     func logInWithParse(googlePlusUser: GTLPlusPerson) {
         var userEmail = (googlePlusUser.emails[0] as GTLPlusPersonEmailsItem).value
         
-        PFUser.logInWithUsernameInBackground(userEmail, password: kUserPassword, block: { (parseUser: PFUser!, error: NSError!) -> Void in
+        PFUser.logInWithUsernameInBackground(userEmail, password: PFUser.password(), block: { (parseUser: PFUser!, error: NSError!) -> Void in
             if (parseUser == nil || error != nil) {
                 NSLog("\(userEmail) does not exist in Parse")
                 var user = PFUser()
                 user.email = userEmail
                 user.username = userEmail
-                user.password = kUserPassword
-                user[kUserNameKey] = googlePlusUser.displayName
-                user[kUserPictureKey] = googlePlusUser.image.url
+                user.password = PFUser.password()
+                user.name = googlePlusUser.displayName
+                user.pictureURL = googlePlusUser.image.url
                 
                 user.signUpInBackgroundWithBlock({ (succeeded: Bool, error: NSError!) -> Void in
                     if (error != nil) {

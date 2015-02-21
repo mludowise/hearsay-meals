@@ -43,16 +43,16 @@ class DinnerTonightViewController: UITableViewController {
     }
     
     private func getDinnerConfig() {
-        PFCloud.callFunctionInBackground("dinnerGetConfigs", withParameters: [:]) { (result: AnyObject!, error: NSError!) -> Void in
+        PFCloud.callFunctionInBackground("dinnerGetConfigs", withParameters: CloudDataUtil.empty()) { (result: AnyObject!, error: NSError!) -> Void in
             if (error != nil || result == nil) {
                 NSLog("\(error)")
                 self.timeLeftLabel.hidden = true
                 return
             }
             
+            self.dinnerConfig = DinnerConfig(data: result as NSDictionary)
             NSLog("Dinner Config: \(self.dinnerConfig)")
             
-            self.dinnerConfig = DinnerConfig(data: result as NSDictionary)
             self.updateTimer()
             NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "updateTimer", userInfo: nil, repeats: true)
         }
@@ -67,7 +67,7 @@ class DinnerTonightViewController: UITableViewController {
                 return
             }
             
-            self.dinnerOrdersTonight = DinnerOrder.dinnerOrders(result as [NSDictionary])
+            self.dinnerOrdersTonight = DinnerOrder.arrayFromData(result as [NSDictionary]?)
             NSLog("Fetched \(self.dinnerOrdersTonight.count) Dinner Orders")
             
             self.userOrderIndex = self.findUserOrder(self.dinnerOrdersTonight)

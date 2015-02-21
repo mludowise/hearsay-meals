@@ -13,18 +13,21 @@ class BeerRequestTableViewCell: UITableViewCell {
     @IBOutlet weak var beerLabel: UILabel!
     @IBOutlet weak var voteButton: UIButton!
     
-    private var beerRequest : PFObject?
+    private var requestId : String?
+    private var beer : Beer?
+    private var votes = [UserInfo]()
     
-    func loadView(beerRequest: PFObject) {
-        self.beerRequest = beerRequest
+    func loadView(beerRequest: BeerRequest) {
+        requestId = beerRequest.id
+        beer = beerRequest.beer
+        votes = beerRequest.votes
         
-        beerLabel.text = beerRequest[kBeerRequestNameKey] as? String
+        beerLabel.text = beer!.name
         updateVotes(nil)
     }
     
     private func updateVotes(completion: (() -> Void)?) {
-        var votes = beerRequest?[kBeerRequestVotesKey] as [String]
-        var userVote = find(votes, PFUser.currentUser().objectId) != nil
+        var userVote = UserInfo.findUser(votes, user: PFUser.currentUser()) != nil
         
         // Figure out how many votes should display when the button is deselected
         var numVotesWithoutUser = votes.count
@@ -40,22 +43,23 @@ class BeerRequestTableViewCell: UITableViewCell {
     }
     
     @IBAction func onVoteButton(sender: AnyObject) {
+        if (requestId == nil) {
+            return
+        }
+        
         // Toggle vote
         voteButton.selected = !voteButton.selected
         
-        if (voteButton.selected) { // User voted
-            self.beerRequest?.addUniqueObject(PFUser.currentUser().objectId, forKey: kBeerRequestVotesKey)
-        } else { // User unvoted
-            self.beerRequest?.removeObject(PFUser.currentUser().objectId, forKey: kBeerRequestVotesKey)
+        let functionName = voteButton.selected ? "beerVoteForRequest" : "beerUnvoteForRequest"
+        PFCloud.callFunctionInBackground(functionName, withParameters: IdData(id: requestId!).data) { (result: AnyObject!, error: NSError!) -> Void in
+            if (error != nil || result == nil) {
+                NSLog("\(error)")
+                return
+            }
+            
+            // Update to the most recent votes
+            self.votes = UserInfo.arrayFromData(result as [NSDictionary]?)
+            self.updateVotes(nil)
         }
-        
-        // Refresh votes while we're at it
-        self.beerRequest?.saveInBackgroundWithBlock({ (b: Bool, error: NSError!) -> Void in
-            self.beerRequest?.refreshInBackgroundWithBlock({ (object: PFObject!, error: NSError!) -> Void in
-                // Update to the most recent votes
-                self.updateVotes(nil)
-            })
-            return () // Have to do this in one-line functions in Swift
-        })
     }
 }

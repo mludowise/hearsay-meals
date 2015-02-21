@@ -29,9 +29,9 @@ class DietaryRestrictionTableCell : UITableViewCell {
     
     func didSwitchChange(sender: UISwitch) {
         if (sender.on) {
-            PFUser.currentUser().addUniqueObject(tag, forKey: kUserPreferencesKey)
+            PFUser.currentUser().addPreference(tag)
         } else {
-            PFUser.currentUser().removeObject(tag, forKey: kUserPreferencesKey)
+            PFUser.currentUser().removePreference(tag)
         }
         PFUser.currentUser().saveInBackgroundWithBlock { (Bool, error: NSError!) -> Void in
             if (error != nil) {

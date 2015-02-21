@@ -24,8 +24,10 @@ class BeerViewController: UITableViewController {
     @IBOutlet weak var reportEmptyButton: UIButton!
     @IBOutlet weak var reportEmptyActivityIndicator: UIActivityIndicatorView!
     
-    private var beerRequests = [PFObject]()
-    private var keg: PFObject?
+    private var beerRequests = [BeerRequest]()
+    private var kegId : String?
+    private var beer : Beer?
+    private var kickedReports = [UserInfo]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -85,23 +87,23 @@ class BeerViewController: UITableViewController {
     }
     
     private func updateKeg(completion: (() -> Void)?) {
-        var query = PFQuery(className: kKegTableKey)
-        query.orderByDescending(kCreatedAtKey)
-        query.getFirstObjectInBackgroundWithBlock { (keg: PFObject!, error: NSError!) -> Void in
-            if (error != nil) {
+        PFCloud.callFunctionInBackground("beerOnTap", withParameters: [:]) { (result: AnyObject!, error: NSError!) -> Void in
+            if (error != nil || result == nil) {
                 NSLog("\(error)")
-            } else {
-                self.keg = keg
-                
-                // Update current keg
-                self.currentKegLabel.text = keg[kKegBeerNameKey] as? String
-                
-                // Disable report empty keg button if user already reported it
-                if (keg[kKegKickedReportsKey] != nil) {
-                    self.reportEmptyButton.selected = find(keg[kKegKickedReportsKey] as [String], PFUser.currentUser().objectId) != nil
-                }
-                completion?()
+                return
             }
+            
+            let beerOnTap = BeerOnTap(data: result as NSDictionary)
+            self.beer = beerOnTap.beer
+            self.kegId = beerOnTap.id
+            self.kickedReports = beerOnTap.kickedReports
+            
+            // Update current keg
+            self.currentKegLabel.text = self.beer?.name
+            
+            // Disable report empty keg button if user already reported it
+            self.reportEmptyButton.selected = UserInfo.findUser(self.kickedReports, user: PFUser.currentUser()) != nil
+            completion?()
         }
     }
     
@@ -111,12 +113,12 @@ class BeerViewController: UITableViewController {
             self.tableView.contentOffset.y = -self.tableView.contentInset.top
         })
         
-        if ((keg?[kKegKickedReportsKey] as [String]).count > 0) { // Keg is kicked
+        if (kickedReports.count > 0) { // Keg is kicked
             // Flash empty report off and on to update it
             UIView.animateWithDuration(0.1, animations: { () -> Void in
                 self.emptyKegReportsLabel.alpha = 0
             }, completion: { (Bool) -> Void in
-                let numPeople = (self.keg?[kKegKickedReportsKey] as [String]).count
+                let numPeople = self.kickedReports.count
                 self.emptyKegReportsLabel.text = numPeople == 1 ? "Reported by 1 person" : "Reported by \(numPeople) people"
                 UIView.animateWithDuration(0.4, delay: 0.1, options: nil, animations: { () -> Void in
                     self.emptyKegReportsLabel.alpha = 1
@@ -147,7 +149,7 @@ class BeerViewController: UITableViewController {
     private func updateTabBadge() {
         var value : String?
         
-        if ((keg?[kKegKickedReportsKey] as [String]).count > 0) { // Keg is kicked
+        if (kickedReports.count > 0) { // Keg is kicked
             value = "!"
         }
         
@@ -156,58 +158,63 @@ class BeerViewController: UITableViewController {
     }
     
     @IBAction func onReportEmpty(sender: AnyObject) {
-        reportEmptyActivityIndicator.startAnimating()
-        
-        if (reportEmptyButton.selected) { // User already reported as kicked
-            keg?.removeObjectsInArray([PFUser.currentUser().objectId], forKey: kKegKickedReportsKey)
-        } else {
-            keg?.addUniqueObject(PFUser.currentUser().objectId, forKey: kKegKickedReportsKey)
+        if (kegId == nil) {
+            return
         }
         
-        keg?.saveInBackgroundWithBlock({ (b: Bool, error: NSError!) -> Void in
+        reportEmptyActivityIndicator.startAnimating()
+        
+        let functionName = reportEmptyButton.selected ? "beerUnreportKicked" : "beerReportKicked"
+        
+        PFCloud.callFunctionInBackground(functionName, withParameters: IdData(id: kegId!).data) { (result: AnyObject!, error: NSError!) -> Void in
+            if (error != nil || result == nil) {
+                NSLog("\(error)")
+                return
+            }
+            
+            self.kickedReports = UserInfo.arrayFromData(result as [NSDictionary]?)
+            
             self.reportEmptyActivityIndicator.stopAnimating()
             self.reportEmptyButton.selected = !self.reportEmptyButton.selected
             self.updateKegKickedView()
             self.updateTabBadge()
-        })
+        }
     }
     
     private func updateBeerRequests(completion: (() -> Void)?) {
-        var beerRequestQuery = PFQuery(className: kBeerRequestTableKey)
-        beerRequestQuery.orderByAscending(kBeerRequestNameKey)
-        beerRequestQuery.findObjectsInBackgroundWithBlock { (objects: [AnyObject]!, error: NSError!) -> Void in
-            if (error != nil) {
+        PFCloud.callFunctionInBackground("beerGetRequests", withParameters: CloudDataUtil.empty()) { (result: AnyObject!, error: NSError!) -> Void in
+            if (error != nil || result == nil) {
                 NSLog("\(error)")
-            } else {
-                self.beerRequests = objects as [PFObject]!
-                self.tableView.reloadData()
-                completion?()
+                return
             }
+            
+            self.beerRequests = BeerRequest.arrayFromData(result as [NSDictionary]?)
+            self.tableView.reloadData()
+            completion?()
         }
     }
     
     @IBAction func onMakeRequest(sender: AnyObject) {
         var noteViewController = storyboard?.instantiateViewControllerWithIdentifier(kNoteViewControllerID) as NoteViewController
         noteViewController.initialize(nil, title: "Beer Request", allowEmpty: false) { (text: String) -> Void in
-            
-            var beerRequest = PFObject(className: kBeerRequestTableKey)
-            beerRequest[kBeerRequestUserKey] = PFUser.currentUser().objectId
-            beerRequest[kBeerRequestNameKey] = text
-            beerRequest.addUniqueObject(PFUser.currentUser().objectId, forKey: kBeerRequestVotesKey)
-            beerRequest.saveInBackgroundWithBlock({ (b: Bool, error: NSError!) -> Void in
+            let beer = Beer(name: text)
+            PFCloud.callFunctionInBackground("beerAddRequest", withParameters: beer.data, block: { (result: AnyObject!, error: NSError!) -> Void in
                 if (error != nil) {
                     NSLog("\(error)")
-                } else {
-                    // Update table
-                    self.beerRequests.append(beerRequest)
-                    self.tableView.beginUpdates()
-                    self.tableView.insertRowsAtIndexPaths([NSIndexPath(forItem: self.beerRequests.count-1, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Automatic)
-                    self.tableView.endUpdates()
-                    
+                    var alertView = UIAlertView(title: "Woops!", message: "Someone has already requested '\(text)'. Instead, why don't you vote for '\(text)'?", delegate: nil, cancelButtonTitle: "OK")
+                    alertView.show()
+                    self.updateBeerRequests(nil)
+                    return
                 }
+                
+                if (result == nil) {
+                    NSLog("Empty Result")
+                    return
+                }
+                
+                self.updateBeerRequests(nil)
             })
         }
         presentViewController(noteViewController, animated: true, completion: nil)
     }
-    
 }
