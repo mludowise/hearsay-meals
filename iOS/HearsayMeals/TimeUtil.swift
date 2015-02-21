@@ -15,6 +15,10 @@ private var dateFormatter = NSDateFormatter()
 private let kDayFormat = "EEE"
 private let kDateFormat = "MMM d"
 
+func dateTimeAtHour(date: NSDate, hour: Int, minute: Int, second: Int, offsetYear: Int, offsetMonth: Int, offsetDay: Int, offsetHour: Int, offsetMinute: Int, offsetSecond:Int) -> NSDate {
+    return dateTimeAtHour(date, hour, minute, second, nil, offsetYear, offsetMonth, offsetDay, offsetHour, offsetMinute, offsetSecond)
+}
+
 func dateTimeAtHour(date: NSDate, hour: Int, minute: Int, second: Int, timeZone: NSTimeZone?, offsetYear: Int, offsetMonth: Int, offsetDay: Int, offsetHour: Int, offsetMinute: Int, offsetSecond:Int) -> NSDate {
     var cal = NSCalendar(identifier: NSGregorianCalendar)!
     var dateComponents = cal.components(kCalendarComponentBits, fromDate: date)
@@ -57,8 +61,8 @@ func pastSunday(date: NSDate) -> NSDate {
     return cal.dateByAddingComponents(dateComponents, toDate: newDate, options: nil)!
 }
 
-func timeUntil(hour: Int, minute: Int, second: Int, inTimeZone: NSTimeZone?) -> NSTimeInterval {
-    var date = dateTimeAtHour(NSDate(), hour, minute, second, inTimeZone, 0, 0, 0, 0, 0, 0)
+func timeUntil(hour: Int, minute: Int) -> NSTimeInterval {
+    var date = dateTimeAtHour(NSDate(), hour, minute, 0, 0, 0, 0, 0, 0, 0)
     return date.timeIntervalSinceNow
 }
 

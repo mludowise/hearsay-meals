@@ -36,13 +36,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UIAlertViewDelegate {
         // Update colors for the application
         setupColors()
         
-        // Check for updates
-        checkForUpdates(nil)
-        
         return true
     }
     
-    func applicationSignificantTimeChange(application: UIApplication) {
+    func applicationDidBecomeActive(application: UIApplication) {
         checkForUpdates(nil)
     }
     

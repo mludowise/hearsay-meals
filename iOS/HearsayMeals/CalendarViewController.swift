@@ -80,6 +80,7 @@ class CalendarViewController: UITableViewController {
         calendarEventsFetchError = nil
         
         var sunday = pastSunday(NSDate())
+        
         var startOfDay = GTLDateTime(date: todayAtZero(kOfficeTimeZone), timeZone: kOfficeTimeZone)
         var inTwoWeeks = GTLDateTime(date: daysInFutureAtZero(14, kOfficeTimeZone), timeZone: kOfficeTimeZone)
         var query = GTLQueryCalendar.queryForEventsListWithCalendarId(kTeamCalendarId) as GTLQueryCalendar

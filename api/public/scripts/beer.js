@@ -148,7 +148,7 @@ function displayBeerRequests() {
 		for (var i in beerRequests){
 			var request = beerRequests[i];
 			var $row = $('<tr id="beerRequestRow_' + request.id + '">');
-			var $beerType = $('<td class="beer-request-name">').text(request.name);
+			var $beerType = $('<td class="beer-request-name">').text(request.beer.name);
 			var $voteButton = $('<button beer-request="' + request.id + '" class="btn beer-vote">').text('+' + request.votes.length.toString());
 			
 			var votes = request.votes;

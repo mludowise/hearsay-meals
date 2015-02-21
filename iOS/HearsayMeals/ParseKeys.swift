@@ -8,34 +8,34 @@
 
 import Foundation
 
-let kUserPassword = "password"
-
-let kUserPictureKey = "picture"
-let kUserNameKey = "name"
-let kUserAdminKey = "admin"
-let kUserPreferencesKey = "preferences"
-let kUserPreferenceNote = "preference_note"
-
-let kBeerRequestTableKey = "BeerRequest"
-let kBeerRequestNameKey = "name"
-let kBeerRequestUserKey = "user_id"
-let kBeerRequestVotesKey = "votes"
-
-let kKegTableKey = "Keg"
-let kKegBeerNameKey = "beerName"
-let kKegKickedReportsKey = "kickedReports"
-
-let kDinnerTableKey = "Dinner"
-let kDinnerOrderDateKey = "order_date"
-let kDinnerUserIdKey = "user_id"
-let kDinnerSpecialRequestKey = "special_request"
-
-let kCreatedAtKey = "createdAt"
-let kObjectId = "objectId"
-
-let kApplicationPropertiesTableKey = "ApplicationProperties"
-let kApplicationPropertiesTypeKey = "applicationType"
-let kApplicationPropertiesIdKey = "applicationId"
-let kApplicationPropertiesLatestVersionKey = "latestVersion"
-let kApplicationPropertiesDownloadUrlKey = "downloadUrl"
-let kApplicationPropertiesBinaryKey = "binary"
+//let kUserPassword = "password"
+//
+//let kUserPictureKey = "picture"
+//let kUserNameKey = "name"
+//let kUserAdminKey = "admin"
+//let kUserPreferencesKey = "preferences"
+//let kUserPreferenceNote = "preference_note"
+//
+//let kBeerRequestTableKey = "BeerRequest"
+//let kBeerRequestNameKey = "name"
+//let kBeerRequestUserKey = "user_id"
+//let kBeerRequestVotesKey = "votes"
+//
+//let kKegTableKey = "Keg"
+//let kKegBeerNameKey = "beerName"
+//let kKegKickedReportsKey = "kickedReports"
+//
+//let kDinnerTableKey = "Dinner"
+//let kDinnerOrderDateKey = "order_date"
+//let kDinnerUserIdKey = "user_id"
+//let kDinnerSpecialRequestKey = "special_request"
+//
+//let kCreatedAtKey = "createdAt"
+//let kObjectId = "objectId"
+//
+//let kApplicationPropertiesTableKey = "ApplicationProperties"
+//let kApplicationPropertiesTypeKey = "applicationType"
+//let kApplicationPropertiesIdKey = "applicationId"
+//let kApplicationPropertiesLatestVersionKey = "latestVersion"
+//let kApplicationPropertiesDownloadUrlKey = "downloadUrl"
+//let kApplicationPropertiesBinaryKey = "binary"

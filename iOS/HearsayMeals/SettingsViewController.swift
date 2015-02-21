@@ -32,9 +32,9 @@ class SettingsViewController: UITableViewController, MFMailComposeViewController
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        nameLabel.text = PFUser.currentUser()[kUserNameKey] as? String
+        nameLabel.text = PFUser.currentUser().name
         emailLabel.text = PFUser.currentUser().email
-        profileImageView.image = loadImageFromURL(PFUser.currentUser()[kUserPictureKey] as String)
+        profileImageView.image = loadImageFromURL(PFUser.currentUser().pictureURL)
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -69,12 +69,8 @@ class SettingsViewController: UITableViewController, MFMailComposeViewController
         preferenceIconViews = []
         ellipsesLabel.hidden = true
         
-        var preferences = PFUser.currentUser()[kUserPreferencesKey] as [Int]?
-        if (preferences == nil) {
-            return
-        }
-        
-        var iconViews = getPreferenceIcons(preferences!)
+        var preferences = PFUser.currentUser().preferences
+        var iconViews = getPreferenceIcons(preferences)
         
         // Calculate how many icons can be displayed
         var totalIconWidth = CGFloat(0)
@@ -96,7 +92,7 @@ class SettingsViewController: UITableViewController, MFMailComposeViewController
         var position = preferencesIconsView.frame.size.width
         if (preferenceIconViews.count < iconViews.count) {
             ellipsesLabel.hidden = false
-            position = ellipsesLabel.frame.origin.x
+            position = ellipsesLabel.frame.origin.x - 5
         }
         for iconView in reverse(preferenceIconViews) {
             preferencesIconsView.addSubview(iconView)
