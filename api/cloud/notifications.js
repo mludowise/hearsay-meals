@@ -24,26 +24,52 @@ Parse.Cloud.job("beerSendKickedNotification", function(request, status) {
 	var query = new Parse.Query(Keg);
 	query.descending("createdAt");
 	query.first().then(function(keg) {
-		if (keg && keg.get("kickedReports") && keg.get("kickedReports").length > 0 && !keg.get("sent_kicked_notice")) {
-			util.getAdmins().then(function(users) {
-				if (!users || users.length == 0) {
-					status.error("No users with in the admin role. No email will be sent.");
-					return;
+		if (!keg) {
+			status.error("No keg");
+			return;
+		}
+		
+		var kickedReports = keg.get("kickedReports")
+		if (keg.get("sent_kicked_notice") || !kickedReports || kickedReports.length == 0) {
+			console.log("Keg isn't kicked. Don't send email.");
+			status.success();
+			return;
+		}
+		
+		util.getAdmins().then(function(admins) {
+			if (!admins || admins.length == 0) {
+				status.error("No users with in the admin role. No email will be sent.");
+				return;
+			}
+			
+			var emailText = "The following people just reported that the keg is empty:\r";
+			var usersPromise = util.findUsers(kickedReports)
+			usersPromise.then(function(users) {
+				for (var u in users) {
+					var user = users[u];
+					emailText += "\t" + user.get("name") + "\r";
 				}
+				return Parse.Promise.as(emailText);
+			}, function(users, error) {
+				console.error(error);
+			}).then(function(emailText) {
+				emailText += "\r"
+							+ "Log into Hearsay Meals to verify:\r"
+							+ "http://meals.hearsaysocial.com/beer.html\r\r"
+							+ "------------------------------------------------------------------------------------------------------------------------\r"
+							+ "You are receiving this email because you are an administrator of Hearsay Meals.\r"
+							+ "If you no longer wish to receive these emails, please contact hearsaymeals-dev@hearsaycorp.com.";
 				
 				var promises = [];
-				for (var i in users) {
-					var user = users[i];
-					console.log("sending email to: " + user.getEmail());
-					
+				for (var i in admins) {
+					var admin = admins[i];
+					console.log("Sending email to: " + admin.getEmail());
+				
 					var promise = Mailgun.sendEmail({
-						to: user.getEmail(),
+						to: admin.getEmail(),
 						from: util.replyTo(),
 						subject: "The Keg is Kicked!",
-						text: "Someone just reported the keg is empty.\r\r"
-							+ "Log into Hearsay Meals to see how many people have reported:\r"
-							+ "http://meals.hearsaysocial.com/beer.html\r\r"
-							+ "You are receiving this email because you are an administrator of Hearsay Meals."
+						text: emailText
 					});
 					promise.then(function(httpResponse) {
 						console.log(httpResponse.text);
@@ -59,13 +85,10 @@ Parse.Cloud.job("beerSendKickedNotification", function(request, status) {
 				}, function() {
 					status.error("Error sending emails.");
 				});
-			}, function(users, error) {
-				status.error(error);
-			});
-		} else {
-			console.log("Keg isn't kicked. Don't send email.");
-			status.success();
-		}
+			})
+		}, function(users, error) {
+			status.error(error);
+		});
 	}, function(keg, error) {
 		status.error(error);
 	});
