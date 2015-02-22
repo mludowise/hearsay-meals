@@ -32,13 +32,9 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li><a href="dinner.html">Dinner</a>
-                    </li>
-                    <li><a href="beer.html">Beer</a>
-                    </li>
-                    <li class="active"><a href="preference.html">Dietary Preferences</a>
-                    </li>
-
+                    <li><a href="dinner.html">Dinner</a></li>
+                    <li><a href="beer.html">Beer</a></li>
+                    <li class="active" id="preference-nav-item"><a href="preference.html">Dietary Preferences</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li class="user hidden-xs">
@@ -57,30 +53,107 @@
 					<div class="well form-group">
 						<div class="row">
 							<div class="col-md-6 col-xs-12">
-								<h4>Diet</h4> 
+								<h4>Diet</h4>
+								<div class="diet"></div>
 								<div class="radio">
 									<label>
-										<input type="radio" name="preferences" id="0" value="0" checked>
+										<input type="radio" name="preferences" id="0" value="0" checked />
 										<i class="icon-omnivore icon-small" alt="Omnivore"></i> Omnivore
 									</label>
 								</div>
 								<div class="radio">
 									<label>
-										<input type="radio" name="preferences" id="1" value="1" checked>
-										<i class="icon-vegetarian icon-small" alt="Vegetarian"></i> Vegetarian</label>
+										<input type="radio" name="preferences" id="4" value="4" />
+										<i class="icon-pescetarian icon-small" alt="Pescetarian"></i> Pescetarian
+									</label>
 								</div>
 								<div class="radio">
 									<label>
-										<input type="radio" name="preferences" id="2" value="2" checked>
-										<i class="icon-vegan icon-small" alt="Vegan"></i> Vegan</label>
+										<input type="radio" name="preferences" id="1" value="1" />
+										<i class="icon-vegetarian icon-small" alt="Vegetarian"></i> Vegetarian
+									</label>
+								</div>
+								<div class="radio">
+									<label>
+										<input type="radio" name="preferences" id="2" value="2" />
+										<i class="icon-vegan icon-small" alt="Vegan"></i> Vegan
+									</label>
 								</div>
 							</div>
 							<div class="col-md-6 col-xs-12">
 								<h4>Restrictions</h4> 
-								<div class="checkbox">
-									<label>
-										<input id="3" type="checkbox" name="restrictions" value="3"><i class="icon-gluten icon-small" alt="No Gluten"></i> No gluten
-									</label>
+									<div class="checkbox">
+										<label>
+											<input id="3" type="checkbox" name="restrictions" value="3">
+											<i class="icon-gluten icon-small" alt="No Gluten"></i> No Gluten
+										</label>
+									</div>
+									<div class="checkbox">
+										<label>
+											<input id="5" type="checkbox" name="restrictions" value="5">
+											<i class="icon-nuts icon-small" alt="No Nuts"></i> No Nuts
+										</label>
+									</div>
+									<div class="checkbox">
+										<label>
+											<input id="6" type="checkbox" name="restrictions" value="6">
+											<i class="icon-soy icon-small" alt="No Soy"></i> No Soy
+										</label>
+									</div>
+									<div class="checkbox">
+										<label>
+											<input id="7" type="checkbox" name="restrictions" value="7">
+											<i class="icon-eggs icon-small" alt="No Eggs"></i> No Eggs
+										</label>
+									</div>
+									<div class="checkbox">
+										<label>
+											<input id="8" type="checkbox" name="restrictions" value="8">
+											<i class="icon-dairy icon-small" alt="No Dairy"></i> No Dairy
+										</label>
+									</div>
+									<div class="checkbox">
+										<label>
+											<input id="9" type="checkbox" name="restrictions" value="9">
+											<i class="icon-shellfish icon-small" alt="No Shellfish"></i> No Shellfish
+										</label>
+									</div>
+									<div class="checkbox">
+										<label>
+											<input id="10" type="checkbox" name="restrictions" value="10">
+											<i class="icon-fish icon-small" alt="No Fish"></i> No Fish
+										</label>
+									</div>
+									<div class="checkbox">
+										<label>
+											<input id="11" type="checkbox" name="restrictions" value="11">
+											<i class="icon-pork icon-small" alt="No Pork"></i> No Pork
+										</label>
+									</div>
+									<div class="checkbox">
+										<label>
+											<input id="12" type="checkbox" name="restrictions" value="12">
+											<i class="icon-beef icon-small" alt="No Beef"></i> No Beef
+										</label>
+									</div>
+									<div class="checkbox">
+										<label>
+											<input id="13" type="checkbox" name="restrictions" value="13">
+											<i class="icon-lamb icon-small" alt="No Lamb"></i> No Lamb
+										</label>
+									</div>
+									<div class="checkbox">
+										<label>
+											<input id="14" type="checkbox" name="restrictions" value="14">
+											<i class="icon-poultry icon-small" alt="No Poultry"></i> No Poultry
+										</label>
+									</div>
+									<div class="checkbox">
+										<label>
+											<input id="15" type="checkbox" name="restrictions" value="15">
+											<i class="icon-garlic icon-small" alt="No Garlic"></i> No Garlic
+										</label>
+									</div>
 								</div>
 							</div>
 						</div>
