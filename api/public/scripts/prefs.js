@@ -22,7 +22,7 @@ function savePreferences() {
 	});
 }
 
-$(document).ready(function () {
+function fetchPreferences() {
     var user = Parse.User.current();
     user.fetch().then(function(user) { // Refresh user in case preferences were edited in a different browser or mobile
 		var preferences = user.getPreferences();
@@ -37,6 +37,16 @@ $(document).ready(function () {
     if (user.getPreferenceNote()) {
         $('#customPrefs').val(user.getPreferenceNote());
     }
-    
+}
+
+function hidePreferencesHelpTip() {
+	if (typeof(Storage) !== "undefined") {
+		localStorage.visitedPreferences = true
+	}
+}
+
+$(document).ready(function () {
+	hidePreferencesHelpTip()
+    fetchPreferences()
     $('#savePrefs').on('click', savePreferences);
 });

@@ -216,8 +216,26 @@ $(function () {
 	});
 });
 
+function showPreferencesHelpTip() {
+	if (typeof(Storage) !== "undefined" && $('#preference-nav-item').is(":visible") ) {
+		$('#preference-nav-item').popover({
+			content: 'More dietary preferences available!',
+			trigger: 'manual',
+			placement: 'bottom',
+		});
+		setTimeout(function() {
+			if (!localStorage.visitedPreferences) {
+				$('#preference-nav-item').popover('show');
+			} else {
+				$('#preference-nav-item').popover('destroy');
+			}
+		}, 1500);
+	}
+}
+
 $(document).ready(function () {
 	updateLoginInfo();
     showAdmin();
-	checkForMobile();	
+	checkForMobile();
+	showPreferencesHelpTip();
 });
