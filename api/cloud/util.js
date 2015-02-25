@@ -1,6 +1,17 @@
+var replyTo = "Hearsay Meals <meals-dev@hearsaycorp.com>";
+
 var restrictedAcl = new Parse.ACL();
 restrictedAcl.setPublicReadAccess(false);
 restrictedAcl.setPublicWriteAccess(false);
+
+// Check if app ID matches that of hearsay-meals.parseapp.com
+var production = Parse.applicationId == "myq9zbMzdkBqqEyudRcwIR5yxnmwihlslqUvYh34";
+
+console.log(production);
+
+exports.replyTo = function() {
+	return replyTo;
+}
 
 exports.isUserAdmin = function(user) {
 	return user.get("admin") == true;
@@ -48,3 +59,9 @@ exports.infoForUsers = function(users, includePrefs) {
 	}
 	return results;
 };
+
+exports.getAdmins = function() {
+	var userQuery = new Parse.Query(Parse.User);
+	userQuery.equalTo("admin", true);
+	return userQuery.find();
+}

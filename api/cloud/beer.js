@@ -134,6 +134,11 @@ Parse.Cloud.define("beerUnreportKicked", function(request, response) {
 		}
 		
 		keg.remove("kickedReports", request.user.id);
+		
+		if (keg.get("kickedReports").length == 0) {
+			keg.set("sent_kicked_notice", false);
+		}
+		
 		keg.save(null, { useMasterKey: true }).then(function(keg) {
 			var kickedReports = keg.get("kickedReports");
 			util.findUsers(kickedReports).then(function(users) {
